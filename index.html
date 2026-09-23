@@ -1,0 +1,5135 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<!-- 审阅版:禁止搜索引擎收录/缓存/摘要,链接仅供定向分享 -->
+<meta name="robots" content="noindex, nofollow, noarchive, nosnippet, noimageindex">
+<meta name="googlebot" content="noindex, nofollow, noarchive">
+<meta name="baiduspider" content="noindex, nofollow, noarchive">
+<meta name="referrer" content="no-referrer">
+<style>
+/* ===== 审阅版防护:禁选中/禁拖拽/禁长按菜单/禁打印 ===== */
+html,body{-webkit-user-select:none;-moz-user-select:none;-ms-user-select:none;user-select:none;-webkit-touch-callout:none;}
+img,svg{-webkit-user-drag:none;user-drag:none;}
+@media print{html{display:none !important;}}
+</style>
+<title>国金证券首页 - 小宝异步提醒 高保真DEMO v9</title>
+<style>
+/* ============================================================
+ * 国金证券客户端设计系统 · design-tokens (750 设计稿基准)
+ * ============================================================ */
+:root {
+  --R1:#FFF2F0; --R2:#FFE0DB; --R3:#FFBAB3; --R4:#FF928A; --R5:#FF6661; --R6:#F93838; --R7:#D4242A;
+  --G1:#E3FAEC; --G6:#05B063;
+  --B6:#2B73FF;
+  /* P · 辅色紫(智能体;取官方 design-tokens.css 紫阶) */
+  --P3:#CEBFFF; --P6:#5E44FF; --P16:#7E69FF; --P17:#9E8FFF; --P19:#DFDAFF;
+  --H1:#FFFFFF; --H2:#F2F4F8; --H3:#E2E8F2; --H4:#EEEEEE; --H5:#DDDDDD; --H6:#CCCCCC; --H7:#87878D; --H8:#55555E; --H9:#0F0F1B;
+
+  --CP0:var(--R6);
+  --CP1:#FF7067;
+  --CP2:#667FFF;
+  --CP3:#8B52FF;
+
+  --CT1:var(--H9);
+  --CT3:var(--H8);
+  --CT4:var(--H7);
+  --CT6:var(--H1);
+
+  --CS1:var(--R6);
+  --CS2:var(--G6);
+
+  --CF3:var(--B6);
+
+  --CL1:var(--H5);
+  --CL2:var(--H4);
+  --CL3:var(--R6);
+  --CL6:var(--P6);        /* 紫色边框(智能体) */
+
+  --CB1:var(--H1);
+  --CB2:var(--H2);
+  --CB4:var(--R1);
+  --CB10:rgba(249,56,56,0.05);
+  --CB13:rgba(249,56,56,0.08);
+  --CB14:rgba(43,115,255,0.08);
+  --CB16:rgba(94,68,255,0.08);  /* 紫色透明标签背景(官方 token:8% P6) */
+  --CB35:#FCFDFF;
+  --CB38:#F6FBFF;
+  --CB39:#FFF9FF;
+  --CB40:#F3F5FF;
+  --CB42:#F6F5FF;
+  --CB19:rgba(0,0,0,0.6);
+
+  --r-4:4px; --r-6:6px; --r-8:8px; --r-12:12px; --r-16:16px; --r-20:20px; --r-24:24px; --r-32:32px; --r-pill:999px;
+  --s-4:4px; --s-8:8px; --s-12:12px; --s-16:16px; --s-20:20px; --s-24:24px; --s-32:32px; --s-40:40px;
+
+  --font-sans:"PingFang SC","Hiragino Sans GB","Microsoft YaHei",system-ui,-apple-system,"Segoe UI",Roboto,sans-serif;
+  --font-num:"GJType","PingFang SC",system-ui,sans-serif;
+
+  --sb:88px;
+  --nav:88px;
+  --tab:98px;
+  --home:68px;
+}
+
+/* ===== 库内字体资产：iconfont(assets/icons/fonts) + GJType 数字字体(assets/fonts) ===== */
+@font-face {
+  font-family: "iconfont";
+  src: url("assets/fonts/iconfont.woff2") format("woff2");
+  font-display: block;
+}
+@font-face { font-family:"GJType"; src:url("assets/fonts/GJType-Regular.ttf") format("truetype"); font-weight:400; }
+@font-face { font-family:"GJType"; src:url("assets/fonts/GJType-Medium.ttf") format("truetype"); font-weight:500; }
+@font-face { font-family:"GJType"; src:url("assets/fonts/GJType-Bold.ttf") format("truetype"); font-weight:600 700; }
+
+.iconfont {
+  font-family: "iconfont" !important;
+  font-style: normal;
+  -webkit-font-smoothing: antialiased;
+  line-height: 1;
+}
+.icon-cebianlan:before { content: "\e63d"; }
+.icon-sousuo:before { content: "\e626"; }
+.icon-shixinjiantou-you:before { content: "\e628"; }
+.icon-guanbi:before { content: "\e63a"; }
+.icon-licaishouye:before { content: "\e636"; }
+.icon-shixinjiantou-shang:before { content: "\e635"; }
+.icon-chenggong:before { content: "\e63f"; }
+.icon-guandian:before { content: "\e618"; }
+.icon-bangzhu:before { content: "\e642"; }
+.icon-huanyihuan:before { content: "\e637"; }
+.icon-fenxiang:before { content: "\e620"; }
+.icon-rili:before { content: "\e623"; }
+.icon-bianji:before { content: "\e643"; }
+
+/* 数字/金额统一 GJType + tnum 等宽(硬规则6) */
+.repo-num, .rate-value, .target-value, .return-value, .sector-change, .gj-sb-time {
+  font-variant-numeric: tabular-nums;
+  font-feature-settings: "tnum";
+}
+
+* {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+}
+
+body {
+  background: #1a1a2e;
+  font-family: var(--font-sans);
+  display: flex;
+  justify-content: center;
+  align-items: flex-start;
+  min-height: 100vh;
+  padding: 30px 0;
+}
+
+/* ========== iPhone 外壳 ========== */
+.iphone-wrapper {
+  position: relative;
+  width: 790px;
+}
+
+.iphone-shell {
+  width: 750px;
+  height: 1624px; /* iPhone 实际比例 393×852 → 750 基准 ≈ 750×1624 */
+  background: var(--CB2);
+  position: relative;
+  overflow: hidden;
+  border-radius: 60px;
+  box-shadow: 
+    0 0 0 12px #1a1a1a,
+    0 0 0 14px #2a2a2a,
+    0 30px 80px rgba(0,0,0,0.5);
+  margin: 0 auto;
+  display: flex;
+  flex-direction: column;
+}
+
+/* 内容滚动区：状态栏/导航之下、底部浮层之上，模拟真机滚动 */
+.screen-scroll {
+  position: relative;
+  flex: 1;
+  min-height: 0;
+  overflow-y: auto;
+  overscroll-behavior: contain;
+  scrollbar-width: none;
+}
+
+.screen-scroll::-webkit-scrollbar {
+  display: none;
+}
+
+/* 灵动岛 */
+.dynamic-island {
+  position: absolute;
+  top: 12px;
+  left: 50%;
+  transform: translateX(-50%);
+  width: 240px;
+  height: 36px;
+  background: #000;
+  border-radius: 20px;
+  z-index: 1000;
+}
+
+/* 侧边按钮 */
+.iphone-side-btn {
+  position: absolute;
+  background: #2a2a2a;
+  border-radius: 2px;
+}
+
+.btn-silent {
+  left: -4px;
+  top: 180px;
+  width: 4px;
+  height: 60px;
+}
+
+.btn-vol-up {
+  left: -4px;
+  top: 260px;
+  width: 4px;
+  height: 100px;
+}
+
+.btn-vol-down {
+  left: -4px;
+  top: 370px;
+  width: 4px;
+  height: 100px;
+}
+
+.btn-power {
+  right: -4px;
+  top: 280px;
+  width: 4px;
+  height: 120px;
+}
+
+/* ========== 顶部渐变背景 ========== */
+.top-header-bg {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 380px;
+  background: 
+    radial-gradient(ellipse at 15% 0%, rgba(255,180,180,0.25) 0%, transparent 50%),
+    radial-gradient(ellipse at 85% -5%, rgba(180,180,255,0.2) 0%, transparent 40%),
+    linear-gradient(180deg, #FFF0F0 0%, #FFF8F8 35%, var(--CB2) 100%);
+  z-index: 0;
+}
+
+/* 右上角定制中心背景(位于滚动区顶部,随内容滚动) */
+.custom-bg {
+  position: absolute;
+  top: 0;
+  right: 0;
+  width: 220px;
+  height: 112px;
+  background: linear-gradient(119.4deg, #E0E4FF 0%, #D0D6FF 100%);
+  border-radius: 0 0 0 36px;
+  z-index: 1;
+}
+
+/* ========== 状态栏 (复用库 status-bar.html 类体系/值) ========== */
+.gj-statusbar {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  height: var(--sb);
+  padding: 12px 40px 0;
+  color: var(--CT1);
+  background: transparent;
+  position: relative;
+  z-index: 10;
+}
+
+.gj-sb-time {
+  font-size: 30px;
+  font-weight: 600;
+  letter-spacing: 1px;
+  min-width: 100px;
+  line-height: 1;
+}
+
+.gj-sb-right {
+  display: inline-flex;
+  align-items: center;
+  gap: 12px;
+}
+
+.gj-sb-5g {
+  font-size: 28px;
+  font-weight: 600;
+  letter-spacing: 0.5px;
+}
+
+.gj-sb-signal rect,
+.gj-sb-battery rect {
+  fill: currentColor;
+}
+
+.gj-sb-battery rect[fill="none"] {
+  fill: none;
+  stroke: currentColor;
+}
+
+/* ========== 顶部导航栏 (对齐库 top-nav.html：图标48、tab选中44/未选36、间距32、安全区24) ========== */
+.top-nav {
+  position: relative;
+  z-index: 10;
+  display: flex;
+  align-items: center;
+  height: var(--nav);
+  padding: 2px 24px 2px 20px;
+}
+
+.top-nav-left {
+  display: flex;
+  align-items: flex-end;
+  min-width: 0;
+}
+
+.menu-btn {
+  width: 48px;
+  height: 48px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: var(--CT1);
+  line-height: 1;
+  margin-bottom: 8px;
+  position: relative;
+  cursor: pointer;
+}
+
+/* 未读红点·方案二:侧边栏按钮(三条杠)右上角红点(参考图:小实心点) */
+.menu-dot {
+  position: absolute;
+  right: -4px;
+  top: -2px;
+  width: 14px;
+  height: 14px;
+  border-radius: 50%;
+  background: var(--CP0);
+  opacity: 0;
+  transition: opacity .3s;
+}
+
+.menu-dot.show { opacity: 1; }
+
+/* 智能体页侧边栏按钮(与首页 menu-btn 同体系,去掉首页专用下沉边距) */
+.agent-menu-btn {
+  margin-bottom: 0;
+  width: 56px;
+  height: 56px;
+}
+
+/* 侧边栏抽屉(参考 方案一·方案2 截图:国金FM 历史对话面板) */
+.side-drawer-mask {
+  position: absolute;
+  inset: 0;
+  z-index: 450;
+  background: var(--CB19);
+  opacity: 0;
+  pointer-events: none;
+  transition: opacity .3s ease;
+}
+
+.side-drawer-mask.show { opacity: 1; pointer-events: auto; }
+
+.side-drawer {
+  position: absolute;
+  left: 0;
+  top: 0;
+  bottom: 0;
+  width: 546px;
+  z-index: 451;
+  background: var(--CB2);
+  transform: translateX(-105%);
+  transition: transform .35s cubic-bezier(.22,1.1,.36,1);
+  display: flex;
+  flex-direction: column;
+  padding: 100px 20px 0;
+}
+
+.side-drawer.open { transform: translateX(0); }
+
+/* 顶部:国金FM logo + 日历/搜索 */
+.drawer-head {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 8px 12px 24px;
+  flex-shrink: 0;
+}
+
+.drawer-logo {
+  display: flex;
+  align-items: center;
+  column-gap: 16px;
+  font-size: 32px;
+  font-weight: 600;
+  color: var(--CT1);
+}
+
+.drawer-logo svg { width: 56px; height: 56px; }
+
+.drawer-head-icons {
+  display: flex;
+  align-items: center;
+  column-gap: 32px;
+  color: var(--CT1);
+}
+
+.drawer-head-icons svg { width: 40px; height: 40px; }
+.drawer-head-icons .iconfont { font-size: 40px; color: var(--CT1); }
+
+.drawer-scroll {
+  flex: 1;
+  min-height: 0;
+  overflow-y: auto;
+  scrollbar-width: none;
+  display: flex;
+  flex-direction: column;
+  row-gap: 20px;
+}
+
+.drawer-scroll::-webkit-scrollbar { display: none; }
+
+/* 白卡(资讯条/历史对话) */
+.drawer-card {
+  background: var(--CB1);
+  border-radius: 20px;
+  padding: 28px 24px;
+}
+
+.drawer-card-news {
+  font-size: 28px;
+  color: var(--CT1);
+  line-height: 42px;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.drawer-card-title {
+  font-size: 32px;
+  font-weight: 600;
+  color: var(--CT1);
+  line-height: 48px;
+  margin-bottom: 8px;
+}
+
+.drawer-group {
+  font-size: 24px;
+  color: var(--CT4);
+  line-height: 36px;
+  margin: 20px 0 4px;
+}
+
+.drawer-q {
+  display: flex;
+  align-items: center;
+  column-gap: 12px;
+  padding: 14px 0;
+  cursor: pointer;
+}
+
+.drawer-q .dq-text {
+  min-width: 0;
+  font-size: 28px;
+  color: var(--CT1);
+  line-height: 42px;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+/* 未读标注:历史对话未读消息以「未读」标签标注(替代小红点;红字 --CP0 / 浅红底 --CB13 / 圆角4) */
+.drawer-q .dq-badge {
+  flex-shrink: 0;
+  display: none;
+  font-size: 20px;
+  font-weight: 500;
+  line-height: 30px;
+  color: var(--CP0);
+  background: var(--CB13);
+  border-radius: var(--r-4);
+  padding: 0 10px;
+}
+
+.drawer-q.unread .dq-badge { display: inline-block; animation: badgeIn .25s ease; }
+
+.drawer-q.unread .dq-text { font-weight: 500; }
+
+@keyframes badgeIn {
+  from { opacity: 0; transform: scale(.8); }
+  to { opacity: 1; transform: scale(1); }
+}
+
+/* 新建对话胶囊 */
+.drawer-newchat {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  column-gap: 14px;
+  height: 88px;
+  border-radius: 999px;
+  background: var(--CB1);
+  font-size: 30px;
+  font-weight: 500;
+  color: var(--CT1);
+  cursor: pointer;
+  flex-shrink: 0;
+}
+
+.drawer-newchat svg { width: 36px; height: 36px; }
+
+/* 底部三入口:备案信息/意见反馈/设置 */
+.drawer-foot {
+  display: flex;
+  align-items: center;
+  flex-shrink: 0;
+  padding: 24px 0 40px;
+}
+
+.df-item {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  row-gap: 8px;
+  font-size: 24px;
+  color: var(--CT3);
+  cursor: pointer;
+}
+
+.df-item svg { width: 44px; height: 44px; }
+
+.menu-btn .iconfont {
+  font-size: 48px;
+  color: var(--CT1);
+}
+
+.nav-tabs {
+  display: inline-flex;
+  align-items: flex-end;
+  column-gap: 32px;
+  margin-left: 24px;
+}
+
+.nav-tab {
+  cursor: pointer;
+  white-space: nowrap;
+  color: var(--CT3);
+  font-size: 36px;
+  font-weight: 400;
+  line-height: 54px;
+  padding: 4px 0;
+  user-select: none;
+  transition: all 0.2s ease;
+  flex-shrink: 0;
+}
+
+.nav-tab.is-on {
+  font-size: 44px;
+  font-weight: 500;
+  line-height: 66px;
+  padding: 0;
+  color: var(--CT1);
+}
+
+.top-nav-right {
+  margin-left: auto;
+  display: flex;
+  align-items: center;
+  gap: 32px;
+}
+
+.search-icon {
+  width: 48px;
+  height: 48px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: var(--CT1);
+}
+
+.search-icon .iconfont {
+  font-size: 48px;
+}
+
+/* ========== 问候语区域 ========== */
+.greet-section {
+  position: relative;
+  z-index: 5;
+  height: 104px;
+  margin-top: 8px;
+  padding: 0 24px;
+}
+
+.greet-card-row {
+  display: inline-flex;
+  position: absolute;
+  top: 0;
+  left: 24px;
+  align-items: center;
+  width: 520px;
+  height: 90px;
+}
+
+.greet-avatar {
+  position: relative;
+  flex-shrink: 0;
+  width: 88px;
+  height: 89px;
+  z-index: 3;
+}
+
+/* 小宝形象：库内资产 gradient/xiaobao.svg */
+.greet-avatar img {
+  width: 88px;
+  height: 89px;
+  display: block;
+}
+
+.greet-bubble {
+  display: flex;
+  flex-shrink: 0;
+  align-items: center;
+  padding: 10px 28px 10px 18px;
+  background: white;
+  border-radius: 0 24px 24px 24px;
+  box-shadow: 0 2px 12px rgba(0,0,0,0.05);
+  position: relative;
+  z-index: 2;
+  margin-left: -8px;
+}
+
+.greet-text {
+  font-size: 26px;
+  font-weight: 500;
+  color: var(--CT1);
+  line-height: 40px;
+  white-space: nowrap;
+  letter-spacing: 0;
+}
+
+/* 定制中心 */
+.custom-center {
+  display: inline-flex;
+  position: absolute;
+  top: 6px;
+  right: 24px;
+  align-items: center;
+  column-gap: 10px;
+  height: 52px;
+  z-index: 4;
+}
+
+/* 定制中心：图标用库内 iconfont icon-licaishouye(房形),红色 --CP0;[待]与源稿"房+AI"定制图标待替换 */
+.custom-icon {
+  flex-shrink: 0;
+  width: 56px;
+  height: 56px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  position: relative;
+}
+
+.custom-icon .iconfont {
+  font-size: 48px;
+  color: var(--CP0);
+}
+
+.custom-icon .ai-badge {
+  position: absolute;
+  right: -6px;
+  top: -2px;
+  font-size: 16px;
+  font-weight: 600;
+  color: var(--CT6);
+  background: var(--CP0);
+  border-radius: 6px;
+  padding: 1px 4px;
+  line-height: 1.2;
+}
+
+.custom-text {
+  flex-shrink: 0;
+  text-align: center;
+  font-size: 22px;
+  font-weight: 500;
+  color: var(--CT1);
+  line-height: 28px;
+  letter-spacing: 0;
+}
+
+/* ========== 功能图标区 (金刚区) ========== */
+.icon-grid-section {
+  position: relative;
+  z-index: 10;
+  width: 702px;
+  margin: 20px auto 0;
+  padding: 0 12px;
+}
+
+.icon-grid {
+  display: flex;
+  align-items: flex-start;
+  column-gap: 0;
+  width: 100%;
+}
+
+.icon-cell {
+  display: flex;
+  flex-direction: column;
+  flex-grow: 1;
+  align-items: center;
+  row-gap: 8px;
+}
+
+.icon-box {
+  flex-shrink: 0;
+  width: 64px;
+  height: 64px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  overflow: hidden;
+}
+
+.icon-box svg {
+  width: 64px;
+  height: 64px;
+  color: var(--CP0);
+}
+
+/* C12 图标宫格：文案 CT3 · S7 24/36 · icon-文案间距 8 */
+.icon-label {
+  align-self: stretch;
+  text-align: center;
+  font-size: 24px;
+  color: var(--CT3);
+  line-height: 36px;
+  letter-spacing: 0;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+/* ========== AI选好股体验到期提醒 ========== */
+.banner-section {
+  position: relative;
+  width: 702px;
+  height: 180px;
+  margin: 20px auto 0;
+}
+
+.banner-stack {
+  position: relative;
+  width: 100%;
+  height: 180px;
+}
+
+.banner-card-back1 {
+  position: absolute;
+  top: 24px;
+  left: 200px;
+  border-radius: 16px;
+  width: 480px;
+  height: 132px;
+  background: linear-gradient(135deg, #FFE8E8 0%, #FFD0D0 100%);
+  opacity: 0.5;
+  overflow: hidden;
+}
+
+.banner-card-back2 {
+  position: absolute;
+  top: 12px;
+  left: 100px;
+  border-radius: 20px;
+  width: 580px;
+  height: 156px;
+  background: linear-gradient(135deg, #FFE0E0 0%, #FFCACA 100%);
+  opacity: 0.3;
+  overflow: hidden;
+}
+
+.banner-card-front {
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  border-radius: 20px;
+  height: 180px;
+  overflow: hidden;
+  margin: 0 4px;
+}
+
+.banner-card-bg {
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  border-radius: 20px;
+  background: linear-gradient(106.5deg, #FFF5F5 1.44%, #FFE0E0 100%);
+}
+
+.banner-deco {
+  position: absolute;
+  right: -80px;
+  bottom: 30px;
+  width: 260px;
+  height: 260px;
+  border-radius: 50%;
+  background: radial-gradient(circle, rgba(255,160,160,0.5) 0%, rgba(255,200,200,0) 65%);
+}
+
+.banner-content {
+  display: flex;
+  position: absolute;
+  top: 20px;
+  left: 24px;
+  right: 24px;
+  flex-direction: column;
+  align-items: flex-start;
+  row-gap: 16px;
+  z-index: 2;
+}
+
+.banner-header {
+  display: flex;
+  flex-shrink: 0;
+  align-items: center;
+  align-self: stretch;
+  justify-content: space-between;
+}
+
+.banner-title-row {
+  display: inline-flex;
+  flex-shrink: 0;
+  align-items: center;
+  column-gap: 10px;
+}
+
+.banner-tag {
+  display: inline-flex;
+  flex-shrink: 0;
+  align-items: center;
+  justify-content: center;
+  border-radius: 6px;
+  background: var(--CB13);
+  padding: 2px 10px;
+  overflow: hidden;
+}
+
+.banner-tag span {
+  font-size: 22px;
+  color: var(--CP0);
+  font-weight: 500;
+  line-height: 32px;
+  letter-spacing: 0;
+}
+
+.banner-title {
+  font-size: 30px;
+  font-weight: 500;
+  color: var(--CT1);
+  line-height: 44px;
+  letter-spacing: 0;
+}
+
+.banner-btn {
+  display: flex;
+  flex-shrink: 0;
+  align-items: center;
+  justify-content: center;
+  border-radius: 40px;
+  background: var(--CP0);
+  width: 136px;
+  height: 44px;
+}
+
+.banner-btn span {
+  font-size: 24px;
+  font-weight: 500;
+  color: var(--CT6);
+  line-height: 36px;
+  letter-spacing: 0;
+}
+
+.banner-desc {
+  flex-shrink: 0;
+  align-self: stretch;
+  line-height: 44px;
+  letter-spacing: 0;
+  font-size: 28px;
+  position: relative;
+  z-index: 2;
+  color: var(--CT1);
+}
+
+.banner-desc .text-normal {
+  color: var(--CT1);
+}
+
+.banner-desc .highlight {
+  color: var(--CS1);
+  font-weight: 500;
+  font-size: 32px;
+}
+
+/* ========== 两列卡片：通用回购 + 板块异动 ========== */
+.two-col-section {
+  display: flex;
+  flex-shrink: 0;
+  align-items: stretch;
+  align-self: stretch;
+  column-gap: 14px;
+  width: 702px;
+  margin: 16px auto 0;
+}
+
+.col-card {
+  display: flex;
+  flex-direction: column;
+  flex: 1 1 0;
+  min-width: 0;
+  align-items: center;
+  border-radius: 20px;
+  background: var(--CB1);
+  padding: 20px;
+  row-gap: 14px;
+}
+
+.card-header {
+  display: flex;
+  flex-shrink: 0;
+  align-items: center;
+  align-self: stretch;
+  justify-content: space-between;
+}
+
+.card-title {
+  font-size: 28px;
+  font-weight: 500;
+  color: var(--CT1);
+  line-height: 40px;
+  letter-spacing: 0;
+  white-space: nowrap;
+}
+
+/* 跳转箭头：库内 iconfont icon-shixinjiantou-you */
+.arrow-icon {
+  font-size: 24px;
+  color: var(--CT4);
+}
+
+.card-content {
+  display: flex;
+  flex-direction: column;
+  flex-shrink: 0;
+  align-items: flex-start;
+  align-self: stretch;
+  row-gap: 16px;
+}
+
+.repo-info-row {
+  display: inline-flex;
+  flex-shrink: 0;
+  align-items: center;
+  align-self: stretch;
+  column-gap: 6px;
+  flex-wrap: wrap;
+}
+
+.repo-text {
+  font-size: 26px;
+  color: var(--CT1);
+  line-height: 40px;
+  letter-spacing: 0;
+}
+
+.repo-num {
+  font-size: 26px;
+  font-weight: 500;
+  color: var(--CT1);
+  font-family: var(--font-num);
+  line-height: 40px;
+  letter-spacing: 0;
+}
+
+.hu-tag {
+  display: inline-flex;
+  flex-shrink: 0;
+  align-items: center;
+  justify-content: center;
+  border: 1px solid var(--CL3);
+  border-radius: 4px;
+  padding: 0 6px;
+  overflow: hidden;
+}
+
+.hu-tag span {
+  font-size: 18px;
+  color: var(--CP0);
+  line-height: 26px;
+  letter-spacing: 0;
+}
+
+.repo-bottom {
+  display: flex;
+  flex-shrink: 0;
+  align-items: flex-end;
+  align-self: stretch;
+  justify-content: space-between;
+}
+
+.rate-box {
+  display: inline-flex;
+  flex-direction: column;
+  flex-shrink: 0;
+  align-items: flex-start;
+}
+
+.rate-value {
+  flex-shrink: 0;
+  align-self: stretch;
+  font-size: 32px;
+  font-weight: 600;
+  color: var(--CS1);
+  font-family: var(--font-num);
+  line-height: 44px;
+  letter-spacing: 0;
+}
+
+.rate-label {
+  flex-shrink: 0;
+  align-self: stretch;
+  font-size: 22px;
+  color: var(--CT4);
+  line-height: 32px;
+  letter-spacing: 0;
+}
+
+.trade-btn {
+  display: flex;
+  flex-shrink: 0;
+  align-items: center;
+  justify-content: center;
+  border-radius: 40px;
+  background: var(--CP0);
+  width: 108px;
+  height: 40px;
+}
+
+.trade-btn span {
+  font-size: 22px;
+  font-weight: 500;
+  color: var(--CT6);
+  line-height: 32px;
+  letter-spacing: 0;
+}
+
+/* 板块异动 */
+.ai-summary-tag {
+  display: inline-flex;
+  flex-shrink: 0;
+  align-items: center;
+  font-size: 24px;
+  font-weight: 700;
+  font-style: italic;
+  background: linear-gradient(121.34deg, #FF3333 0.72%, #8B52FF 60%, #2B73FF 100%);
+  -webkit-background-clip: text;
+  background-clip: text;
+  color: transparent;
+  letter-spacing: 1px;
+  cursor: pointer;
+}
+
+.sector-desc {
+  display: -webkit-box;
+  flex-shrink: 0;
+  align-self: stretch;
+  overflow: hidden;
+  line-height: 40px;
+  letter-spacing: 0;
+  color: var(--CT1);
+  font-size: 26px;
+  -webkit-line-clamp: 2;
+  line-clamp: 2;
+  -webkit-box-orient: vertical;
+  height: 80px;
+}
+
+.sector-bottom {
+  display: flex;
+  flex-shrink: 0;
+  align-items: center;
+  align-self: stretch;
+  justify-content: space-between;
+}
+
+.sector-name {
+  font-size: 28px;
+  font-weight: 500;
+  color: var(--CT1);
+  line-height: 40px;
+  letter-spacing: 0;
+}
+
+.sector-change {
+  line-height: 40px;
+  letter-spacing: 0;
+  color: var(--CS1);
+  font-family: var(--font-num);
+  font-size: 28px;
+  font-weight: 500;
+}
+
+/* ========== 分页指示器 ========== */
+.pagination-dots {
+  position: relative;
+  flex-shrink: 0;
+  width: 60px;
+  height: 6px;
+  margin: 12px auto 0;
+}
+
+.pagination-dots .dot-bg {
+  position: absolute;
+  top: 0;
+  left: 0;
+  opacity: 0.5;
+  border-radius: 200px;
+  background: var(--H6);
+  width: 60px;
+  height: 6px;
+}
+
+.pagination-dots .dot-active {
+  position: absolute;
+  top: 0;
+  left: 0;
+  border-radius: 200px;
+  background: var(--CP0);
+  width: 30px;
+  height: 6px;
+}
+
+/* ========== AI投顾区 ========== */
+.ai-advisor-section {
+  display: flex;
+  flex-direction: column;
+  flex-shrink: 0;
+  align-items: flex-start;
+  align-self: stretch;
+  border-radius: 20px;
+  background: var(--CB1);
+  width: 702px;
+  margin: 12px auto 0;
+  overflow: hidden;
+}
+
+.ai-advisor-header {
+  position: relative;
+  flex-shrink: 0;
+  align-self: stretch;
+  height: 80px;
+  overflow: hidden;
+}
+
+.ai-advisor-logo {
+  display: flex;
+  position: absolute;
+  top: 0;
+  left: 0;
+  align-items: center;
+  justify-content: center;
+  width: 180px;
+  height: 80px;
+  background: linear-gradient(121.34deg, #FF3333 0.72%, #490D14 49.98%, #194078 98.74%);
+  -webkit-mask: linear-gradient(90deg, #000 70%, transparent 100%);
+  mask: linear-gradient(90deg, #000 70%, transparent 100%);
+}
+
+.ai-logo-text {
+  font-size: 32px;
+  font-weight: 700;
+  color: white;
+  letter-spacing: 1px;
+}
+
+.ai-tabs {
+  display: flex;
+  position: absolute;
+  top: 0;
+  left: 170px;
+  align-items: center;
+  column-gap: 4px;
+  padding-top: 14px;
+  padding-bottom: 14px;
+  height: 80px;
+  overflow: hidden;
+}
+
+.ai-tab {
+  flex-shrink: 0;
+  z-index: 1;
+  padding: 4px 14px;
+  line-height: 44px;
+  letter-spacing: 0;
+  color: var(--CT3);
+  font-family: var(--font-sans);
+  font-size: 28px;
+  position: relative;
+  cursor: pointer;
+}
+
+.ai-tab.is-on {
+  flex-shrink: 0;
+  background: linear-gradient(121.34deg, #ff3333 0.72%, #490d14 49.98%, #194078 98.74%);
+  -webkit-background-clip: text;
+  background-clip: text;
+  padding: 4px 0px;
+  text-align: center;
+  line-height: 44px;
+  letter-spacing: 0;
+  color: transparent;
+  font-weight: 600;
+  font-size: 30px;
+}
+
+.ai-tab.is-on::after {
+  content: '';
+  position: absolute;
+  bottom: 6px;
+  left: 50%;
+  transform: translateX(-50%);
+  flex-shrink: 0;
+  border-radius: 27px;
+  width: 22px;
+  height: 5px;
+  background-image: linear-gradient(176.42deg, #ff8585 -68.24%, #ff0101 172.69%);
+}
+
+.ai-tab-fade {
+  position: absolute;
+  top: 20px;
+  right: 0;
+  flex-shrink: 0;
+  z-index: 3;
+  width: 50px;
+  height: 40px;
+  background-image: linear-gradient(90deg, transparent 0%, var(--CB1) 100%);
+  pointer-events: none;
+}
+
+/* AI投顾引导文案 */
+.ai-advisor-hint {
+  display: flex;
+  flex-shrink: 0;
+  align-items: center;
+  align-self: stretch;
+  justify-content: space-between;
+  padding: 8px 20px 16px;
+}
+
+.ai-hint-text {
+  font-size: 26px;
+  color: var(--CT1);
+  line-height: 40px;
+  letter-spacing: 0;
+}
+
+.ai-hint-arrow {
+  font-size: 24px;
+  color: var(--CT4);
+}
+
+/* 股票卡片 */
+.stock-card-wrapper {
+  padding: 0 16px 16px;
+  display: flex;
+  align-items: flex-start;
+  column-gap: 14px;
+  width: 100%;
+  overflow: hidden;
+}
+
+.stock-card {
+  display: flex;
+  flex-direction: column;
+  flex-shrink: 0;
+  align-items: flex-start;
+  border: 1px solid var(--R2);
+  border-radius: 14px;
+  padding-top: 16px;
+  width: 540px;
+  row-gap: 16px;
+  background-image: linear-gradient(34.88deg, var(--CB1) 43.69%, var(--CB4) 71.3%);
+  position: relative;
+  overflow: hidden;
+}
+
+.stock-card-header {
+  display: flex;
+  flex-direction: column;
+  flex-shrink: 0;
+  align-items: flex-start;
+  align-self: stretch;
+  padding-right: 16px;
+  padding-left: 16px;
+  row-gap: 16px;
+}
+
+.stock-header-row {
+  display: flex;
+  flex-shrink: 0;
+  align-items: flex-start;
+  align-self: stretch;
+  justify-content: space-between;
+}
+
+.stock-info {
+  display: flex;
+  flex-direction: column;
+  flex-shrink: 0;
+  align-items: flex-start;
+}
+
+.stock-name {
+  font-size: 28px;
+  font-weight: 500;
+  color: var(--CT1);
+  line-height: 40px;
+  letter-spacing: 0;
+}
+
+.stock-code {
+  font-size: 22px;
+  color: var(--CT4);
+  line-height: 32px;
+  letter-spacing: 0;
+}
+
+.stock-header-right {
+  display: inline-flex;
+  flex-direction: column;
+  flex-shrink: 0;
+  align-items: flex-end;
+  justify-content: flex-start;
+  row-gap: 6px;
+}
+
+.stock-targets {
+  display: inline-flex;
+  flex-direction: column;
+  flex-shrink: 0;
+  align-items: flex-end;
+  align-self: stretch;
+  justify-content: flex-end;
+  row-gap: 6px;
+}
+
+.target-row {
+  display: inline-flex;
+  flex-shrink: 0;
+  align-items: center;
+  align-self: stretch;
+  justify-content: flex-end;
+  column-gap: 6px;
+}
+
+.target-tag {
+  position: relative;
+  flex-shrink: 0;
+  width: 26px;
+  height: 26px;
+  border-radius: 4px;
+}
+
+.target-tag.buy {
+  background: var(--CP0);
+}
+
+.target-tag.sell {
+  background: var(--B6);
+}
+
+.target-tag span {
+  position: absolute;
+  top: 0;
+  left: 3px;
+  width: 20px;
+  height: 26px;
+  line-height: 26px;
+  letter-spacing: 0;
+  color: var(--CT6);
+  font-family: var(--font-sans);
+  font-size: 18px;
+  font-weight: 500;
+}
+
+.target-label {
+  font-size: 22px;
+  color: var(--CT1);
+  line-height: 32px;
+  letter-spacing: 0;
+}
+
+.target-value {
+  line-height: 32px;
+  letter-spacing: 0;
+  color: var(--CS1);
+  font-family: var(--font-num);
+  font-size: 26px;
+  font-weight: 600;
+}
+
+.stock-return {
+  display: inline-flex;
+  flex-direction: column;
+  flex-shrink: 0;
+  align-items: flex-end;
+  border-radius: 10px;
+}
+
+.return-value {
+  line-height: 42px;
+  letter-spacing: 0;
+  color: var(--CS1);
+  font-family: var(--font-num);
+  font-size: 32px;
+  font-weight: 700;
+}
+
+.return-label {
+  font-size: 20px;
+  color: var(--CT4);
+  line-height: 30px;
+  letter-spacing: 0;
+}
+
+/* 标签行 */
+.stock-tags {
+  display: inline-flex;
+  flex-shrink: 0;
+  align-items: center;
+  align-self: stretch;
+  column-gap: 10px;
+  margin-right: 60px;
+  flex-wrap: wrap;
+  row-gap: 6px;
+}
+
+.stock-tag {
+  display: inline-flex;
+  flex-shrink: 0;
+  align-items: center;
+  justify-content: center;
+  column-gap: 10px;
+  border-radius: 6px;
+  background: var(--CB13);
+  padding: 1px 8px;
+  overflow: hidden;
+}
+
+.stock-tag span {
+  font-size: 18px;
+  color: var(--CP0);
+  line-height: 28px;
+  letter-spacing: 0;
+}
+
+/* 卡片底部操作区 */
+.stock-card-footer {
+  display: flex;
+  flex-shrink: 0;
+  align-items: center;
+  align-self: stretch;
+  justify-content: space-between;
+  margin-right: -1px;
+  margin-left: -1px;
+  margin-bottom: -1px;
+  border-radius: 0px 0px 14px 14px;
+  background: var(--CB10);
+  padding: 12px 16px;
+}
+
+.footer-left {
+  display: inline-flex;
+  flex-shrink: 0;
+  align-items: center;
+  column-gap: 10px;
+}
+
+.buy-mini-btn {
+  display: flex;
+  flex-shrink: 0;
+  align-items: center;
+  justify-content: center;
+  border-radius: 6px;
+  background: var(--CP0);
+  width: 28px;
+  height: 28px;
+  overflow: hidden;
+}
+
+.buy-mini-btn span {
+  flex-shrink: 0;
+  line-height: 26px;
+  letter-spacing: 0;
+  color: var(--CT6);
+  font-family: var(--font-sans);
+  font-size: 18px;
+  font-weight: 500;
+}
+
+.footer-action-text {
+  flex-shrink: 0;
+  line-height: 38px;
+  letter-spacing: 0;
+  color: var(--CT1);
+  font-family: var(--font-sans);
+  font-size: 24px;
+  font-weight: 500;
+}
+
+.smart-trade-btn {
+  display: flex;
+  flex-shrink: 0;
+  align-items: center;
+  justify-content: center;
+  border-radius: 28px;
+  background: var(--CP0);
+  width: 140px;
+  height: 48px;
+}
+
+.smart-trade-btn span {
+  flex-shrink: 0;
+  line-height: 36px;
+  letter-spacing: 0;
+  color: var(--CT6);
+  font-family: var(--font-sans);
+  font-size: 24px;
+  font-weight: 500;
+}
+
+/* 右侧"热"标签 */
+.stock-hot-badge {
+  position: absolute;
+  right: 16px;
+  top: 0;
+  width: 38px;
+  height: 52px;
+  background: linear-gradient(180deg, #FF7067 0%, #F93838 100%);
+  border-radius: 0 0 10px 10px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  z-index: 10;
+}
+
+.stock-hot-badge span {
+  font-size: 18px;
+  font-weight: 500;
+  color: var(--CT6);
+  writing-mode: vertical-rl;
+  letter-spacing: 0;
+}
+
+/* ========== 看资讯模块 ========== */
+.news-section {
+  display: flex;
+  flex-direction: column;
+  flex-shrink: 0;
+  align-items: center;
+  align-self: stretch;
+  border-radius: 20px;
+  background: var(--CB1);
+  width: 702px;
+  margin: 14px auto 0;
+  padding: 20px 18px 18px;
+  position: relative;
+  overflow: hidden;
+}
+
+.news-section::before {
+  content: '';
+  position: absolute;
+  top: -40px;
+  right: -20px;
+  width: 160px;
+  height: 160px;
+  border-radius: 50%;
+  background: radial-gradient(circle, rgba(255,220,220,0.4) 0%, transparent 70%);
+  pointer-events: none;
+}
+
+.news-section::after {
+  content: '';
+  position: absolute;
+  top: -20px;
+  right: 80px;
+  width: 100px;
+  height: 100px;
+  border-radius: 50%;
+  background: radial-gradient(circle, rgba(200,220,255,0.3) 0%, transparent 70%);
+  pointer-events: none;
+}
+
+.news-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  width: 100%;
+  margin-bottom: 16px;
+}
+
+.news-header .card-title {
+  font-size: 30px;
+  font-weight: 500;
+  color: var(--CT1);
+  line-height: 44px;
+  letter-spacing: 0;
+}
+
+.news-content {
+  display: flex;
+  position: relative;
+  flex-direction: column;
+  align-items: flex-start;
+  justify-content: center;
+  width: 100%;
+  row-gap: 14px;
+  z-index: 2;
+}
+
+.news-item {
+  display: -webkit-box;
+  flex-shrink: 0;
+  padding: 0px 0px 0px 32px;
+  width: 100%;
+  height: 40px;
+  overflow: hidden;
+  line-height: 40px;
+  letter-spacing: 0;
+  color: var(--CT1);
+  font-family: var(--font-sans);
+  font-size: 26px;
+  -webkit-line-clamp: 1;
+  line-clamp: 1;
+  -webkit-box-orient: vertical;
+  position: relative;
+}
+
+.news-item::before {
+  content: '';
+  position: absolute;
+  left: 8px;
+  top: 50%;
+  transform: translateY(-50%);
+  width: 10px;
+  height: 10px;
+  border-radius: 50%;
+  background: #D4D4DD;
+}
+
+.news-with-icon {
+  display: flex;
+  flex-shrink: 0;
+  align-items: center;
+  align-self: stretch;
+  column-gap: 14px;
+}
+
+.news-with-icon .news-avatar {
+  width: 44px;
+  height: 44px;
+  border-radius: 50%;
+  flex-shrink: 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: linear-gradient(135deg, #E8E8F0 0%, #D0D0E0 100%);
+  overflow: hidden;
+}
+
+.news-with-icon .news-avatar svg {
+  width: 24px;
+  height: 24px;
+  opacity: 0.6;
+}
+
+.news-with-icon .news-text {
+  display: -webkit-box;
+  flex-grow: 1;
+  overflow: hidden;
+  line-height: 40px;
+  letter-spacing: 0;
+  color: var(--CT1);
+  font-family: var(--font-sans);
+  font-size: 26px;
+  -webkit-line-clamp: 1;
+  line-clamp: 1;
+  -webkit-box-orient: vertical;
+}
+
+/* 1小时要闻速递 */
+.news-highlight {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  align-self: stretch;
+  margin-top: 16px;
+  border-radius: 14px;
+  padding: 14px;
+  row-gap: 10px;
+  background-image: linear-gradient(
+    90deg,
+    var(--CB38) 0%,
+    var(--CB39) 50%,
+    var(--CB40) 100%
+  );
+}
+
+.news-highlight-header {
+  display: inline-flex;
+  flex-shrink: 0;
+  align-items: center;
+  align-self: stretch;
+  column-gap: 12px;
+}
+
+.news-highlight-title {
+  flex-shrink: 0;
+  background: linear-gradient(90deg, #5c9ef0 0%, #9179f6 100%);
+  -webkit-background-clip: text;
+  background-clip: text;
+  line-height: 40px;
+  letter-spacing: 0;
+  color: transparent;
+  font-family: var(--font-sans);
+  font-size: 28px;
+  font-weight: 700;
+}
+
+.news-highlight-content {
+  display: flex;
+  flex-shrink: 0;
+  align-items: flex-start;
+  align-self: stretch;
+  column-gap: 10px;
+  padding-right: 8px;
+  padding-left: 8px;
+}
+
+.news-highlight-content p {
+  flex-grow: 1;
+  text-align: justify;
+  line-height: 38px;
+  letter-spacing: 0;
+  color: var(--CT3);
+  font-family: var(--font-sans);
+  font-size: 24px;
+}
+
+/* ========== 底部占位(浮层高 226 = 信息栏60 + 底导带166) ========== */
+.bottom-placeholder {
+  height: calc(var(--tab) + var(--home) + 76px);
+}
+
+/* ========== 底部浮层：投资者的一天信息栏 + 悬浮胶囊底导 + 语音球(样式参照 首页底部浮窗 v8) ========== */
+.floating-layer {
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  z-index: 200;
+  height: 226px;
+  background: linear-gradient(180deg, rgba(255,255,255,0) 0 60px, var(--CB1) 60px);
+}
+
+/* ---------- 投资者的一天·底部信息栏「异动通知」态(首页收起) ----------
+ * 复用库 C03 一级页面底部导航栏之底部信息栏 A(参考实现 assets/components/bottom-info-bar.html)
+ * 库内值:高60 / 顶圆角32 / 渐变 CB38-CB39-CB40(-90°)→CB1 / 行 left24 gap12 高44 / 文28行高44 CT1 截断 / 实时图标32 */
+.gj-ibi {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 750px;
+  border-radius: var(--r-32) var(--r-32) 0 0;
+  overflow: hidden;
+  background: linear-gradient(-90deg, var(--CB38) 0%, var(--CB39) 50.48%, var(--CB40) 100%);
+  transition: opacity .3s ease;
+}
+
+.gj-ibi::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(180deg, transparent, var(--CB1));
+  z-index: 0;
+}
+
+.gj-ibi60 { height: 60px; }
+
+.gj-ibi-row {
+  position: absolute;
+  left: 24px;
+  width: 702px;
+  height: 44px;
+  display: flex;
+  gap: 12px;
+  align-items: center;
+  z-index: 1;
+}
+
+.gj-ibi-row.t12 { top: 12px; }
+
+/* 实时图标:库内资产 market/shishi.svg */
+.gj-ibi-ico {
+  flex-shrink: 0;
+  width: 32px;
+  height: 32px;
+}
+
+.gj-ibi-ico img {
+  width: 32px;
+  height: 32px;
+  display: block;
+}
+
+.gj-ibi-txt {
+  flex: 1 0 0;
+  min-width: 0;
+  font-size: 28px;
+  line-height: 44px;
+  color: var(--CT1);
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+/* 消息提示气泡出现时,覆盖并隐藏「投资者的一天」信息栏(避免气泡两侧留白处露出底纹) */
+.floating-layer.msg-on .gj-ibi { opacity: 0; }
+
+.bottom-bar {
+  position: relative;
+  height: 100%;
+}
+
+/* 消息条容器(不参与布局,子元素各自绝对定位) */
+.msg-container { display: contents; }
+
+/* 智能体语音球：v8 规格 132×128,悬浮于右下(库内资产 gradient/agent-orb-clean.svg,>150KB 走相对路径外链,勿内联) */
+.voice-orb-wrapper {
+  position: absolute;
+  right: 12px;
+  bottom: 40px;
+  z-index: 2;
+}
+
+.voice-orb {
+  width: 132px;
+  height: 128px;
+  position: relative;
+}
+
+.voice-orb img {
+  width: 132px;
+  height: 128px;
+  display: block;
+}
+
+/* Home Indicator(v8:悬浮式,无白底条) */
+.home-indicator {
+  position: absolute;
+  left: 0;
+  right: 0;
+  bottom: 16px;
+  display: flex;
+  justify-content: center;
+  pointer-events: none;
+}
+
+.home-bar {
+  width: 268px;
+  height: 10px;
+  border-radius: 999px;
+  background: var(--CT1);
+  opacity: 0.9;
+}
+
+/* ============================================================
+ * 交互 DEMO 扩展 (方案一：小宝异步提醒)
+ * 状态机：常规 - 思考中 - 完成(气泡) - 未读(红点) - 已读
+ * 语音球动效参数取自「国金语音球交互方案-外发版 · 方案三 声波光环」
+ * ============================================================ */
+
+/* ---------- 语音球状态覆盖层 ---------- */
+.voice-orb { cursor: pointer; }
+
+.orb-overlay {
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+}
+
+/* ===== 声波光环 · 引导态(常规态循环:声波扩散 + 长按说话/点击输入 交替) ===== */
+.wave-ripple {
+  position: absolute;
+  left: 50%;
+  top: 46%;
+  width: 80px;
+  height: 80px;
+  margin: -40px 0 0 -40px;
+  border-radius: 50%;
+  border: 2px solid rgba(255,255,255,0.8);
+  opacity: 0;
+  pointer-events: none;
+}
+
+.voice-orb.is-guide .wave-ripple { opacity: 1; }
+.voice-orb.is-guide .wave-ripple:nth-of-type(1) { animation: rippleOut 2s ease-out infinite; }
+.voice-orb.is-guide .wave-ripple:nth-of-type(2) { animation: rippleOut 2s ease-out infinite .5s; }
+.voice-orb.is-guide .wave-ripple:nth-of-type(3) { animation: rippleOut 2s ease-out infinite 1s; }
+
+@keyframes rippleOut {
+  0% { transform: scale(.5); opacity: .8; }
+  100% { transform: scale(2.2); opacity: 0; }
+}
+
+.orb-guide {
+  position: absolute;
+  inset: 0;
+  opacity: 0;
+  transition: opacity .4s;
+}
+
+.voice-orb.is-guide .orb-guide { opacity: 1; }
+
+.orb-guide .g-icon {
+  width: 48px;
+  height: 48px;
+  margin-bottom: 34px;
+  animation: iconPulse 1.5s ease-in-out infinite;
+  filter: drop-shadow(0 2px 6px rgba(255,255,255,0.3));
+}
+
+.orb-guide .g-icon svg { width: 100%; height: 100%; display: block; }
+
+/* 引导文字:沿小球下沿弧形排布于球体内部(逐字旋转,微笑弧,保持可读) */
+.orb-guide .g-arc {
+  position: absolute;
+  left: 0;
+  right: 0;
+  bottom: 32px;
+  display: flex;
+  justify-content: center;
+  gap: 2px;
+}
+
+.orb-guide .g-arc span {
+  color: #fff;
+  font-size: 18px;
+  font-weight: 600;
+  line-height: 1;
+  text-shadow: 0 2px 6px rgba(0,0,0,0.35);
+  display: inline-block;
+}
+
+.orb-guide .g-arc span:nth-child(1) { transform: rotate(12deg) translateY(-4px); }
+.orb-guide .g-arc span:nth-child(2) { transform: rotate(4deg) translateY(1px); }
+.orb-guide .g-arc span:nth-child(3) { transform: rotate(-4deg) translateY(1px); }
+.orb-guide .g-arc span:nth-child(4) { transform: rotate(-12deg) translateY(-4px); }
+
+.orb-guide .g-voice, .orb-guide .g-input {
+  position: absolute;
+  inset: 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  opacity: 0;
+  transition: opacity .5s;
+}
+
+.voice-orb.is-guide[data-guide="voice"] .g-voice { opacity: 1; }
+.voice-orb.is-guide[data-guide="input"] .g-input { opacity: 1; }
+
+@keyframes iconPulse {
+  0%, 100% { transform: scale(1); opacity: .8; }
+  50% { transform: scale(1.15); opacity: 1; }
+}
+
+/* ===== 声波光环 · 思考态中心搜索图标(40px档,1.2s 脉冲) ===== */
+.orb-search {
+  position: absolute;
+  left: 50%;
+  top: 46%;
+  width: 44px;
+  height: 44px;
+  margin: -22px 0 0 -22px;
+  opacity: 0;
+  transition: opacity .4s;
+}
+
+.voice-orb.is-thinking .orb-search {
+  opacity: 1;
+  animation: searchPulse 1.2s ease-in-out infinite;
+}
+
+.orb-search svg {
+  width: 100%;
+  height: 100%;
+  display: block;
+  filter: drop-shadow(0 2px 8px rgba(255,255,255,0.4));
+}
+
+@keyframes searchPulse {
+  0%, 100% { transform: scale(.8); opacity: .6; }
+  50% { transform: scale(1.15); opacity: 1; }
+}
+
+/* 思考态：SVG 进度环(方案三：120px 环等比缩至球尺寸,4px 粗,蓝紫粉渐变) */
+.orb-ring {
+  position: absolute;
+  left: 50%;
+  top: 46%;
+  width: 120px;
+  height: 120px;
+  margin: -60px 0 0 -60px;
+  opacity: 0;
+  transition: opacity .4s;
+}
+
+.voice-orb.is-thinking .orb-ring,
+.voice-orb.is-done .orb-ring { opacity: 1; }
+
+.orb-ring svg {
+  width: 100%;
+  height: 100%;
+  transform: rotate(-90deg);
+  transition: transform .35s cubic-bezier(.4,0,.2,1), opacity .35s;
+}
+
+.orb-ring .ring-bg {
+  fill: none;
+  stroke: rgba(255,255,255,0.25);
+  stroke-width: 4;
+}
+
+.orb-ring .ring-progress {
+  fill: none;
+  stroke: url(#orbRingGrad);
+  stroke-width: 4;
+  stroke-linecap: round;
+  stroke-dasharray: 283;
+  stroke-dashoffset: 283;
+  filter: drop-shadow(0 0 6px rgba(255,255,255,0.6)) drop-shadow(0 0 10px rgba(139,82,255,0.4));
+}
+
+/* 思考态：呼吸光晕(方案三 2s 脉冲) */
+.orb-breath {
+  position: absolute;
+  left: 50%;
+  top: 46%;
+  width: 96px;
+  height: 96px;
+  margin: -48px 0 0 -48px;
+  border-radius: 50%;
+  background: radial-gradient(circle, rgba(102,127,255,0.45), transparent 70%);
+  opacity: 0;
+}
+
+.voice-orb.is-thinking .orb-breath {
+  opacity: 1;
+  animation: orbBreath 2s ease-in-out infinite;
+}
+
+@keyframes orbBreath {
+  0%, 100% { transform: scale(1); opacity: .3; }
+  50% { transform: scale(1.3); opacity: .7; }
+}
+
+/* 完成态：对勾弹出(方案三：环补满0.3s-收缩0.35s-对勾0.5s 弹性) */
+.orb-check {
+  position: absolute;
+  left: 50%;
+  top: 46%;
+  width: 56px;
+  height: 56px;
+  margin: -28px 0 0 -28px;
+  opacity: 0;
+  transform: scale(0);
+  filter: drop-shadow(0 2px 10px rgba(255,255,255,0.6));
+}
+
+.voice-orb.is-done .orb-check {
+  animation: orbCheckPop .5s cubic-bezier(.34,1.56,.64,1) .5s forwards;
+}
+
+@keyframes orbCheckPop {
+  0% { opacity: 0; transform: scale(0); }
+  60% { opacity: 1; transform: scale(1.2); }
+  100% { opacity: 1; transform: scale(1); }
+}
+
+/* ---------- 消息提示气泡(唯一方案:底导上方气泡,覆盖「投资者的一天」信息栏) ----------
+ * 智能体业务定制消息卡(scenarios/basic.md 对话气泡标[待],按 skill 回退链取①基础 token)
+ * 视觉真相 = guojin-home-demo1:浅紫渐变圆角卡 + 底部小三角指向语音球
+ * 取色合规:底色=紫阶 P19→P3;标签=P16→P17 渐变+反白 CT6;问=CT1;答=CT3;×底=CB16/×=P6
+ * 圆角:卡 r-32(一级背景卡/源稿真值 16×2);标签与圆钮 r-pill;字号 S5=28/S8=20,文字行高 1.5×
+ * 层级:不用阴影,靠浅紫渐变与页面 CB2 分层 + 1px CL2 描边 */
+.msg-bubble2 {
+  position: absolute;
+  left: var(--s-16);
+  right: var(--s-16);
+  bottom: 176px;            /* 源稿真值 84px(375基准)×2:底边略高于语音球顶8px,小三角悬空指向球体 */
+  min-height: 148px;
+  display: flex;
+  align-items: flex-start;
+  gap: var(--s-16);
+  padding: var(--s-20) var(--s-24) 22px;
+  background: linear-gradient(135deg, var(--P19) 0%, var(--P3) 100%);
+  border: 1px solid var(--CL2);
+  border-radius: var(--r-32);
+  cursor: pointer;
+  z-index: 3;
+  opacity: 0;
+  transform: translateY(24px);
+  pointer-events: none;
+  transition: opacity .35s ease, transform .35s cubic-bezier(.34,1.3,.64,1);
+}
+
+/* 底部尾巴 SVG:等腰三角 36×18,色取渐变末端 P3(currentColor),指向右下方语音球 */
+.msg-bubble2 .toast-tail {
+  position: absolute;
+  right: 40px;
+  bottom: -17px;          /* 上压1px盖住卡片底边描边,保证尾巴与卡身无缝 */
+  width: 36px;
+  height: 18px;
+  color: var(--P3);
+  pointer-events: none;
+}
+
+.msg-bubble2.show {
+  opacity: 1;
+  transform: translateY(0);
+  pointer-events: auto;
+}
+
+/* 文案列 */
+.toast-copy { flex: 1; min-width: 0; }
+
+/* 「回答完毕」标签:紫色渐变胶囊(S8 · r-pill · 反白 CT6;渐变取紫阶 P16→P17) */
+.toast-flag {
+  display: block;
+  width: max-content;
+  height: 36px;
+  margin-bottom: 6px;
+  padding: 0 var(--s-16);
+  font-size: 20px;          /* S8 */
+  line-height: 36px;
+  font-weight: 500;
+  letter-spacing: .6px;
+  color: var(--CT6);
+  background: linear-gradient(90deg, var(--P16), var(--P17));
+  border-radius: var(--r-pill);
+}
+
+/* 问 / 答两行:各单行截断;问=S5/500/CT1,答=S8/400/CT3,文字行高 1.5× */
+.toast-q,
+.toast-a {
+  display: block;
+  min-width: 0;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+.toast-q {
+  font-size: 28px;          /* S5 */
+  line-height: 42px;
+  font-weight: 500;
+  color: var(--CT1);
+}
+.toast-a {
+  font-size: 20px;          /* S8 */
+  line-height: 30px;
+  font-weight: 400;
+  color: var(--CT3);
+}
+
+/* 右上角圆形「×」关闭钮:紫 8% 底 CB16 + 紫 P6 图标,r-pill */
+.msg-bubble2 .toast-close {
+  flex-shrink: 0;
+  width: 40px;
+  height: 40px;
+  margin: 0;
+  padding: 0;
+  border: 0;
+  border-radius: var(--r-pill);
+  background: var(--CB16);
+  color: var(--P6);
+  font-family: inherit;
+  font-size: 28px;
+  line-height: 40px;
+  text-align: center;
+  cursor: pointer;
+}
+
+/* ===== 共用:气泡内两行问答(上一提问 + 回答,各单行截断,始终两行) ===== */
+.qa {
+  flex: 1;
+  min-width: 0;
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+}
+
+.qa-txt {
+  min-width: 0;
+  font-size: 26px;
+  line-height: 40px;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+/* 首行 = 「回答完毕」标签 + 上一次提问(标签不收缩,问题超长省略号截断) */
+.qa-q { display: flex; align-items: center; gap: 12px; }
+.qa-q .qa-var { min-width: 0; overflow: hidden; text-overflow: ellipsis; }
+
+/* 「回答完毕」标签:库 C13 标签-浅色面性(H32 · r6 · 左右内边距6 · PingFang SC Regular 20/30) */
+.qa-flag {
+  flex-shrink: 0;
+  height: 32px;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  padding: 0 6px;
+  border-radius: var(--r-6);
+  font-size: 20px;
+  line-height: 30px;
+  font-weight: 400;
+  white-space: nowrap;
+}
+
+/* 蓝紫玻璃气泡:反白款 = 白60% + blur4 + 白边20% + --CT3 字色(库定「深底之上」用法) */
+.agent-tip-bubble .qa-flag {
+  background: rgba(255,255,255,0.6);
+  backdrop-filter: blur(4px);
+  -webkit-backdrop-filter: blur(4px);
+  border: 1px solid rgba(255,255,255,0.2);
+  color: var(--CT3);
+}
+
+/* ===== 侧边栏旁气泡:右侧竖列(上 × / 下 » 引导箭头) ===== */
+.bub-right {
+  flex-shrink: 0;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 6px;
+}
+
+/* 引导箭头「»」:复用库内细 chevron 画法(bottom-info-bar.html 列表更多 ">"),两枚交错流动,
+ * 不吞点击(点它=点整卡→定位);细描边+渐次透明,营造"点我查看"的方向感,避免实心三角的突兀 */
+.bub-go {
+  display: inline-flex;
+  align-items: center;
+  pointer-events: none;
+}
+
+.bub-go svg {
+  width: 22px;
+  height: 22px;
+  display: block;
+}
+
+.bub-go svg + svg { margin-left: -12px; }
+
+.bub-go .c1 { animation: goFlow 1.8s ease-in-out infinite; }
+.bub-go .c2 { animation: goFlow 1.8s ease-in-out infinite .18s; }
+
+@keyframes goFlow {
+  0%, 100% { opacity: .38; transform: translateX(0); }
+  50% { opacity: 1; transform: translateX(3px); }
+}
+
+/* ---------- 底部导航栏(v8:左侧悬浮白胶囊,常规态 5 tab,始终保持原样) ---------- */
+.gj-bnav {
+  position: absolute;
+  left: 24px;
+  bottom: 50px;
+  height: 108px;
+  display: flex;
+  align-items: center;
+  padding: 4px;
+  background: var(--CB1);
+  border: 1px solid var(--CL2);
+  border-radius: 60px;
+  box-shadow: 0 6px 22px rgba(15,15,27,0.06);
+  transition: transform .35s ease;
+}
+
+.gj-bnav-tab {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 4px;                 /* 图标-文字间距 4(C03) */
+  padding: 9px 33px;        /* v8 tab 内边距 */
+  cursor: pointer;
+  user-select: none;
+  transition: transform .12s;
+}
+
+.gj-bnav-tab:active { transform: scale(0.94); }
+
+.gj-bnav-tab img {
+  width: 48px;              /* 图标 48(C03/v8) */
+  height: 48px;
+  display: block;
+}
+
+.gj-bnav-tab span {
+  font-size: 20px;          /* v8 底导文字 20 */
+  font-weight: 400;
+  line-height: 30px;
+  color: var(--CT3);
+}
+
+.gj-bnav-tab.is-on span { color: var(--CP0); font-weight: 500; }
+
+/* ---------- 智能体对话页(整页覆盖,右侧推入) ---------- */
+.agent-page {
+  position: absolute;
+  inset: 0;
+  z-index: 400;
+  display: flex;
+  flex-direction: column;
+  background:
+    radial-gradient(ellipse at 20% 0%, rgba(197,208,255,0.55) 0%, transparent 45%),
+    radial-gradient(ellipse at 90% 8%, rgba(255,214,235,0.5) 0%, transparent 40%),
+    linear-gradient(180deg, #EEF2FF 0%, #F7F9FF 40%, #FDFDFF 100%);
+  transform: translateX(100%);
+  transition: transform .38s cubic-bezier(.32,.72,.34,1);
+  overflow: hidden;
+}
+
+.agent-page.open { transform: translateX(0); }
+
+/* AI投顾 logo(场景化半弹窗顶部居中用) */
+.agent-logo {
+  position: absolute;
+  left: 50%;
+  top: 50%;
+  transform: translate(-50%, -50%);
+  font-size: 40px;
+  font-weight: 700;
+  font-style: italic;
+  background: linear-gradient(121.34deg, #FF3333 0.72%, #8B52FF 60%, #2B73FF 100%);
+  -webkit-background-clip: text;
+  background-clip: text;
+  color: transparent;
+  letter-spacing: 1px;
+}
+
+/* ===== 新版首页推荐问 ===== */
+.agent-nav-v2 {
+  position: relative;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  height: var(--nav);
+  padding: 0 24px;
+  flex-shrink: 0;
+}
+
+.agent-nav-v2 .nav-left {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+}
+
+.agent-nav-v2 .nav-logo {
+  font-size: 40px;
+  font-weight: 700;
+  font-style: italic;
+  background: linear-gradient(121.34deg, #FF3333 0.72%, #8B52FF 60%, #2B73FF 100%);
+  -webkit-background-clip: text;
+  background-clip: text;
+  color: transparent;
+}
+
+.agent-nav-v2 .nav-slogan {
+  font-size: 26px;
+  color: #9999B5;
+  font-style: italic;
+}
+
+.agent-nav-v2 .nav-right {
+  display: flex;
+  align-items: center;
+  gap: 20px;
+}
+
+.agent-nav-v2 .nav-icon {
+  font-size: 44px;
+  color: #33334D;
+  cursor: pointer;
+}
+
+/* 新版欢迎区 */
+.agent-welcome-v2 {
+  display: flex;
+  flex-direction: column;
+  padding: 24px 24px 0;
+}
+
+.welcome-card-v2 {
+  background: #FFFFFF;
+  border-radius: 28px;
+  padding: 44px 36px 36px;
+  position: relative;
+  box-shadow: 0 8px 32px rgba(102,127,255,0.08);
+}
+
+.welcome-avatar-v2 {
+  position: absolute;
+  top: -20px;
+  right: 24px;
+  width: 180px;
+  height: 180px;
+}
+
+.welcome-avatar-v2 img {
+  width: 100%;
+  height: 100%;
+}
+
+.welcome-hello-v2 {
+  font-size: 36px;
+  font-weight: 600;
+  background: linear-gradient(90deg, #667FFF 0%, #8B52FF 100%);
+  -webkit-background-clip: text;
+  background-clip: text;
+  color: transparent;
+  margin-bottom: 8px;
+}
+
+.welcome-title-v2 {
+  font-size: 40px;
+  font-weight: 600;
+  background: linear-gradient(90deg, #33334D 0%, #667FFF 70%, #8B52FF 100%);
+  -webkit-background-clip: text;
+  background-clip: text;
+  color: transparent;
+  line-height: 56px;
+  margin-bottom: 12px;
+}
+
+.welcome-sub-v2 {
+  font-size: 28px;
+  color: #666685;
+  line-height: 42px;
+}
+
+/* 情况②:距上一提问10min~4h内进入 → 首页推荐问 + 侧边栏按钮旁气泡(内容=上一次问答两行)
+ * 形态参考竞品 AI 助手:蓝紫色毛玻璃(半透明+背景模糊),左侧小尾巴指向侧边栏按钮
+ * 配色由品牌 token CP2/CP3 经 color-mix 取半透明,文字反白;卡片圆角 24 */
+.agent-tip-bubble {
+  position: absolute;
+  left: 104px;
+  top: 8px;
+  display: flex;
+  align-items: flex-start;
+  gap: 10px;
+  max-width: 460px;
+  min-width: 340px;
+  padding: 12px 14px 12px 18px;
+  background: linear-gradient(135deg,
+    color-mix(in srgb, var(--CP2) 74%, transparent) 0%,
+    color-mix(in srgb, var(--CP3) 74%, transparent) 100%);
+  backdrop-filter: blur(18px) saturate(160%);
+  -webkit-backdrop-filter: blur(18px) saturate(160%);
+  border: 1px solid rgba(255,255,255,0.38);
+  border-radius: 24px;
+  box-shadow: 0 16px 36px rgba(102,127,255,0.30), inset 0 1px 0 rgba(255,255,255,0.35);
+  cursor: pointer;
+  z-index: 30;
+  opacity: 0;
+  transform: translateX(-16px);
+  transform-origin: left top;
+  pointer-events: none;
+  transition: opacity .35s ease, transform .35s cubic-bezier(.34,1.3,.64,1);
+}
+
+.agent-tip-bubble.show {
+  opacity: 1;
+  transform: translateX(0);
+  pointer-events: auto;
+  animation: tipPulse 2.4s ease-in-out .6s 1;
+}
+
+/* 尾巴:指向左侧侧边栏按钮(按钮竖直中心 ≈ 顶部下 32),色值取玻璃左缘蓝紫 */
+.agent-tip-bubble::before {
+  content: '';
+  position: absolute;
+  left: -11px;
+  top: 32px;
+  border: 10px solid transparent;
+  border-right-color: color-mix(in srgb, var(--CP2) 74%, transparent);
+  border-left-width: 4px;
+}
+
+@keyframes tipPulse {
+  0%, 100% { transform: translateX(0) scale(1); }
+  50% { transform: translateX(0) scale(1.03); }
+}
+
+/* 毛玻璃气泡(agent-tip-bubble)问答层级:问=反白主文本,答=反白降透明区分 */
+.agent-tip-bubble .qa-q { color: var(--CT6); font-weight: 500; }
+.agent-tip-bubble .qa-a { color: rgba(255,255,255,0.85); }
+/* 更紧凑的行距,压低整体高度,避免挡住下方欢迎卡 */
+.agent-tip-bubble .qa { gap: 2px; }
+.agent-tip-bubble .qa-txt { line-height: 36px; }
+
+.agent-tip-bubble .tip-close {
+  flex-shrink: 0;
+  width: 40px;
+  height: 40px;
+  margin-top: -2px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border-radius: 50%;
+  background: rgba(255,255,255,0.20);
+  font-size: 20px;
+  color: var(--CT6);
+  cursor: pointer;
+}
+
+.agent-tip-bubble .bub-go { color: var(--CT6); }
+
+/* 气泡出现时,其下方的 logo/slogan 淡出避让(参考图:气泡占据 logo 区) */
+.agent-nav-v2 .nav-logo,
+.agent-nav-v2 .nav-slogan { transition: opacity .3s ease; }
+
+.agent-nav-v2.tip-on .nav-logo,
+.agent-nav-v2.tip-on .nav-slogan { opacity: 0; }
+
+/* 国金FM 资讯子卡(参考图:欢迎卡内浅紫底横条) */
+.fm-card {
+  display: flex;
+  align-items: center;
+  gap: 16px;
+  margin-top: 28px;
+  padding: 20px;
+  background: var(--CB40);
+  border-radius: 16px;
+}
+
+.fm-card .fm-icon {
+  width: 64px;
+  height: 64px;
+  flex-shrink: 0;
+}
+
+.fm-card .fm-body { flex: 1; min-width: 0; }
+
+.fm-card .fm-title {
+  font-size: 28px;
+  font-weight: 500;
+  color: var(--CT1);
+  line-height: 42px;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.fm-card .fm-sub {
+  font-size: 22px;
+  color: var(--CT4);
+  line-height: 32px;
+  font-variant-numeric: tabular-nums;
+  font-feature-settings: "tnum";
+}
+
+.rec-list-v2 {
+  margin-top: 32px;
+  display: flex;
+  flex-direction: column;
+  gap: 0;
+}
+
+.rec-item-v2 {
+  display: flex;
+  align-items: center;
+  padding: 24px 8px;
+  border-bottom: 1px solid rgba(102,127,255,0.08);
+  cursor: pointer;
+}
+
+.rec-item-v2:last-child {
+  border-bottom: none;
+}
+
+.rec-dot-v2 {
+  width: 12px;
+  height: 12px;
+  border-radius: 50%;
+  background: linear-gradient(135deg, #FF7067 0%, #F93838 100%);
+  flex-shrink: 0;
+  margin-right: 16px;
+}
+
+.rec-text-v2 {
+  flex: 1;
+  font-size: 28px;
+  color: #1A1A2E;
+  line-height: 42px;
+}
+
+.rec-arrow-v2 {
+  font-size: 24px;
+  color: #9999B5;
+  flex-shrink: 0;
+}
+
+.refresh-btn-v2 {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 10px;
+  padding-top: 28px;
+  font-size: 26px;
+  color: #666685;
+  cursor: pointer;
+}
+
+.refresh-btn-v2 .iconfont {
+  font-size: 28px;
+}
+
+/* 新版工具栏(参考图:胶囊横排,超出可横滑,末位可截断) */
+.agent-toolbar-v2 {
+  display: flex;
+  gap: 16px;
+  padding: 20px 24px 16px;
+  flex-shrink: 0;
+  overflow-x: auto;
+  scrollbar-width: none;
+}
+
+.agent-toolbar-v2::-webkit-scrollbar { display: none; }
+
+.agent-tool-chip-v2 {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  font-size: 26px;
+  color: #33334D;
+  background: var(--CB1);
+  border: 1px solid var(--CL2);
+  border-radius: 999px;
+  padding: 12px 24px;
+  cursor: pointer;
+  white-space: nowrap;
+  flex-shrink: 0;
+}
+
+.agent-tool-chip-v2 .iconfont {
+  font-size: 28px;
+  color: var(--CT3);
+}
+
+.agent-tool-chip-v2.active {
+  background: var(--CB40);
+  border-color: #667FFF;
+  color: #667FFF;
+}
+
+.agent-tool-chip-v2.active .iconfont { color: #667FFF; }
+
+/* 新版输入栏 */
+.agent-inputbar-v2 {
+  display: flex;
+  align-items: center;
+  margin: 0 24px 60px;
+  height: 92px;
+  background: #FFFFFF;
+  border-radius: 999px;
+  padding: 0 16px 0 28px;
+  flex-shrink: 0;
+  box-shadow: 0 4px 20px rgba(102,127,255,0.08);
+}
+
+.agent-inputbar-v2 .voice-icon {
+  width: 56px;
+  height: 56px;
+  border-radius: 50%;
+  background: linear-gradient(135deg, #667FFF 0%, #8B52FF 100%);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-shrink: 0;
+}
+
+.agent-inputbar-v2 .voice-icon .iconfont {
+  color: #FFFFFF;
+  font-size: 28px;
+}
+
+.agent-inputbar-v2 .input-ph-v2 {
+  flex: 1;
+  font-size: 28px;
+  color: #9999B5;
+  margin-left: 20px;
+}
+
+/* 异常情况界面(方案一§3.2 参考图:对话流内错误卡,两类文案共用) */
+.agent-error {
+  display: flex;
+  flex-direction: column;
+  row-gap: 24px;
+}
+
+.error-time {
+  text-align: center;
+  font-size: 22px;
+  color: var(--CT4);
+  line-height: 32px;
+}
+
+/* 错误卡:红色停止图标 + 文案 + 重新生成 */
+.error-card {
+  display: flex;
+  align-items: center;
+  column-gap: 16px;
+  background: var(--CB1);
+  border-radius: 20px;
+  padding: 28px 24px;
+  box-shadow: 0 4px 20px rgba(102,127,255,0.08);
+}
+
+.error-card .err-ic {
+  width: 40px;
+  height: 40px;
+  flex-shrink: 0;
+}
+
+.error-card .err-text {
+  flex: 1;
+  min-width: 0;
+  font-size: 30px;
+  font-weight: 500;
+  color: var(--CT1);
+  line-height: 44px;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.error-regen {
+  display: inline-flex;
+  align-items: center;
+  column-gap: 10px;
+  flex-shrink: 0;
+  cursor: pointer;
+  font-size: 28px;
+  color: var(--CT1);
+  line-height: 42px;
+}
+
+.error-regen svg { width: 30px; height: 30px; }
+
+/* AI 免责声明 */
+.error-disclaimer {
+  font-size: 22px;
+  color: var(--CT4);
+  line-height: 34px;
+}
+
+/* 反馈行:赞/踩 + 找顾问 */
+.error-fb-row {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+
+.fb-like-group {
+  display: flex;
+  align-items: center;
+  column-gap: 40px;
+  background: var(--CB1);
+  border-radius: 999px;
+  padding: 18px 36px;
+}
+
+.fb-like-group svg { width: 36px; height: 36px; cursor: pointer; }
+
+.fb-advisor {
+  display: flex;
+  align-items: center;
+  column-gap: 12px;
+  background: var(--CB1);
+  border-radius: 999px;
+  padding: 10px 28px 10px 12px;
+  font-size: 28px;
+  color: var(--CT1);
+  cursor: pointer;
+}
+
+.fb-advisor img {
+  width: 56px;
+  height: 56px;
+  border-radius: 50%;
+}
+
+.agent-body {
+  flex: 1;
+  min-height: 0;
+  overflow-y: auto;
+  padding: 8px 24px 24px;
+  scrollbar-width: none;
+}
+
+.agent-body::-webkit-scrollbar { display: none; }
+
+/* 对话流 */
+.agent-conv {
+  display: flex;
+  flex-direction: column;
+  row-gap: 24px;
+}
+
+.user-bubble {
+  align-self: flex-end;
+  max-width: 560px;
+  background: linear-gradient(135deg, #667FFF 0%, #8B52FF 100%);
+  color: var(--CT6);
+  font-size: 28px;
+  line-height: 42px;
+  padding: 18px 28px;
+  border-radius: 24px 24px 4px 24px;
+}
+
+/* 思考卡片(草稿状态1/状态5 截图) */
+.think-card {
+  background: var(--CB1);
+  border-radius: 20px;
+  padding: 24px;
+  box-shadow: 0 4px 20px rgba(102,127,255,0.08);
+}
+
+.think-head {
+  display: flex;
+  align-items: center;
+  column-gap: 14px;
+}
+
+.think-spinner {
+  width: 32px;
+  height: 32px;
+  border-radius: 50%;
+  border: 4px solid rgba(249,56,56,0.15);
+  border-top-color: var(--CP0);
+  animation: thinkSpin 0.9s linear infinite;
+  flex-shrink: 0;
+}
+
+@keyframes thinkSpin {
+  to { transform: rotate(360deg); }
+}
+
+.think-check {
+  display: none;
+  color: var(--CP0);
+  font-size: 32px;
+  flex-shrink: 0;
+}
+
+.think-card.done .think-spinner { display: none; }
+.think-card.done .think-check { display: block; }
+
+.think-title {
+  font-size: 30px;
+  font-weight: 500;
+  color: var(--CT1);
+  line-height: 44px;
+  flex: 1;
+}
+
+.think-fold {
+  font-size: 22px;
+  color: var(--CT4);
+  transform: rotate(-90deg);
+}
+
+.think-steps {
+  margin-top: 20px;
+  padding-left: 8px;
+  display: flex;
+  flex-direction: column;
+  row-gap: 18px;
+}
+
+.think-step {
+  display: flex;
+  align-items: flex-start;
+  column-gap: 14px;
+  position: relative;
+}
+
+.think-step .step-dot {
+  width: 24px;
+  height: 24px;
+  border-radius: 50%;
+  border: 2px solid var(--H6);
+  background: var(--CB1);
+  color: var(--H6);
+  font-size: 16px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-shrink: 0;
+  margin-top: 6px;
+}
+
+.think-step.done .step-dot {
+  border-color: var(--H6);
+  background: var(--H6);
+  color: var(--CT6);
+}
+
+.think-step .step-text {
+  font-size: 26px;
+  color: var(--CT1);
+  line-height: 38px;
+  font-weight: 500;
+}
+
+.think-step .step-sub {
+  font-size: 24px;
+  color: var(--CT4);
+  line-height: 36px;
+  font-weight: 400;
+  display: block;
+}
+
+/* 答案区(打字机) */
+.answer-block {
+  background: var(--CB1);
+  border-radius: 20px;
+  padding: 24px;
+  font-size: 28px;
+  color: var(--CT1);
+  line-height: 46px;
+  box-shadow: 0 4px 20px rgba(102,127,255,0.08);
+  display: none;
+}
+
+.answer-block.show { display: block; }
+
+.answer-block .caret {
+  display: inline-block;
+  width: 3px;
+  height: 30px;
+  background: var(--CP0);
+  vertical-align: -4px;
+  margin-left: 4px;
+  animation: caretBlink 0.8s steps(1) infinite;
+}
+
+@keyframes caretBlink {
+  50% { opacity: 0; }
+}
+
+.answer-block.finished .caret { display: none; }
+
+/* 工具 chips + 输入栏 */
+.agent-toolbar {
+  display: flex;
+  column-gap: 16px;
+  padding: 0 24px 16px;
+  flex-shrink: 0;
+}
+
+.agent-tool-chip {
+  display: inline-flex;
+  align-items: center;
+  column-gap: 8px;
+  background: var(--CB1);
+  border: 1px solid rgba(102,127,255,0.15);
+  border-radius: 999px;
+  padding: 10px 24px;
+  font-size: 24px;
+  color: var(--CT3);
+}
+
+.agent-inputbar {
+  display: flex;
+  align-items: center;
+  column-gap: 16px;
+  margin: 0 24px 60px;
+  height: 92px;
+  background: var(--CB1);
+  border-radius: 999px;
+  border: 2px solid transparent;
+  background-image: linear-gradient(var(--CB1), var(--CB1)), linear-gradient(90deg, #FF7067, #8B52FF, #2B73FF);
+  background-origin: border-box;
+  background-clip: padding-box, border-box;
+  padding: 0 12px 0 24px;
+  flex-shrink: 0;
+  cursor: pointer;
+}
+
+.agent-inputbar img {
+  width: 56px;
+  height: 54px;
+}
+
+.agent-inputbar .input-ph {
+  flex: 1;
+  font-size: 28px;
+  color: var(--CT4);
+}
+
+.agent-send {
+  width: 68px;
+  height: 68px;
+  border-radius: 50%;
+  background: linear-gradient(135deg, #FF7067 0%, #F93838 100%);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: var(--CT6);
+}
+
+.agent-send .iconfont {
+  font-size: 32px;
+  color: var(--CT6);
+}
+
+.agent-page .home-indicator { background: transparent; flex-shrink: 0; }
+
+/* ---------- 场景化并行:半弹窗(直接调缓存回答,新开窗口,不出提醒/未读) ----------
+ * 参照 方案一§2 例图:点「板块异动·AI解读」→ 底部半弹窗新开对话秒出缓存答案
+ * 规范:遮罩 --CB19 / 弹窗圆角 32 上 / 智能体渐变背景(CB38-40) */
+.scene-sheet-mask {
+  position: absolute;
+  inset: 0;
+  z-index: 500;
+  background: var(--CB19);
+  opacity: 0;
+  pointer-events: none;
+  transition: opacity .3s ease;
+}
+
+.scene-sheet-mask.show { opacity: 1; pointer-events: auto; }
+
+.scene-sheet {
+  position: absolute;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  z-index: 501;
+  height: 78%;
+  display: flex;
+  flex-direction: column;
+  border-radius: 32px 32px 0 0;
+  background:
+    radial-gradient(ellipse at 20% 0%, rgba(197,208,255,0.55) 0%, transparent 45%),
+    radial-gradient(ellipse at 90% 8%, rgba(255,214,235,0.5) 0%, transparent 40%),
+    linear-gradient(180deg, var(--CB38) 0%, var(--CB39) 40%, var(--CB40) 100%);
+  box-shadow: 0 -8px 40px rgba(15,15,27,0.12);
+  transform: translateY(105%);
+  transition: transform .4s cubic-bezier(.22,1.1,.36,1);
+  overflow: hidden;
+}
+
+.scene-sheet.open { transform: translateY(0); }
+
+/* 顶部:拖拽指示条 + AI投顾 logo 居中 + 关闭(库 gradient/agent-close.svg) */
+.scene-sheet .sheet-grab {
+  position: absolute;
+  left: 50%;
+  top: 14px;
+  transform: translateX(-50%);
+  width: 80px;
+  height: 8px;
+  border-radius: 999px;
+  background: var(--CL1);
+}
+
+.scene-sheet .sheet-nav {
+  display: flex;
+  align-items: center;
+  justify-content: flex-end;
+  height: 100px;
+  padding: 0 24px;
+  position: relative;
+  flex-shrink: 0;
+}
+
+.scene-sheet .sheet-close {
+  width: 48px;
+  height: 48px;
+  cursor: pointer;
+}
+
+.scene-sheet .sheet-body {
+  flex: 1;
+  min-height: 0;
+  overflow-y: auto;
+  padding: 8px 24px 24px;
+  display: flex;
+  flex-direction: column;
+  row-gap: 24px;
+  scrollbar-width: none;
+}
+
+.scene-sheet .sheet-body::-webkit-scrollbar { display: none; }
+
+/* 缓存答案卡:即时呈现,无思考过程 */
+.scene-cache-tip {
+  align-self: flex-start;
+  display: inline-flex;
+  align-items: center;
+  column-gap: 8px;
+  font-size: 22px;
+  color: var(--CT4);
+  line-height: 32px;
+}
+
+/* 相关推荐问 */
+.scene-rec-item {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  background: var(--CB1);
+  border-radius: 20px;
+  padding: 22px 28px;
+  font-size: 28px;
+  color: var(--CT1);
+  line-height: 42px;
+  cursor: pointer;
+  box-shadow: 0 4px 20px rgba(102,127,255,0.08);
+}
+
+.scene-rec-item .iconfont {
+  font-size: 24px;
+  color: var(--CT4);
+}
+
+.scene-sheet .agent-inputbar { margin: 16px 24px 40px; flex-shrink: 0; }
+
+/* ---------- 演示控制台(与手机同排流式布局:互不遮挡,窄屏自动换到下方) ---------- */
+body { gap: 48px; padding-left: 24px; padding-right: 24px; }
+
+.iphone-wrapper { flex-shrink: 0; }
+
+@media (max-width: 1820px) {
+  body { flex-direction: column; align-items: center; }
+  .demo-console { position: static; width: min(1160px, 92vw); max-width: 92vw; margin: 20px auto; order: 2; }
+}
+
+.demo-console {
+  position: sticky;
+  top: 30px;
+  flex: 0 1 1160px;
+  min-width: 520px;
+  background: #23233A;
+  border: 1px solid #3A3A55;
+  border-radius: 24px;
+  padding: 32px;
+  color: #E8E8F0;
+  font-size: 24px;
+  z-index: 999;
+  font-family: var(--font-sans);
+}
+
+/* 双栏排布:左=操作/日志,右=说明卡片,控制演示台整体高度不超过手机 */
+.dc-cols {
+  display: flex;
+  align-items: flex-start;
+  gap: 24px;
+  flex-wrap: wrap;
+}
+
+.dc-col {
+  flex: 1 1 460px;
+  min-width: 420px;
+}
+
+.demo-console h3 {
+  font-size: 30px;
+  margin: 0 0 20px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+
+.dc-state {
+  display: inline-block;
+  background: rgba(249,56,56,0.18);
+  color: #FF8A8A;
+  border-radius: 999px;
+  padding: 6px 24px;
+  font-size: 24px;
+}
+
+.dc-guide {
+  background: #1B1B2E;
+  border-radius: 16px;
+  padding: 20px 24px;
+  line-height: 1.8;
+  color: #A8A8C0;
+  margin-bottom: 20px;
+  font-size: 22px;
+}
+
+.dc-guide b { color: #E8E8F0; }
+
+.dc-btns {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 14px;
+  margin-bottom: 20px;
+}
+
+.dc-btn {
+  flex: 1 1 45%;
+  border: none;
+  border-radius: 12px;
+  padding: 18px 0;
+  font-size: 24px;
+  cursor: pointer;
+  background: #34345A;
+  color: #E8E8F0;
+  transition: filter .15s;
+  font-family: var(--font-sans);
+}
+
+.dc-btn:hover { filter: brightness(1.2); }
+.dc-btn.primary { background: #F93838; color: #fff; }
+.dc-btn.reset { background: #55555E; }
+.dc-btn.small { flex: none; padding: 10px 20px; font-size: 20px; border-radius: 10px; }
+
+/* 消息提示方式切换(方案一/方案二) */
+.dc-mode-row {
+  display: flex;
+  align-items: center;
+  flex-wrap: wrap;
+  gap: 10px;
+  margin-bottom: 20px;
+}
+
+.dc-mode-label { font-size: 22px; color: #A8A8C0; flex-shrink: 0; }
+
+.dc-mode-btn {
+  flex: 0 1 auto;
+  border: 1px solid #3A3A55;
+  border-radius: 12px;
+  padding: 14px 14px;
+  font-size: 22px;
+  cursor: pointer;
+  background: #1B1B2E;
+  color: #A8A8C0;
+  transition: all .15s;
+  font-family: var(--font-sans);
+}
+
+.dc-mode-btn.active {
+  background: rgba(249,56,56,0.18);
+  border-color: #F93838;
+  color: #FF8A8A;
+}
+
+.dc-log {
+  background: #1B1B2E;
+  border-radius: 16px;
+  padding: 16px 24px;
+  height: 320px;
+  overflow-y: auto;
+  font-size: 22px;
+  line-height: 1.9;
+  color: #8888A6;
+}
+
+.dc-log .t { color: #556; margin-right: 10px; }
+.dc-log .hl { color: #FF8A8A; }
+
+/* ---------- 分栏备注区 ---------- */
+.dc-notes {
+  margin-top: 0;
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+}
+
+.dc-note-card {
+  background: #1B1B2E;
+  border-radius: 16px;
+  padding: 20px 22px;
+  border: 1px solid #3A3A55;
+}
+
+.dc-note-title {
+  font-size: 24px;
+  font-weight: 600;
+  color: #E8E8F0;
+  margin-bottom: 12px;
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+
+.dc-note-title .dot {
+  width: 8px;
+  height: 8px;
+  border-radius: 50%;
+  flex-shrink: 0;
+}
+
+.dc-note-title .dot.blue { background: #667FFF; }
+.dc-note-title .dot.purple { background: #8B52FF; }
+.dc-note-title .dot.orange { background: #FF9D5C; }
+
+.dc-note-list {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+
+.dc-note-list li {
+  font-size: 20px;
+  line-height: 1.7;
+  color: #A8A8C0;
+  padding-left: 18px;
+  position: relative;
+}
+
+.dc-note-list li::before {
+  content: '';
+  position: absolute;
+  left: 2px;
+  top: 10px;
+  width: 6px;
+  height: 6px;
+  border-radius: 50%;
+  background: #55557A;
+}
+
+.dc-note-list li b {
+  color: #D0D0E8;
+  font-weight: 500;
+}
+
+.dc-note-list .num {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 22px;
+  height: 22px;
+  border-radius: 50%;
+  background: #34345A;
+  color: #B8B8D4;
+  font-size: 18px;
+  margin-right: 6px;
+  font-weight: 600;
+  flex-shrink: 0;
+}
+
+.dc-note-link {
+  color: #667FFF;
+  font-size: 18px;
+  text-decoration: underline;
+  cursor: pointer;
+  word-break: break-all;
+}
+
+.dc-note-sub {
+  font-size: 18px;
+  color: #8888A6;
+  margin-top: 6px;
+  padding-left: 18px;
+}
+
+@media (max-width: 1480px) {
+  .dc-notes { flex-direction: row; flex-wrap: wrap; }
+  .dc-note-card { flex: 1 1 100%; }
+}
+</style>
+</head>
+<body>
+
+<div class="iphone-wrapper">
+  <!-- 侧边按钮 -->
+  <div class="iphone-side-btn btn-silent"></div>
+  <div class="iphone-side-btn btn-vol-up"></div>
+  <div class="iphone-side-btn btn-vol-down"></div>
+  <div class="iphone-side-btn btn-power"></div>
+
+  <div class="iphone-shell">
+    <!-- 灵动岛 -->
+    <div class="dynamic-island"></div>
+
+    <!-- 顶部渐变背景 -->
+    <div class="top-header-bg"></div>
+
+    <!-- 状态栏 -->
+    <div class="gj-statusbar">
+      <span class="gj-sb-time">9:25</span>
+      <span class="gj-sb-right">
+        <svg width="34" height="21" viewBox="0 0 22 14" fill="none" class="gj-sb-signal">
+          <rect x="0" y="8.5" width="3.5" height="5.5" rx="1"/>
+          <rect x="6" y="6" width="3.5" height="8" rx="1"/>
+          <rect x="12" y="3" width="3.5" height="11" rx="1"/>
+          <rect x="18" y="0" width="3.5" height="14" rx="1"/>
+        </svg>
+        <svg width="31" height="22" viewBox="0 0 20 16" fill="none" class="gj-sb-wifi">
+          <path d="M10 4C7 4 4.2 5.2 2 7.2L3.4 8.6C5.2 7 7.5 6 10 6C12.5 6 14.8 7 16.6 8.6L18 7.2C15.8 5.2 13 4 10 4Z" fill="currentColor"/>
+          <path d="M10 8C8.4 8 6.8 8.6 5.6 9.6L7 11C7.8 10.4 8.9 10 10 10C11.1 10 12.2 10.4 13 11L14.4 9.6C13.2 8.6 11.6 8 10 8Z" fill="currentColor"/>
+          <circle cx="10" cy="13" r="1.5" fill="currentColor"/>
+        </svg>
+        <span class="gj-sb-5g">5G</span>
+        <svg width="49" height="23" viewBox="0 0 28 13" fill="none" class="gj-sb-battery">
+          <rect x="0.5" y="0.8" width="24" height="11.5" rx="3" stroke-width="1" fill="none" opacity="0.4"/>
+          <rect x="2.3" y="2.6" width="19.5" height="7.9" rx="1.6"/>
+          <rect x="25.8" y="4" width="1.8" height="5" rx="0.9" opacity="0.4"/>
+        </svg>
+      </span>
+    </div>
+
+    <!-- 顶部导航栏 (库 top-nav 类体系；图标=iconfont icon-cebianlan / icon-sousuo) -->
+    <div class="top-nav">
+      <div class="top-nav-left">
+        <div class="menu-btn" id="menuBtn">
+          <i class="iconfont icon-cebianlan"></i>
+          <span class="menu-dot" id="menuDot"></span>
+        </div>
+        <div class="nav-tabs">
+          <span class="nav-tab is-on">推荐</span>
+          <span class="nav-tab">资讯</span>
+          <span class="nav-tab">开户</span>
+        </div>
+      </div>
+      <div class="top-nav-right">
+        <div class="search-icon">
+          <i class="iconfont icon-sousuo"></i>
+        </div>
+      </div>
+    </div>
+
+    <!-- 内容滚动区(模拟真机上下滑动) -->
+    <div class="screen-scroll">
+    <div class="custom-bg"></div>
+
+    <!-- 问候语区域 (小宝=库内资产 assets/icons/xiaobao.svg) -->
+    <div class="greet-section">
+      <div class="greet-card-row">
+        <div class="greet-avatar">
+          <img src="assets/icons/xiaobao.svg" alt="小宝">
+        </div>
+        <div class="greet-bubble">
+          <span class="greet-text">每天都赚一个亿的王总，早上好!</span>
+        </div>
+      </div>
+
+      <!-- 定制中心 (图标=库内 iconfont icon-licaishouye；[待]源稿"房+AI"定制图标待补库) -->
+      <div class="custom-center">
+        <div class="custom-icon">
+          <i class="iconfont icon-licaishouye"></i>
+          <span class="ai-badge">AI</span>
+        </div>
+        <div class="custom-text">定制<br/>中心</div>
+      </div>
+    </div>
+
+    <!-- 功能图标区 (金刚区 · C12 标准5列)
+         [待]一级功能彩色图标库内无(quickcard C12 批3待补)，以下为按参考图重绘的红色单色线性占位，待 Figma 导出正式资产替换 -->
+    <div class="icon-grid-section">
+      <div class="icon-grid">
+        <!-- 市场行情 -->
+        <div class="icon-cell">
+          <div class="icon-box">
+            <svg viewBox="0 0 64 64" fill="none">
+              <rect x="10" y="14" width="44" height="32" rx="6" stroke="currentColor" stroke-width="3.5"/>
+              <path d="M20 36L27 28L33 32L42 22" stroke="currentColor" stroke-width="3.5" stroke-linecap="round" stroke-linejoin="round"/>
+              <path d="M42 22H36M42 22V28" stroke="currentColor" stroke-width="3.5" stroke-linecap="round" stroke-linejoin="round"/>
+              <path d="M24 52H40" stroke="currentColor" stroke-width="3.5" stroke-linecap="round"/>
+            </svg>
+          </div>
+          <span class="icon-label">市场行情</span>
+        </div>
+
+        <!-- 银证转账 -->
+        <div class="icon-cell">
+          <div class="icon-box">
+            <svg viewBox="0 0 64 64" fill="none">
+              <circle cx="32" cy="32" r="22" stroke="currentColor" stroke-width="3.5"/>
+              <path d="M22 27H40M40 27L35 22" stroke="currentColor" stroke-width="3.5" stroke-linecap="round" stroke-linejoin="round"/>
+              <path d="M42 37H24M24 37L29 42" stroke="currentColor" stroke-width="3.5" stroke-linecap="round" stroke-linejoin="round"/>
+            </svg>
+          </div>
+          <span class="icon-label">银证转账</span>
+        </div>
+
+        <!-- AI投顾 -->
+        <div class="icon-cell" id="aiEntryCell" style="cursor:pointer">
+          <div class="icon-box">
+            <svg viewBox="0 0 64 64" fill="none">
+              <path d="M32 8L52 20V44L32 56L12 44V20L32 8Z" stroke="currentColor" stroke-width="3.5" stroke-linejoin="round"/>
+              <text x="32" y="40" text-anchor="middle" font-size="20" font-weight="600" fill="currentColor" font-family="PingFang SC,sans-serif">AI</text>
+            </svg>
+          </div>
+          <span class="icon-label">AI投顾</span>
+        </div>
+
+        <!-- 我的资产 -->
+        <div class="icon-cell">
+          <div class="icon-box">
+            <svg viewBox="0 0 64 64" fill="none">
+              <path d="M12 28L32 12L52 28V50C52 51.6 50.6 53 49 53H15C13.4 53 12 51.6 12 50V28Z" stroke="currentColor" stroke-width="3.5" stroke-linejoin="round"/>
+              <path d="M26 30L32 37L38 30" stroke="currentColor" stroke-width="3.5" stroke-linecap="round" stroke-linejoin="round"/>
+              <path d="M32 37V45M27 41H37" stroke="currentColor" stroke-width="3.5" stroke-linecap="round"/>
+            </svg>
+          </div>
+          <span class="icon-label">我的资产</span>
+        </div>
+
+        <!-- 全部功能 -->
+        <div class="icon-cell">
+          <div class="icon-box">
+            <svg viewBox="0 0 64 64" fill="none">
+              <rect x="12" y="12" width="16" height="16" rx="4" stroke="currentColor" stroke-width="3.5"/>
+              <rect x="36" y="12" width="16" height="16" rx="4" stroke="currentColor" stroke-width="3.5"/>
+              <rect x="12" y="36" width="16" height="16" rx="4" stroke="currentColor" stroke-width="3.5"/>
+              <rect x="36" y="36" width="16" height="16" rx="4" stroke="currentColor" stroke-width="3.5"/>
+              <circle cx="52" cy="12" r="5" fill="currentColor"/>
+            </svg>
+          </div>
+          <span class="icon-label">全部功能</span>
+        </div>
+      </div>
+    </div>
+
+    <!-- AI选好股体验到期提醒 -->
+    <div class="banner-section">
+      <div class="banner-stack">
+        <div class="banner-card-back1"></div>
+        <div class="banner-card-back2"></div>
+        <div class="banner-card-front">
+          <div class="banner-card-bg"></div>
+          <div class="banner-deco"></div>
+          <div class="banner-content">
+            <div class="banner-header">
+              <div class="banner-title-row">
+                <div class="banner-tag"><span>体验</span></div>
+                <span class="banner-title">AI选好股体验到期提醒</span>
+              </div>
+              <div class="banner-btn"><span>立即签约</span></div>
+            </div>
+            <div class="banner-desc">
+              <span class="text-normal">您的AI选好股免费体验还有&nbsp;</span>
+              <span class="highlight">2天&nbsp;</span>
+              <span class="text-normal">到期， 立即签约不错过后续信号。</span>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- 两列卡片：通用回购 + 板块异动 -->
+    <div class="two-col-section">
+      <div class="col-card">
+        <div class="card-header">
+          <span class="card-title">通用回购逆回购</span>
+          <i class="iconfont icon-shixinjiantou-you arrow-icon"></i>
+        </div>
+        <div class="card-content">
+          <div class="repo-info-row">
+            <span class="repo-text">购买</span>
+            <span class="repo-num">1</span>
+            <span class="repo-text">天期</span>
+            <div class="hu-tag"><span>沪</span></div>
+            <span class="repo-text">计息</span>
+            <span class="repo-num">9</span>
+            <span class="repo-text">天</span>
+          </div>
+          <div class="repo-bottom">
+            <div class="rate-box">
+              <span class="rate-value">2.025%</span>
+              <span class="rate-label">年化收益</span>
+            </div>
+            <div class="trade-btn"><span>去交易</span></div>
+          </div>
+        </div>
+      </div>
+
+      <div class="col-card" id="sectorCard">
+        <div class="card-header">
+          <span class="card-title">板块异动</span>
+          <span class="ai-summary-tag" id="aiSummaryTag">AI解读</span>
+          <i class="iconfont icon-shixinjiantou-you arrow-icon"></i>
+        </div>
+        <div class="card-content">
+          <div class="sector-desc">13:30 军工板块发生大幅拉升，中航沈飞的</div>
+          <div class="sector-bottom">
+            <span class="sector-name">军工ETF</span>
+            <span class="sector-change">+1.86%</span>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- 分页指示器 -->
+    <div class="pagination-dots">
+      <div class="dot-bg"></div>
+      <div class="dot-active"></div>
+    </div>
+
+    <!-- AI投顾区 -->
+    <div class="ai-advisor-section">
+      <div class="ai-advisor-header">
+        <div class="ai-advisor-logo">
+          <span class="ai-logo-text">AI投顾</span>
+        </div>
+        <div class="ai-tabs">
+          <span class="ai-tab is-on">AI选好股</span>
+          <span class="ai-tab">AI持股优化</span>
+          <span class="ai-tab">AI股票解套</span>
+        </div>
+        <div class="ai-tab-fade"></div>
+      </div>
+
+      <div class="ai-advisor-hint">
+        <span class="ai-hint-text">可点击，跳转AI投顾主页，定位AI股票解套</span>
+        <i class="iconfont icon-shixinjiantou-you ai-hint-arrow"></i>
+      </div>
+
+      <div class="stock-card-wrapper">
+        <!-- 股票卡片1 -->
+        <div class="stock-card">
+          <div class="stock-card-header">
+            <div class="stock-header-row">
+              <div class="stock-info">
+                <span class="stock-name">国金证券</span>
+                <span class="stock-code">600109</span>
+              </div>
+              <div class="stock-header-right">
+                <div class="stock-targets">
+                  <div class="target-row">
+                    <div class="target-tag buy"><span>买</span></div>
+                    <span class="target-label">买入价</span>
+                    <span class="target-value">≤8.25</span>
+                  </div>
+                  <div class="target-row">
+                    <div class="target-tag sell"><span>卖</span></div>
+                    <span class="target-label">止盈价</span>
+                    <span class="target-value">8.75</span>
+                  </div>
+                </div>
+                <div class="stock-return">
+                  <span class="return-value">+24.88%</span>
+                  <span class="return-label">策略波段收益率</span>
+                </div>
+              </div>
+            </div>
+            <div class="stock-tags">
+              <div class="stock-tag"><span>热点</span></div>
+              <div class="stock-tag"><span>自选</span></div>
+              <div class="stock-tag"><span>非银金融</span></div>
+              <div class="stock-tag"><span>行业内业绩龙头</span></div>
+            </div>
+          </div>
+          <div class="stock-card-footer">
+            <div class="footer-left">
+              <div class="buy-mini-btn"><span>买</span></div>
+              <span class="footer-action-text">可跟随买入</span>
+            </div>
+            <div class="smart-trade-btn"><span>智能交易</span></div>
+          </div>
+        </div>
+
+        <!-- 股票卡片2 (带热标签) -->
+        <div class="stock-card">
+          <div class="stock-hot-badge"><span>热</span></div>
+          <div class="stock-card-header">
+            <div class="stock-header-row">
+              <div class="stock-info">
+                <span class="stock-name">国金证券</span>
+                <span class="stock-code">600109</span>
+              </div>
+              <div class="stock-header-right">
+                <div class="stock-targets">
+                  <div class="target-row">
+                    <div class="target-tag buy"><span>买</span></div>
+                    <span class="target-label">参考买入价</span>
+                    <span class="target-value">≤8.25</span>
+                  </div>
+                  <div class="target-row">
+                    <div class="target-tag sell"><span>卖</span></div>
+                    <span class="target-label">止盈卖出价</span>
+                    <span class="target-value">8.75</span>
+                  </div>
+                </div>
+                <div class="stock-return">
+                  <span class="return-value">+24.88%</span>
+                  <span class="return-label">策略波段收益率</span>
+                </div>
+              </div>
+            </div>
+            <div class="stock-tags">
+              <div class="stock-tag"><span>热点</span></div>
+              <div class="stock-tag"><span>自选</span></div>
+              <div class="stock-tag"><span>非银金融</span></div>
+              <div class="stock-tag"><span>行业内业绩龙头</span></div>
+            </div>
+          </div>
+          <div class="stock-card-footer">
+            <div class="footer-left">
+              <div class="buy-mini-btn"><span>买</span></div>
+              <span class="footer-action-text">可跟随买入</span>
+            </div>
+            <div class="smart-trade-btn"><span>智能交易</span></div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- 看资讯模块 -->
+    <div class="news-section">
+      <div class="news-header">
+        <span class="card-title">看资讯</span>
+        <i class="iconfont icon-shixinjiantou-you arrow-icon"></i>
+      </div>
+      <div class="news-content">
+        <div class="news-item">4 倍雪球爆仓刷屏核心是2024年1月 "汤总" 200...</div>
+        <div class="news-item">特朗普党内劲敌（核心为佛州州长德桑蒂斯）退...</div>
+        <div class="news-with-icon">
+          <div class="news-avatar">
+            <svg viewBox="0 0 24 24" fill="none">
+              <circle cx="12" cy="8" r="4" fill="currentColor"/>
+              <path d="M4 20C4 16.6863 7.58172 14 12 14C16.4183 14 20 16.6863 20 20" stroke="currentColor" stroke-width="2" stroke-linecap="round"/>
+            </svg>
+          </div>
+          <div class="news-text">投顾观点：将进一步研究，将是指管理纳将进一步研究</div>
+        </div>
+        <div class="news-with-icon">
+          <div class="news-avatar" style="background: linear-gradient(135deg, #FFD6C8 0%, #FFB0A0 100%);">
+            <svg viewBox="0 0 24 24" fill="none" style="opacity:0.5">
+              <circle cx="12" cy="8" r="4" fill="white"/>
+              <path d="M4 20C4 16.6863 7.58172 14 12 14C16.4183 14 20 16.6863 20 20" stroke="white" stroke-width="2" stroke-linecap="round"/>
+            </svg>
+          </div>
+          <div class="news-text">投顾观点：常出现在标的评估、政策影响研判、组合调整等场景</div>
+        </div>
+      </div>
+
+      <!-- 1小时要闻速递 -->
+      <div class="news-highlight">
+        <div class="news-highlight-header">
+          <svg width="48" height="48" viewBox="0 0 48 48" fill="none">
+            <circle cx="24" cy="24" r="20" fill="url(#newsGrad)" opacity="0.1"/>
+            <defs>
+              <linearGradient id="newsGrad" x1="0" y1="0" x2="1" y2="1">
+                <stop offset="0%" stop-color="#5C9EF0"/>
+                <stop offset="100%" stop-color="#9179F6"/>
+              </linearGradient>
+            </defs>
+            <path d="M20 16H32M20 22H32M20 28H26" stroke="url(#newsGrad)" stroke-width="2.5" stroke-linecap="round"/>
+            <circle cx="24" cy="24" r="20" stroke="url(#newsGrad)" stroke-width="2" fill="none"/>
+          </svg>
+          <span class="news-highlight-title">1小时要闻速递</span>
+        </div>
+        <div class="news-highlight-content">
+          <p>1. 美联储提前完成11位地区联储主席连任，任期自明年3月1日开始。&nbsp;&nbsp;<br/>2. 头部公募研判权益资产估值修复，*新研判权权...</p>
+        </div>
+      </div>
+    </div>
+
+    <!-- 底部占位 -->
+    <div class="bottom-placeholder"></div>
+    </div><!-- /screen-scroll -->
+
+    <!-- ============ 智能体对话页(方案一 状态1/状态5；右侧推入覆盖层) ============ -->
+    <div class="agent-page" id="agentPage">
+      <!-- 状态栏(复用库 status-bar 类体系) -->
+      <div class="gj-statusbar">
+        <span class="gj-sb-time">9:25</span>
+        <span class="gj-sb-right">
+          <svg width="34" height="21" viewBox="0 0 22 14" fill="none" class="gj-sb-signal">
+            <rect x="0" y="8.5" width="3.5" height="5.5" rx="1"/>
+            <rect x="6" y="6" width="3.5" height="8" rx="1"/>
+            <rect x="12" y="3" width="3.5" height="11" rx="1"/>
+            <rect x="18" y="0" width="3.5" height="14" rx="1"/>
+          </svg>
+          <span class="gj-sb-5g">5G</span>
+          <svg width="49" height="23" viewBox="0 0 28 13" fill="none" class="gj-sb-battery">
+            <rect x="0.5" y="0.8" width="24" height="11.5" rx="3" stroke-width="1" fill="none" opacity="0.4"/>
+            <rect x="2.3" y="2.6" width="19.5" height="7.9" rx="1.6"/>
+            <rect x="25.8" y="4" width="1.8" height="5" rx="0.9" opacity="0.4"/>
+          </svg>
+        </span>
+      </div>
+
+      <!-- 导航栏(问答页/首页推荐问统一使用新版;含情况② 侧边栏旁气泡) -->
+      <div class="agent-nav-v2" id="agentNavV2">
+        <div class="nav-left">
+          <div class="menu-btn agent-menu-btn" id="agentMenuBtnV2">
+            <i class="iconfont icon-cebianlan nav-icon"></i>
+          </div>
+          <span class="nav-logo">AI投顾</span>
+          <span class="nav-slogan">随叫随到，你的投资小帮手！</span>
+        </div>
+        <div class="nav-right">
+          <i class="iconfont icon-fenxiang nav-icon"></i>
+          <i class="iconfont icon-guanbi nav-icon" id="agentCloseV2"></i>
+        </div>
+        <!-- 情况②:距上一提问10min~4h内进入 → 侧边栏旁气泡,内容=上一次问答两行,点击定位到上一个问题 -->
+        <div class="agent-tip-bubble" id="agentTipBubble">
+          <div class="qa">
+            <span class="qa-txt qa-q"><span class="qa-flag">回答完毕</span><span class="qa-var" id="tipQ">今天大盘为什么突然涨这么多？我手上的军工还能继续拿吗？</span></span>
+            <span class="qa-txt qa-a" id="tipA">今日大盘呈现震荡上行格局：上证指数收涨0.82%，科创50放量拉升近7%，军工、AI算力方向领涨。北向资金全天净流入58亿元。综合来看，市场情绪回暖，建议关注景气度持续验证的军工与科技主线，控制仓位、逢低分批布局。</span>
+          </div>
+          <div class="bub-right">
+            <span class="tip-close" id="agentTipClose"><i class="iconfont icon-guanbi"></i></span>
+            <span class="bub-go">
+              <svg class="c1" viewBox="0 0 24 24" fill="none"><path d="M9 6l6 6-6 6" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"/></svg>
+              <svg class="c2" viewBox="0 0 24 24" fill="none"><path d="M9 6l6 6-6 6" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"/></svg>
+            </span>
+          </div>
+        </div>
+      </div>
+
+      <div class="agent-body" id="agentBody">
+        <!-- 对话流：提问 + 思考卡片 + 答案 -->
+        <div class="agent-conv" id="agentConv" style="display:none">
+          <div class="user-bubble" id="userBubble">今天大盘为什么突然涨这么多？我手上的军工还能继续拿吗？</div>
+          <div class="think-card" id="thinkCard">
+            <div class="think-head">
+              <span class="think-spinner"></span>
+              <i class="iconfont icon-chenggong think-check"></i>
+              <span class="think-title" id="thinkTitle">问题思考中（预估20秒）</span>
+              <i class="iconfont icon-shixinjiantou-you think-fold"></i>
+            </div>
+            <div class="think-steps">
+              <div class="think-step done">
+                <div class="step-dot"><i class="iconfont icon-chenggong" style="font-size:14px"></i></div>
+                <div>
+                  <span class="step-text">关键数据检索完成</span>
+                  <span class="step-sub">·分析方法库：综合分析+行情数据</span>
+                </div>
+              </div>
+              <div class="think-step" id="thinkStep2">
+                <div class="step-dot"></div>
+                <div>
+                  <span class="step-text" id="step2Text">补充查询数据和资料中…</span>
+                  <span class="step-sub">·思考中的内容默认全部展示在页面中，可上滑查看</span>
+                </div>
+              </div>
+            </div>
+          </div>
+          <div class="answer-block" id="answerBlock"><span id="answerText"></span><span class="caret"></span></div>
+        </div>
+
+        <!-- 新版首页推荐问 (从其它入口进入时显示;情况② 提示改由导航栏侧边栏旁气泡承载) -->
+        <div class="agent-welcome-v2" id="agentWelcomeV2" style="display:none">
+          <div class="welcome-card-v2">
+            <div class="welcome-avatar-v2">
+              <img src="assets/icons/xiaobao.svg" alt="小宝">
+            </div>
+            <div class="welcome-head-default">
+              <div class="welcome-hello-v2">Hello～</div>
+              <div class="welcome-title-v2">尊敬的AI服务体验官！</div>
+              <div class="welcome-sub-v2">有什么投资的问题，尽管问我！</div>
+            </div>
+            <!-- 国金FM 资讯子卡 -->
+            <div class="fm-card">
+              <svg class="fm-icon" viewBox="0 0 56 56" fill="none">
+                <rect x="4" y="8" width="48" height="40" rx="10" fill="#8B9BF7"/>
+                <rect x="10" y="14" width="26" height="18" rx="4" fill="#FFFFFF"/>
+                <circle cx="40" cy="36" r="8" fill="#FFFFFF"/>
+                <path d="M40 31v5l3.5 2" stroke="#8B9BF7" stroke-width="2.4" stroke-linecap="round"/>
+              </svg>
+              <div class="fm-body">
+                <div class="fm-title">美股欧股普跌科技股领跌，白银加速赶顶…</div>
+                <div class="fm-sub">国金FM&nbsp;&nbsp;2026年4月20日&nbsp;&nbsp;早报</div>
+              </div>
+            </div>
+            <div class="rec-list-v2">
+              <div class="rec-item-v2" data-q="智能工具使用后为什么还亏钱？">
+                <span class="rec-dot-v2"></span>
+                <span class="rec-text-v2">智能工具使用后为什么还亏钱？</span>
+                <i class="iconfont icon-shixinjiantou-you rec-arrow-v2"></i>
+              </div>
+              <div class="rec-item-v2" data-q="影子账户收费模式总结">
+                <span class="rec-dot-v2"></span>
+                <span class="rec-text-v2">影子账户收费模式总结</span>
+                <i class="iconfont icon-shixinjiantou-you rec-arrow-v2"></i>
+              </div>
+              <div class="rec-item-v2" data-q="智能产品签约流程为什么这么长？">
+                <span class="rec-dot-v2"></span>
+                <span class="rec-text-v2">智能产品签约流程为什么这么长？</span>
+                <i class="iconfont icon-shixinjiantou-you rec-arrow-v2"></i>
+              </div>
+              <div class="rec-item-v2" data-q="综艺股份还能买吗？">
+                <span class="rec-dot-v2"></span>
+                <span class="rec-text-v2">综艺股份还能买吗？</span>
+                <i class="iconfont icon-shixinjiantou-you rec-arrow-v2"></i>
+              </div>
+            </div>
+            <div class="refresh-btn-v2">
+              <i class="iconfont icon-huanyihuan"></i>
+              <span>换一换</span>
+            </div>
+          </div>
+        </div>
+
+        <!-- 异常情况界面(方案一§3.2:系统异常(回答超时),对话流内错误卡;不再考虑APP进程被杀) -->
+        <div class="agent-error" id="agentError" style="display:none">
+          <div class="error-time">今天 10:01</div>
+          <div class="user-bubble" id="errorQuestion">今天大盘为什么突然涨这么多？我手上的军工还能继续拿吗？</div>
+          <div class="error-card">
+            <svg class="err-ic" viewBox="0 0 40 40" fill="none">
+              <circle cx="20" cy="20" r="20" fill="#F93838"/>
+              <rect x="13" y="13" width="14" height="14" rx="3" fill="#FFFFFF"/>
+            </svg>
+            <span class="err-text" id="errorText">问题回答异常</span>
+            <span class="error-regen" id="errorRegenBtn">
+              <svg viewBox="0 0 30 30" fill="none">
+                <path d="M25 15a10 10 0 1 1-2.93-7.07" stroke="currentColor" stroke-width="2.4" stroke-linecap="round"/>
+                <path d="M25 4v5h-5" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"/>
+              </svg>
+              重新生成
+            </span>
+          </div>
+          <div class="error-disclaimer">以上内容由AI生成，不代表我司立场，且无法保证所有生成内容的真实性、准确性和可靠性，输出内容仅供参考，不构成您采取任何行动或投资决策依据。您应自行评估任何输出内容的真实性、准确性和可靠性，并承担因使用该内容而引起的所有风险。同时应确保您输入的内容未侵害他人合法权利，请勿输入或引导大模型输出涉嫌违法、不良的内容。</div>
+          <div class="error-fb-row">
+            <div class="fb-like-group">
+              <svg viewBox="0 0 36 36" fill="none">
+                <path d="M10 16v14H6a2 2 0 0 1-2-2V18a2 2 0 0 1 2-2h4Zm0 0 6.2-10.9a2.6 2.6 0 0 1 4.85 1.3V13h7.6a3 3 0 0 1 2.96 3.5l-1.9 10A3 3 0 0 1 26.77 29H10" stroke="#55555E" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"/>
+              </svg>
+              <svg viewBox="0 0 36 36" fill="none">
+                <path d="M26 20V6h4a2 2 0 0 1 2 2v10a2 2 0 0 1-2 2h-4Zm0 0-6.2 10.9a2.6 2.6 0 0 1-4.85-1.3V23h-7.6a3 3 0 0 1-2.96-3.5l1.9-10A3 3 0 0 1 9.23 7H26" stroke="#55555E" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"/>
+              </svg>
+            </div>
+            <div class="fb-advisor">
+              <img src="assets/icons/xiaobao.svg" alt="顾问">
+              <span>找顾问</span>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- 工具栏 + 输入栏(问答页/首页推荐问统一使用新版;参考图:深度思考高亮胶囊 + 任务中心/业务办理/找客服) -->
+      <div class="agent-toolbar-v2" id="agentToolbarV2">
+        <div class="agent-tool-chip-v2 active">
+          <i class="iconfont icon-guandian"></i>
+          <span>深度思考</span>
+        </div>
+        <div class="agent-tool-chip-v2">
+          <i class="iconfont icon-rili"></i>
+          <span>任务中心</span>
+        </div>
+        <div class="agent-tool-chip-v2">
+          <i class="iconfont icon-bianji"></i>
+          <span>业务办理</span>
+        </div>
+        <div class="agent-tool-chip-v2">
+          <i class="iconfont icon-bangzhu"></i>
+          <span>找客服</span>
+        </div>
+      </div>
+      <div class="agent-inputbar-v2" id="agentInputV2">
+        <div class="voice-icon">
+          <svg viewBox="0 0 32 32" fill="none" width="28" height="28">
+            <rect x="12" y="4" width="8" height="16" rx="4" fill="#fff"/>
+            <path d="M7 15C7 20 11 23.5 16 23.5C21 23.5 25 20 25 15" stroke="#fff" stroke-width="2.5" stroke-linecap="round" fill="none"/>
+            <path d="M16 23.5V28" stroke="#fff" stroke-width="2.5" stroke-linecap="round"/>
+          </svg>
+        </div>
+        <span class="input-ph-v2">发消息或按住说话...</span>
+      </div>
+      <div class="home-indicator"><div class="home-bar"></div></div>
+    </div>
+
+    <!-- 场景化并行:半弹窗(新开对话调缓存秒答;关闭按钮=库 gradient/agent-close.svg) -->
+    <!-- 侧边栏抽屉(参考 方案一 截图:国金FM 历史对话;未读消息以「未读」标签标注) -->
+    <div class="side-drawer-mask" id="sideDrawerMask"></div>
+    <div class="side-drawer" id="sideDrawer">
+      <div class="drawer-head">
+        <div class="drawer-logo">
+          <svg viewBox="0 0 56 56" fill="none">
+            <rect x="4" y="8" width="48" height="40" rx="10" fill="#8B9BF7"/>
+            <rect x="10" y="14" width="26" height="18" rx="4" fill="#FFFFFF"/>
+            <circle cx="40" cy="36" r="8" fill="#FFFFFF"/>
+            <path d="M40 31v5l3.5 2" stroke="#8B9BF7" stroke-width="2.4" stroke-linecap="round"/>
+          </svg>
+          <span>国金 FM</span>
+        </div>
+        <div class="drawer-head-icons">
+          <svg viewBox="0 0 40 40" fill="none">
+            <rect x="6" y="8" width="28" height="26" rx="6" stroke="currentColor" stroke-width="2.6"/>
+            <path d="M6 16h28M14 5v6M26 5v6" stroke="currentColor" stroke-width="2.6" stroke-linecap="round"/>
+            <path d="M15 24l4 4 7-7" stroke="currentColor" stroke-width="2.6" stroke-linecap="round" stroke-linejoin="round"/>
+          </svg>
+          <i class="iconfont icon-sousuo"></i>
+        </div>
+      </div>
+      <div class="drawer-scroll">
+        <div class="drawer-card">
+          <div class="drawer-card-news">港澳台及获得中国永久居留资格的…</div>
+        </div>
+        <div class="drawer-card">
+          <div class="drawer-card-title">历史对话</div>
+          <div class="drawer-group">今日</div>
+          <!-- 主动提问历史(动态渲染;§3.1b 多轮提问各自保留「未读」标注,仅最新一次会触发提醒) -->
+          <div id="drawerToday"></div>
+          <div class="drawer-q">
+            <span class="dq-text">7月28日投资避雷针：美股费城半…</span>
+            <span class="dq-badge">未读</span>
+          </div>
+          <div class="drawer-group">昨天</div>
+          <div class="drawer-q">
+            <span class="dq-text">【每日收评】创业板指涨超3%，全…</span>
+            <span class="dq-badge">未读</span>
+          </div>
+          <div class="drawer-q">
+            <span class="dq-text">红板科技扩产高端 PCB</span>
+            <span class="dq-badge">未读</span>
+          </div>
+          <div class="drawer-group">7月23日</div>
+          <div class="drawer-q">
+            <span class="dq-text">科创50、创业板指探底回升超6%</span>
+            <span class="dq-badge">未读</span>
+          </div>
+          <div class="drawer-q">
+            <span class="dq-text">国金提供哪些高端金融服务?</span>
+            <span class="dq-badge">未读</span>
+          </div>
+        </div>
+        <div class="drawer-newchat" id="drawerNewChat">
+          <svg viewBox="0 0 36 36" fill="none">
+            <path d="M6 8h24v18H16l-6 5v-5H6V8Z" stroke="currentColor" stroke-width="2.4" stroke-linejoin="round"/>
+            <path d="M18 13v8M14 17h8" stroke="currentColor" stroke-width="2.4" stroke-linecap="round"/>
+          </svg>
+          <span>新建对话</span>
+        </div>
+      </div>
+      <div class="drawer-foot">
+        <div class="df-item">
+          <svg viewBox="0 0 44 44" fill="none">
+            <rect x="9" y="6" width="26" height="32" rx="5" stroke="currentColor" stroke-width="2.6"/>
+            <path d="M16 15h12M16 22h12M16 29h7" stroke="currentColor" stroke-width="2.6" stroke-linecap="round"/>
+          </svg>
+          <span>备案信息</span>
+        </div>
+        <div class="df-item">
+          <svg viewBox="0 0 44 44" fill="none">
+            <rect x="7" y="8" width="30" height="26" rx="6" stroke="currentColor" stroke-width="2.6"/>
+            <path d="M26 8l-8 18M15 15l-4 4 4 4M29 15l4 4-4 4" stroke="currentColor" stroke-width="2.6" stroke-linecap="round" stroke-linejoin="round"/>
+          </svg>
+          <span>意见反馈</span>
+        </div>
+        <div class="df-item">
+          <svg viewBox="0 0 44 44" fill="none">
+            <circle cx="22" cy="22" r="6" stroke="currentColor" stroke-width="2.6"/>
+            <path d="M22 6v6M22 32v6M6 22h6M32 22h6M10.7 10.7l4.2 4.2M29.1 29.1l4.2 4.2M33.3 10.7l-4.2 4.2M14.9 29.1l-4.2 4.2" stroke="currentColor" stroke-width="2.6" stroke-linecap="round"/>
+          </svg>
+          <span>设置</span>
+        </div>
+      </div>
+    </div>
+
+    <div class="scene-sheet-mask" id="sceneSheetMask"></div>
+    <div class="scene-sheet" id="sceneSheet">
+      <div class="sheet-grab"></div>
+      <div class="sheet-nav">
+        <div class="agent-logo">AI投顾</div>
+        <img class="sheet-close" id="sceneSheetClose" src="assets/icons/agent-close.svg" alt="关闭">
+      </div>
+      <div class="sheet-body" id="sceneSheetBody">
+        <div class="user-bubble">板块异动AI总结</div>
+        <div class="scene-cache-tip"><i class="iconfont icon-chenggong"></i>已调用缓存结果，秒出解读</div>
+        <div class="answer-block show finished" id="sceneAnswer">13:30 军工板块发生大幅拉升，中航沈飞领涨。驱动因素：一是行业景气度持续验证，中报订单同比高增；二是低空经济与大飞机产业链催化密集落地。资金面看，军工ETF（512660）今日放量上涨1.86%，主力资金净流入居两市前列。综合判断，板块短线情绪偏强，建议关注主机厂与发动机链核心标的，注意追高风险。</div>
+        <div class="scene-rec-item" data-q="军工板块还能上车吗？"><span>军工板块还能上车吗？</span><i class="iconfont icon-shixinjiantou-you"></i></div>
+        <div class="scene-rec-item" data-q="中航沈飞当前估值贵不贵？"><span>中航沈飞当前估值贵不贵？</span><i class="iconfont icon-shixinjiantou-you"></i></div>
+      </div>
+      <div class="agent-toolbar">
+        <span class="agent-tool-chip"><i class="iconfont icon-guandian"></i> 深度思考</span>
+        <span class="agent-tool-chip"><i class="iconfont icon-bangzhu"></i> 找客服</span>
+      </div>
+      <div class="agent-inputbar" id="sceneInput">
+        <img src="assets/icons/agent-orb-wave.svg" alt="">
+        <span class="input-ph">发消息或按住说话...</span>
+        <div class="agent-send"><i class="iconfont icon-shixinjiantou-shang"></i></div>
+      </div>
+    </div>
+
+    <!-- 底部浮层 (首页图标=库 bottom-nav/home-active.svg；小宝=gradient/xiaobao.svg；语音球=gradient/agent-orb-wave.svg) -->
+    <div class="floating-layer" id="floatingLayer">
+      <!-- 投资者的一天·底部信息栏「异动通知」态(库 C03 一级页面底部导航栏之信息栏 A;实时图标=库 market/shishi.svg) -->
+      <div class="info-A gj-ibi gj-ibi60" id="infoBar">
+        <div class="gj-ibi-row t12">
+          <span class="gj-ibi-ico"><img src="assets/icons/shishi.svg" alt="实时"></span>
+          <span class="gj-ibi-txt">军工板块异动拉升，中航沈飞涨超5%</span>
+        </div>
+      </div>
+
+      <!-- 消息提示气泡(唯一方案):回答完成后统一显示,覆盖「投资者的一天」信息栏
+           样式对齐 guojin-home-demo1:浅紫渐变圆角卡 + 底部小三角指向语音球;内容=标签 + 问 / 答两行(单行截断) -->
+      <div class="msg-bubble2" id="msgBubble2">
+        <div class="toast-copy">
+          <span class="toast-flag">回答完毕</span>
+          <b class="toast-q" id="mbQ">今天大盘为什么突然涨这么多？我手上的军工还能继续拿吗？</b>
+          <small class="toast-a" id="mbA">今日大盘呈现震荡上行格局：上证指数收涨0.82%，科创50放量拉升近7%，军工、AI算力方向领涨。北向资金全天净流入58亿元。综合来看，市场情绪回暖，建议关注景气度持续验证的军工与科技主线，控制仓位、逢低分批布局。</small>
+        </div>
+        <button type="button" class="toast-close mb2-close" id="msgBubble2Close" aria-label="关闭">×</button>
+        <!-- 气泡指向尾巴(卡片几何形状延伸,非功能图标;库内无 callout-tail 资产,内联 SVG 等腰三角,fill 取 P3) -->
+        <svg class="toast-tail" viewBox="0 0 36 18" aria-hidden="true"><polygon points="0,0 36,0 18,18" fill="currentColor"/></svg>
+      </div>
+
+      <div class="bottom-bar expanded" id="bottomBar">
+        <!-- 底部导航栏(v8 悬浮胶囊):常规态 5 tab;消息提示态仅保留当前页按钮 -->
+        <div class="gj-bnav" id="gjBnav">
+          <div class="gj-bnav-tab is-on" data-tab="home">
+            <img src="assets/icons/home-active.svg" alt=""><span>首页</span>
+          </div>
+          <div class="gj-bnav-tab" data-tab="watchlist">
+            <img src="assets/icons/watchlist-inactive.svg" alt=""><span>自选</span>
+          </div>
+          <div class="gj-bnav-tab" data-tab="trade">
+            <img src="assets/icons/trade-inactive.svg" alt=""><span>交易</span>
+          </div>
+          <div class="gj-bnav-tab" data-tab="finance">
+            <img src="assets/icons/finance-inactive.svg" alt=""><span>理财</span>
+          </div>
+          <div class="gj-bnav-tab" data-tab="mine">
+            <img src="assets/icons/mine-inactive.svg" alt=""><span>我的</span>
+          </div>
+        </div>
+
+        <!-- 语音球 -->
+        <div class="msg-container">
+          <div class="voice-orb-wrapper">
+            <div class="voice-orb" id="voiceOrb" data-guide="voice">
+              <img src="assets/icons/agent-orb-clean.svg" alt="智能体语音球">
+              <div class="orb-overlay">
+                <!-- 引导态:三层声波扩散(声波光环①②) -->
+                <div class="wave-ripple"></div>
+                <div class="wave-ripple"></div>
+                <div class="wave-ripple"></div>
+                <div class="orb-guide">
+                  <div class="g-voice">
+                    <svg class="g-icon" viewBox="0 0 32 32" fill="none">
+                        <rect x="12" y="4" width="8" height="16" rx="4" fill="#fff"/>
+                        <path d="M7 15C7 20 11 23.5 16 23.5C21 23.5 25 20 25 15" stroke="#fff" stroke-width="2.5" stroke-linecap="round" fill="none"/>
+                        <path d="M16 23.5V28" stroke="#fff" stroke-width="2.5" stroke-linecap="round"/>
+                    </svg>
+                    <div class="g-arc"><span>长</span><span>按</span><span>说</span><span>话</span></div>
+                  </div>
+                  <div class="g-input">
+                    <svg class="g-icon" viewBox="0 0 32 32" fill="none">
+                        <rect x="3" y="8" width="26" height="16" rx="3" stroke="#fff" stroke-width="2.5"/>
+                        <path d="M8 13H10M14 13H16M20 13H22M8 18H10M14 18H16M20 18H22M10 21H22" stroke="#fff" stroke-width="2" stroke-linecap="round"/>
+                    </svg>
+                    <div class="g-arc"><span>点</span><span>击</span><span>输</span><span>入</span></div>
+                  </div>
+                </div>
+                <!-- 思考态:呼吸光晕 + 进度环 + 搜索脉冲(声波光环③) -->
+                <div class="orb-breath"></div>
+                <div class="orb-search">
+                  <svg viewBox="0 0 36 36" fill="none">
+                    <circle cx="15" cy="15" r="9" stroke="#fff" stroke-width="3"/>
+                    <path d="M22 22L30 30" stroke="#fff" stroke-width="3.5" stroke-linecap="round"/>
+                  </svg>
+                </div>
+                <div class="orb-ring">
+                  <svg viewBox="0 0 96 96">
+                    <defs>
+                      <linearGradient id="orbRingGrad" x1="0" y1="0" x2="1" y2="1">
+                        <stop offset="0%" stop-color="#667FFF"/>
+                        <stop offset="50%" stop-color="#8B52FF"/>
+                        <stop offset="100%" stop-color="#FF7CC0"/>
+                      </linearGradient>
+                    </defs>
+                    <circle class="ring-bg" cx="48" cy="48" r="45"/>
+                    <circle class="ring-progress" id="orbRingProgress" cx="48" cy="48" r="45"/>
+                  </svg>
+                </div>
+                <!-- 完成态:对勾(声波光环④;未读提示统一走侧边栏,不再出球上红点) -->
+                <div class="orb-check">
+                  <svg viewBox="0 0 44 44" fill="none">
+                    <circle cx="22" cy="22" r="20" fill="rgba(255,255,255,0.92)"/>
+                    <path d="M13 22.5L19.5 29L31 16" stroke="#8B52FF" stroke-width="4" stroke-linecap="round" stroke-linejoin="round"/>
+                  </svg>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Home Indicator -->
+      <div class="home-indicator">
+        <div class="home-bar"></div>
+      </div>
+    </div>
+
+  </div>
+</div>
+
+<!-- ============ 演示控制台(手机外,不属于产品 UI) ============ -->
+<div class="demo-console">
+  <h3>小宝异步提醒 · 演示台 v9 <span class="dc-state" id="dcState">常规态</span></h3>
+  <div class="dc-cols">
+    <div class="dc-col">
+      <div class="dc-guide" id="dcGuide">
+        <b>演示路径</b>：点语音球进智能体 → 点推荐问/场景入口提问 → 思考中点「×」退出回首页 → 观察语音球<b>思考态</b> → 回答完成时按<b>「①是否在APP内一级界面 ②提问账号是否登录」双重检测</b>决定提醒时机：满足则<b>立即出气泡</b>覆盖「投资者的一天」(两行：【回答完毕】+问 / 答)，否则<b>挂起</b>，点「进入APP/登录」按钮补发 → 点气泡回到对话定位答案 → 或错过气泡后按「距上一提问」三档观察重进表现。
+      </div>
+      <div class="dc-mode-row">
+        <span class="dc-mode-label">距上一提问</span>
+        <button class="dc-mode-btn active" id="dcWin10">10min内</button>
+        <button class="dc-mode-btn" id="dcWin4h">10min~4h</button>
+        <button class="dc-mode-btn" id="dcWinOver">超过4h</button>
+      </div>
+      <div class="dc-mode-row">
+        <span class="dc-mode-label">完成时检测</span>
+        <button class="dc-mode-btn active" id="dcChkIn">在APP一级界面·已登录</button>
+        <button class="dc-mode-btn" id="dcChkOut">不在APP一级界面</button>
+        <button class="dc-mode-btn" id="dcChkLogout">已登出提问账号</button>
+        <button class="dc-btn small" id="dcChkBack">进入APP/登录 → 补发</button>
+      </div>
+      <div class="dc-btns">
+        <button class="dc-btn primary" id="dcAsk">一键演示：提问并退出</button>
+        <button class="dc-btn" id="dcFinishNow">立即完成回答</button>
+        <button class="dc-btn" id="dcAskAgain">再问一个新问题</button>
+        <button class="dc-btn" id="dcTimeout">模拟气泡超时(5s)</button>
+        <button class="dc-btn" id="dcMidnight">模拟跨24:00(红点/未读失效)</button>
+        <button class="dc-btn" id="dcPin">保留气泡(不自动收起)</button>
+        <button class="dc-btn reset" id="dcReset">重置全部状态</button>
+      </div>
+      <div class="dc-log" id="dcLog"></div>
+    </div>
+
+    <div class="dc-col">
+      <div class="dc-guide">
+        <b>消息提示</b>：仅「底导上方气泡」一种形式，<b>覆盖「投资者的一天」信息栏</b>（显示时隐藏该信息栏，收起后复原），内容为<b>【回答完毕】+问 / 答两行</b>（各单行截断，始终两行），右上「×」可去除，「×」下方为<b>「&gt;&gt;」脉冲</b>；<b>5s</b> 未点击自动收起转未读。<br>
+        <b>出现时机（状态3 双重检测）</b>：回答完成时检测 <b>①用户是否在APP内一级界面 ②提问账号是否登录</b> —— 在一级界面且未登出则<b>回答完成后即出气泡</b>；不在一级界面或已登出则<b>提醒挂起</b>，等用户<b>下一次进入APP / 登录提问账号</b>时（限提问后 <b>4h</b> 内）补发，超 4h 作废、仅留未读。<br>
+        <b>未读消息</b>：侧边栏按钮（三条杠）右上角<b>小红点</b> + 历史对话该条打「<b>未读</b>」标签；<b>首页与智能体内侧边栏共用</b>同一套标注；<b>小红点与未读标签 24:00 失效</b>。<br>
+        <b>AI回答进程</b>：不管是否退出智能体界面、是否杀掉后台进程，AI都<b>继续回答</b>。
+      </div>
+
+      <div class="dc-notes">
+        <div class="dc-note-card">
+          <div class="dc-note-title"><span class="dot purple"></span>提问后退出并重进智能体的显示界面（场景化除外，三种情况）</div>
+          <ul class="dc-note-list">
+            <li><span class="num">1</span>距上一提问<b>10min内</b>，点击任意智能体入口 → 都<b>定位到上一次提问</b>（思考中则定位查看进度）</li>
+            <li><span class="num">2</span>10min内<b>未进入</b>智能体，则距上一提问<b>4h内</b>且回答仍「未读」，点击任意入口 → 显示<b>首页推荐问</b>，且侧边栏旁弹出<b>蓝紫毛玻璃气泡</b>（两行：【回答完毕】+提问 / 回答），<b>出现时脉冲一次</b>，点击气泡定位到上一个问题；<b>保持1min后自动消失</b>，点「×」也可手动收起（「×」下方为「&gt;&gt;」脉冲），未读保留</li>
+            <li><span class="num">3</span>距上一提问<b>4h后</b>重进 → 显示首页推荐问，侧边栏旁气泡<b>消失</b></li>
+          </ul>
+          <div style="margin-top:14px;display:flex;gap:10px;flex-wrap:wrap">
+            <button class="dc-btn small" onclick="demoScene1()">演示①：10min内·定位上次提问</button>
+            <button class="dc-btn small" onclick="demoScene2()">演示②：4h内·推荐问+侧边栏旁气泡</button>
+            <button class="dc-btn small" onclick="demoScene3()">演示③：4h后·气泡消失</button>
+          </div>
+        </div>
+
+        <div class="dc-note-card">
+          <div class="dc-note-title"><span class="dot blue"></span>多对话并行（§3.1）</div>
+          <ul class="dc-note-list">
+            <li><span class="num">a</span>与<b>直接调缓存回答</b>的场景并行：<b>新开窗口</b>，独立于上述主动提问，<b>不出现消息提醒，也不引入未读消息</b></li>
+            <li><span class="num">b</span>与<b>新对话/其它对话追问</b>并行：消息提醒以<b>最新一次提问</b>为准，此前的提问<b>仅显示未读</b>，不再提醒回答完成</li>
+          </ul>
+          <div class="dc-note-sub">例：点击「板块异动」卡片 → 智能体界面开新窗口快速回答「板块异动AI总结」</div>
+          <div style="margin-top:14px;display:flex;gap:10px;flex-wrap:wrap">
+            <button class="dc-btn small" onclick="openSceneSheet('板块异动AI总结')">演示 a：板块异动·AI解读</button>
+            <button class="dc-btn small" onclick="demoLatestOnly()">演示 b：两次提问·只提醒最新</button>
+          </div>
+        </div>
+
+        <div class="dc-note-card">
+          <div class="dc-note-title"><span class="dot orange"></span>异常情况（§3.2）</div>
+          <ul class="dc-note-list">
+            <li>仅指 <b>系统异常（回答超时）</b>，不再考虑APP后台进程是否被杀</li>
+            <li><b>不出现消息提示气泡</b>，也<b>不引入未读</b>（侧边栏无红点、历史对话无「未读」标注）</li>
+            <li>下一次回到智能体界面时，<b>直接显示首页推荐问</b></li>
+            <li>用户仍可通过<b>侧边栏历史消息</b>查看错误信息（点击相应会话后显示错误界面），可点「<b>重新生成</b>」重答</li>
+          </ul>
+          <div style="margin-top:14px;display:flex;gap:10px;flex-wrap:wrap">
+            <button class="dc-btn small" onclick="triggerError()">模拟系统异常(超时)</button>
+            <button class="dc-btn small" onclick="openDrawer()">打开侧边栏查看</button>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<script>
+// Tab 切换交互
+document.querySelectorAll('.nav-tabs').forEach(tabs => {
+  tabs.querySelectorAll('.nav-tab').forEach(tab => {
+    tab.addEventListener('click', () => {
+      tabs.querySelectorAll('.nav-tab').forEach(t => t.classList.remove('is-on'));
+      tab.classList.add('is-on');
+    });
+  });
+});
+
+document.querySelectorAll('.ai-tabs').forEach(tabs => {
+  tabs.querySelectorAll('.ai-tab').forEach(tab => {
+    tab.addEventListener('click', () => {
+      tabs.querySelectorAll('.ai-tab').forEach(t => t.classList.remove('is-on'));
+      tab.classList.add('is-on');
+    });
+  });
+});
+
+/* ============================================================
+ * 「小宝异步提醒」状态机 v9(对齐 方案一/需求草稿1 2026-08-10)
+ * IDLE 常规 → THINKING 思考中 → DONE_BUBBLE 完成(底导上方气泡5s)
+ * → UNREAD 未读(侧边栏红点+历史对话「未读」标注) → 定位查看 → IDLE
+ * v9 变更(相对 v8):
+ *  - 状态3:回答完成时恢复双重检测 ①是否在APP内一级界面 ②提问账号是否登录
+ *    · 在一级界面且未登出 → 回答完成后即出气泡
+ *    · 不在一级界面/已登出 → 提醒挂起,等下次进入APP或登录提问账号时补发(限提问后4h内)
+ *  - 状态4:侧边栏小红点与历史对话「未读」标签 24:00 失效(过期后仅保留会话,不再标未读)
+ *  - 状态5.2:侧边栏旁气泡出现时脉冲「一次」(v8 为两次)
+ *  - §3.1b:多对话并行 → 消息提醒以「最新一次提问」为准,此前提问仅保留未读、不再提醒完成
+ * 沿用规则:
+ *  - 消息提示仅「底导上方气泡」,覆盖「投资者的一天」信息栏,内容=【回答完毕】+问 / 答两行
+ *  - 未读仅走侧边栏:三条杠红点 + 历史对话「未读」标签
+ *  - 重进智能体三种情况(场景化除外):①10min内定位上次提问 ②10min~4h内未读 → 推荐问+侧边栏旁气泡
+ *    ③4h后 → 推荐问,气泡消失
+ *  - 系统异常(回答超时):不出气泡、不引入未读,错误信息仅从侧边栏历史消息进入
+ * 补充逻辑(草稿未写明,按合理交互补齐):
+ *  - 思考中点任意入口 = 定位上一提问查看进度
+ *  - 回答完成时正停留在对话页:不打扰,直接展示答案(视为已读)
+ *  - 底部气泡点「×」/点底导切页 = 收起气泡,保留未读
+ *  - 侧边栏旁气泡点「×」= 仅收起本次提示,未读标注保留,下次进入4h内仍会弹出
+ * ============================================================ */
+(function () {
+  var $ = function (id) { return document.getElementById(id); };
+  var orb = $('voiceOrb'), ringP = $('orbRingProgress');
+  var msgBubble2 = $('msgBubble2'), msgBubble2Close = $('msgBubble2Close');
+  var agentTipBubble = $('agentTipBubble'), agentTipClose = $('agentTipClose');
+  var agentPage = $('agentPage'), agentBody = $('agentBody');
+  var agentConv = $('agentConv');
+  var agentWelcomeV2 = $('agentWelcomeV2'), agentError = $('agentError');
+  var agentNavV2 = $('agentNavV2'), agentCloseV2 = $('agentCloseV2');
+  var agentInputV2 = $('agentInputV2');
+  var userBubble = $('userBubble'), thinkCard = $('thinkCard'), thinkTitle = $('thinkTitle');
+  var step2Text = $('step2Text'), thinkStep2 = $('thinkStep2');
+  var answerBlock = $('answerBlock'), answerText = $('answerText');
+  var errorRegenBtn = $('errorRegenBtn');
+  var dcState = $('dcState'), dcLog = $('dcLog');
+
+  var THINK_MS = 12000;      // 模拟回答耗时
+  var BUBBLE_MS = 5000;      // 气泡驻留 5s(草稿状态3)
+  var RING_LEN = 283;        // 2πr, r=45
+
+  var state = 'IDLE';        // IDLE | THINKING | DONE_BUBBLE | UNREAD
+  var pendingError = null;   // null | 'timeout'(系统异常·回答超时;不出提醒也不引入未读)
+  var currentQuestion = '';  // 最近一次主动提问
+  var inAgent = false;       // 当前是否在智能体页
+  var hasQuestion = false;   // 是否存在"上一个主动提问"
+  var answerDone = false;    // 上一个提问的回答是否已完成
+  var unreadAnswer = false;  // 已完成的回答是否仍未读(未定位查看过)
+  var tipDismissed = false;  // 本次侧边栏旁气泡是否被「×」收起(仅收起本次,重进仍弹)
+  var pinBubble = false;     // 演示台开关:保留气泡不自动收起(仅演示用,不属产品逻辑)
+  var timeWindow = 'in10';   // 距上一提问:in10=10min内 | in4h=10min~4h | over4h=超过4h(演示台模拟)
+  /* 状态3 双重检测(演示台模拟):atL1=是否在APP内一级界面;acctLoggedIn=提问账号是否仍登录 */
+  var atL1 = true;
+  var acctLoggedIn = true;
+  var pendingNotify = false; // 提醒已挂起,待用户下次进入APP/登录提问账号时补发(限4h内)
+  var badgesExpired = false; // 状态4:小红点与「未读」标签是否已过 24:00 失效
+  /* §3.1b 多对话并行:sessions 保存今日主动提问(index 0 = 最新);cur 指向最新一次提问 */
+  var sessions = [];
+  var cur = null;
+  var timers = [];
+  var ringTimer = null;
+  var typeTimer = null;
+
+  var QUESTION = '今天大盘为什么突然涨这么多？我手上的军工还能继续拿吗？';
+  var ANSWER = '今日大盘呈现震荡上行格局：上证指数收涨0.82%，科创50放量拉升近7%，军工、AI算力方向领涨。北向资金全天净流入58亿元。综合来看，市场情绪回暖，建议关注景气度持续验证的军工与科技主线，控制仓位、逢低分批布局。';
+
+  function log(msg, hl) {
+    var t = new Date().toTimeString().slice(0, 8);
+    dcLog.insertAdjacentHTML('afterbegin',
+      '<div><span class="t">' + t + '</span>' + (hl ? '<span class="hl">' + msg + '</span>' : msg) + '</div>');
+  }
+
+  function later(fn, ms) { var t = setTimeout(fn, ms); timers.push(t); return t; }
+  function clearTimers() {
+    timers.forEach(clearTimeout); timers = [];
+    if (answerTimer) { clearTimeout(answerTimer); answerTimer = null; }
+    if (ringTimer) { clearInterval(ringTimer); ringTimer = null; }
+    if (typeTimer) { clearInterval(typeTimer); typeTimer = null; }
+  }
+
+  /* ---- 声波光环·引导态:常规/未读时循环「长按说话3s / 点击输入3s」交替 ---- */
+  var guideTimer = null;
+  function startGuide() {
+    orb.classList.add('is-guide');
+    orb.setAttribute('data-guide', 'voice');
+    if (guideTimer) clearInterval(guideTimer);
+    var voice = true;
+    guideTimer = setInterval(function () {
+      voice = !voice;
+      orb.setAttribute('data-guide', voice ? 'voice' : 'input');
+    }, 3000);
+  }
+  function stopGuide() {
+    if (guideTimer) { clearInterval(guideTimer); guideTimer = null; }
+    orb.classList.remove('is-guide');
+  }
+
+  /* ---- 底部导航栏(v8):始终保持原样,仅切换当前页 tab ---- */
+  function setTab(target) {
+    document.querySelectorAll('.gj-bnav-tab').forEach(function (t) {
+      var on = t === target;
+      t.classList.toggle('is-on', on);
+      t.querySelector('img').src = 'assets/icons/' + t.dataset.tab + '-' + (on ? 'active' : 'inactive') + '.svg';
+    });
+  }
+
+  /* ---- 未读指示(唯一方案:侧边栏):三条杠红点 + 历史对话「未读」标签
+   *      状态4:两者均 24:00 失效;系统异常不引入未读(§3.2)
+   *      §3.1b:多条提问各自保留「未读」,提醒只认最新一次 ---- */
+  var menuDot = $('menuDot'), drawerToday = $('drawerToday');
+  var sideDrawer = $('sideDrawer'), sideDrawerMask = $('sideDrawerMask');
+
+  function unreadCount() {
+    if (badgesExpired) return 0;
+    return sessions.filter(function (s) { return s.unread; }).length;
+  }
+
+  function renderHistory() {
+    drawerToday.innerHTML = '';
+    sessions.forEach(function (s, i) {
+      var showBadge = s.unread && !badgesExpired;
+      var row = document.createElement('div');
+      row.className = 'drawer-q' + (showBadge ? ' unread' : '');
+      row.dataset.idx = i;
+      row.innerHTML = '<span class="dq-text"></span><span class="dq-badge">未读</span>';
+      row.querySelector('.dq-text').textContent = s.q;
+      row.addEventListener('click', function () { openHistory(s); });
+      drawerToday.appendChild(row);
+    });
+  }
+
+  function updateDots() {
+    menuDot.classList.toggle('show', unreadCount() > 0);
+    renderHistory();
+  }
+
+  function setState(s) {
+    state = s;
+    orb.classList.remove('is-thinking', 'is-done', 'is-unread');
+    var label = { IDLE: '常规态', THINKING: '思考态', DONE_BUBBLE: '完成·气泡', UNREAD: '未读·侧边栏' }[s];
+    dcState.textContent = label;
+    if (s === 'THINKING') { stopGuide(); orb.classList.add('is-thinking'); }
+    else if (s === 'DONE_BUBBLE') { stopGuide(); orb.classList.add('is-done'); }
+    else if (s === 'UNREAD') { orb.classList.add('is-unread'); startGuide(); }
+    else { startGuide(); }   // IDLE:恢复声波引导循环
+    if (s !== 'DONE_BUBBLE') hideBubble();
+    updateDots();
+  }
+
+  /* ---- 语音球进度环(方案三:单次走完,不循环) ---- */
+  function startRing(dur) {
+    if (!ringP) return;
+    ringP.style.transition = 'none';
+    ringP.style.strokeDashoffset = RING_LEN;
+    ringP.style.transform = '';
+    ringP.style.opacity = '';
+    var start = Date.now();
+    if (ringTimer) clearInterval(ringTimer);
+    ringTimer = setInterval(function () {
+      var p = Math.min((Date.now() - start) / dur, 1);
+      ringP.style.strokeDashoffset = RING_LEN * (1 - p);
+      if (p >= 1) { clearInterval(ringTimer); ringTimer = null; }
+    }, 30);
+  }
+
+  /* 完成:环补满0.3s → 收缩淡出0.35s → CSS 对勾弹出 */
+  function ringToCheck() {
+    if (!ringP) return;
+    if (ringTimer) { clearInterval(ringTimer); ringTimer = null; }
+    ringP.style.transition = 'stroke-dashoffset .3s ease-out';
+    ringP.style.strokeDashoffset = 0;
+    later(function () {
+      ringP.style.transition = 'all .35s cubic-bezier(.4,0,.2,1)';
+      ringP.style.transform = 'scale(0.6)';
+      ringP.style.opacity = '0';
+    }, 300);
+  }
+
+  /* ---- 气泡问答内容:两个气泡统一显示「最新一次提问 + 回答」两行(§3.1b) ---- */
+  function fillQA() {
+    var q = (cur && cur.q) || currentQuestion || QUESTION;
+    var a = (cur && cur.a) || ANSWER;
+    $('mbQ').textContent = q;
+    $('tipQ').textContent = q;
+    $('mbA').textContent = a;
+    $('tipA').textContent = a;
+  }
+
+  /* ---- 消息提示气泡(唯一方案:底导上方气泡,覆盖「投资者的一天」信息栏;5s未点击自动收起转未读) ---- */
+  var floatingLayer = $('floatingLayer');
+  var bubbleTimer = null;
+  function showBubble() {
+    fillQA();
+    msgBubble2.classList.add('show');
+    floatingLayer.classList.add('msg-on');
+    if (bubbleTimer) clearTimeout(bubbleTimer);
+    if (pinBubble) return;   // 演示台「保留气泡」:不自动收起
+    bubbleTimer = later(function () {
+      if (state === 'DONE_BUBBLE') {
+        setState('UNREAD');
+        log('气泡5s未点击 → 收起,「投资者的一天」复原;侧边栏保留红点+「未读」标注(状态4)');
+      }
+    }, BUBBLE_MS);
+  }
+  function hideBubble() {
+    msgBubble2.classList.remove('show');
+    floatingLayer.classList.remove('msg-on');
+  }
+
+  /* ---- 侧边栏旁气泡(情况②:推荐问页,内容=上一次问答两行;出现1min后自动消失) ---- */
+  var TIP_MS = 60000;
+  var tipTimer = null;
+  var tipShowTimer = null;
+  function showTip() {
+    fillQA();
+    agentTipBubble.classList.add('show');
+    agentNavV2.classList.add('tip-on');
+    if (tipTimer) clearTimeout(tipTimer);
+    if (pinBubble) return;   // 演示台「保留气泡」:不自动消失
+    tipTimer = later(function () {
+      if (agentTipBubble.classList.contains('show')) {
+        tipDismissed = true;   // 自动消失后不再随时间窗切换重复弹出
+        hideTip();
+        log('侧边栏旁气泡保持1min未点击 → 自动消失(历史对话「未读」标注仍保留)');
+      }
+    }, TIP_MS);
+  }
+  function showTipSoon(ms) {
+    if (tipShowTimer) clearTimeout(tipShowTimer);
+    tipShowTimer = setTimeout(function () { tipShowTimer = null; showTip(); }, ms);
+  }
+  function hideTip() {
+    if (tipTimer) { clearTimeout(tipTimer); tipTimer = null; }
+    if (tipShowTimer) { clearTimeout(tipShowTimer); tipShowTimer = null; }
+    agentTipBubble.classList.remove('show');
+    agentNavV2.classList.remove('tip-on');
+  }
+
+  /* ---- 智能体页(导航栏/工具栏/输入栏全页统一,仅切换主体视图) ---- */
+  function hideAllAgentViews() {
+    agentConv.style.display = 'none';
+    agentWelcomeV2.style.display = 'none';
+    agentError.style.display = 'none';
+    hideTip();
+  }
+
+  function openAgent(mode) {
+    // mode: 'locate'=定位上一次提问及其回答(情况①:10min内任意入口/点消息气泡/思考中)
+    //       'new-v2'=首页推荐问(情况②③;4h内且回答未读时侧边栏旁弹出气泡)
+    //       'error'=异常会话的错误信息(§3.2:仅由侧边栏历史消息进入)
+    inAgent = true;
+    agentPage.classList.add('open');
+    hideAllAgentViews();
+
+    if (mode === 'error' && pendingError) {
+      $('errorQuestion').textContent = (cur && cur.q) || currentQuestion || QUESTION;
+      $('errorText').textContent = '问题回答异常';
+      agentError.style.display = 'flex';
+      agentBody.scrollTop = 0;
+      log('侧边栏历史消息 → 显示「问题回答异常」错误信息,可点「重新生成」重答(§3.2:异常不引入未读)', true);
+    } else if (mode === 'locate' && hasQuestion) {
+      agentConv.style.display = '';
+      later(function () { agentBody.scrollTop = agentBody.scrollHeight; }, 400);
+      if (answerDone && unreadAnswer) {
+        unreadAnswer = false;
+        if (cur) cur.unread = false;
+        log('进入智能体 → 定位到上一次提问及其回答,回答标记为已读');
+      } else log('进入智能体 → 定位到上一次提问及其回答');
+    } else {
+      agentWelcomeV2.style.display = '';
+      agentBody.scrollTop = 0;
+      // 情况②:回答已完成且未读、距上一提问未超4h → 侧边栏旁弹出气泡
+      var showTipNow = hasQuestion && answerDone && unreadAnswer && timeWindow !== 'over4h' && !pendingError;
+      if (showTipNow) {
+        tipDismissed = false;
+        showTipSoon(350);   // 页面推入后再弹出,视觉更从容
+        log('进入智能体 → 首页推荐问,侧边栏旁弹出气泡「【回答完毕】+问/答」,出现时脉冲一次(情况②:10min内未进入且4h内)', true);
+      } else if (hasQuestion && answerDone && unreadAnswer && timeWindow === 'over4h') {
+        log('进入智能体 → 首页推荐问,距上一提问已超4h,侧边栏旁气泡消失(情况③)', true);
+      } else if (pendingError) {
+        log('进入智能体 → 直接显示首页推荐问;错误信息不在此展示,可从侧边栏历史消息查看(§3.2)', true);
+      } else if (hasQuestion && answerDone) {
+        log('进入智能体 → 首页推荐问(上一回答已读,不再提示)');
+      } else {
+        log('进入智能体 → 首页推荐问(无已完成的上一个回答)');
+      }
+    }
+    // 状态4:红点/「未读」标签由「是否仍有未读回答」决定(并 24:00 失效),不再一进入智能体就清空
+    if ((state === 'DONE_BUBBLE' || state === 'UNREAD') && !unreadAnswer) setState('IDLE');
+    else if (state === 'DONE_BUBBLE' && mode !== 'locate') setState('UNREAD');
+    updateDots();
+  }
+
+  /* ---- 侧边栏历史对话:点任意一条主动提问(§3.1b 多条并行) ---- */
+  function openHistory(s) {
+    closeDrawer();
+    if (s.err) {
+      cur = s; currentQuestion = s.q;
+      openAgent('error');
+      return;
+    }
+    if (!s.done) { openAgent('locate'); return; }
+    userBubble.textContent = s.q;
+    answerText.textContent = s.a;
+    answerBlock.classList.add('show', 'finished');
+    thinkCard.classList.add('done');
+    thinkTitle.textContent = '思考完成';
+    var wasUnread = s.unread;
+    s.unread = false;
+    if (s === cur) unreadAnswer = false;
+    openAgent('locate');
+    log('侧边栏历史对话 → 定位到「' + s.q + '」' + (wasUnread ? ',该条「未读」标签消除' : ''), wasUnread);
+  }
+
+  function closeAgent() {
+    inAgent = false;
+    agentPage.classList.remove('open');
+    hideTip();
+    if (state === 'THINKING') log('退出智能体,回答继续 → 语音球思考态(状态2)', true);
+  }
+
+  /* ---- 提问流程 ---- */
+  var answerTimer = null;
+  function ask(question) {
+    if (answerTimer) { clearTimeout(answerTimer); answerTimer = null; }
+    if (ringTimer) { clearInterval(ringTimer); ringTimer = null; }
+    if (typeTimer) { clearInterval(typeTimer); typeTimer = null; }
+    hasQuestion = true;
+    currentQuestion = question;
+    pendingError = null;
+    answerDone = false;
+    unreadAnswer = false;
+    tipDismissed = false;
+    pendingNotify = false;
+    // §3.1b:新提问入栈为最新会话;此前会话的「未读」状态原样保留,但不再触发完成提醒
+    cur = { q: question, a: ANSWER, done: false, unread: false, err: false };
+    sessions.unshift(cur);
+    setWindow('in10', true);   // 新提问 → 重新计时,回到10min内
+    agentWelcomeV2.style.display = 'none';
+    agentError.style.display = 'none';
+    agentConv.style.display = '';
+    hideTip();
+    userBubble.textContent = question;
+    thinkCard.classList.remove('done');
+    thinkTitle.textContent = '问题思考中（预估20秒）';
+    thinkStep2.classList.remove('done');
+    step2Text.textContent = '补充查询数据和资料中…';
+    answerBlock.classList.remove('show', 'finished');
+    answerText.textContent = '';
+    setState('THINKING');
+    startRing(THINK_MS);
+    log('提问:「' + question + '」→ AI 开始思考(状态1)', true);
+    answerTimer = setTimeout(finishAnswer, THINK_MS);
+  }
+
+  function finishAnswer() {
+    if (state !== 'THINKING') return;
+    answerDone = true;
+    if (cur) cur.done = true;
+    thinkCard.classList.add('done');
+    thinkTitle.textContent = '思考完成';
+    thinkStep2.classList.add('done');
+    step2Text.textContent = '补充查询数据和资料完成';
+    answerBlock.classList.add('show');
+    typeAnswer();
+    if (inAgent) {
+      // 停留在对话页:不打扰,直接呈现答案(即视为已读)
+      unreadAnswer = false;
+      if (cur) cur.unread = false;
+      setState('IDLE');
+      log('回答完成(用户在对话页) → 直接展示,不提醒');
+      return;
+    }
+    unreadAnswer = true;
+    if (cur) cur.unread = true;
+    // 状态3 双重检测:①在APP内一级界面 ②提问账号仍登录 → 才即时出气泡
+    if (atL1 && acctLoggedIn) {
+      pendingNotify = false;
+      setState('DONE_BUBBLE');
+      ringToCheck();
+      showBubble();
+      log('回答完成(检测:在APP一级界面 + 提问账号已登录) → 语音球完成态 + 底导上方气泡(状态3)', true);
+    } else {
+      pendingNotify = true;
+      setState('UNREAD');
+      log('回答完成(检测:' + (!atL1 ? '不在APP一级界面' : '') + (!atL1 && !acctLoggedIn ? ' + ' : '') +
+        (!acctLoggedIn ? '已登出提问账号' : '') + ') → 提醒挂起,等下次进入APP/登录提问账号时补发(限提问后4h内,状态3)', true);
+    }
+  }
+
+  /* ---- 状态3 挂起提醒的补发:用户下次进入APP / 登录提问账号时触发,超4h则作废 ---- */
+  function resumeNotify() {
+    atL1 = true; acctLoggedIn = true;
+    syncCheckBtns();
+    if (!pendingNotify) { log('当前无挂起的提醒'); return; }
+    if (timeWindow === 'over4h') {
+      pendingNotify = false;
+      log('进入APP/登录提问账号,但距上一提问已超4h → 提醒作废,仅保留侧边栏未读(状态3)', true);
+      updateDots();
+      return;
+    }
+    pendingNotify = false;
+    if (inAgent) closeAgent();
+    setState('DONE_BUBBLE');
+    ringToCheck();
+    showBubble();
+    log('进入APP/登录提问账号(距上一提问4h内) → 补发消息提示气泡 + 语音球完成态(状态3)', true);
+  }
+
+  function typeAnswer() {
+    var i = 0;
+    if (typeTimer) clearInterval(typeTimer);
+    typeTimer = setInterval(function () {
+      i += 2;
+      answerText.textContent = ANSWER.slice(0, i);
+      if (inAgent) agentBody.scrollTop = agentBody.scrollHeight;
+      if (i >= ANSWER.length) {
+        clearInterval(typeTimer); typeTimer = null;
+        answerBlock.classList.add('finished');
+      }
+    }, 40);
+  }
+
+  /* ---- 重置 ---- */
+  function resetAll() {
+    clearTimers();
+    if (bubbleTimer) clearTimeout(bubbleTimer);
+    hasQuestion = false;
+    pendingError = null;
+    currentQuestion = '';
+    answerDone = false;
+    unreadAnswer = false;
+    tipDismissed = false;
+    sessions = [];
+    cur = null;
+    pendingNotify = false;
+    badgesExpired = false;
+    atL1 = true;
+    acctLoggedIn = true;
+    syncCheckBtns();
+    setWindow('in10', true);
+    closeDrawer();
+    inAgent = false;
+    agentPage.classList.remove('open');
+    hideTip();
+    agentWelcomeV2.style.display = '';
+    agentError.style.display = 'none';
+    agentConv.style.display = 'none';
+    answerBlock.classList.remove('show', 'finished');
+    answerText.textContent = '';
+    thinkCard.classList.remove('done');
+    if (ringP) { ringP.style.transition = 'none'; ringP.style.strokeDashoffset = RING_LEN; ringP.style.transform = ''; ringP.style.opacity = ''; }
+    setState('IDLE');
+    log('—— 全部状态已重置 ——', true);
+  }
+
+  /* ---- 事件绑定 ---- */
+  // 任意智能体入口统一规则(§3,场景化除外):
+  //  思考中 / 底部气泡出现时 → 定位上一次提问
+  //  距上一提问10min内 → 定位上一次提问(情况①)
+  //  其余 → 首页推荐问;4h内且回答未读时侧边栏旁弹气泡(情况②),超4h气泡消失(情况③)
+  function agentEntry() {
+    if (state === 'THINKING') { openAgent('locate'); log('思考中点智能体入口 → 定位上一次提问,查看思考进度'); }
+    else if (state === 'DONE_BUBBLE') openAgent('locate');
+    else if (hasQuestion && !pendingError && timeWindow === 'in10') { log('距上一提问10min内点智能体入口 → 定位上一次提问(情况①)', true); openAgent('locate'); }
+    else openAgent('new-v2');
+  }
+  orb.addEventListener('click', agentEntry);
+
+  // 侧边栏旁气泡:点击 → 定位到上一个问题(情况②);点「×」仅收起本次
+  agentTipBubble.addEventListener('click', function (e) {
+    if (e.target.closest('.tip-close')) return;
+    log('点击侧边栏旁气泡 → 定位到上一个问题及其回答(情况②)', true);
+    openAgent('locate');
+  });
+
+  agentTipClose.addEventListener('click', function (e) {
+    e.stopPropagation();
+    tipDismissed = true;
+    hideTip();
+    log('点侧边栏旁气泡「×」→ 收起本次提示;历史对话「未读」标注保留,4h内重进仍会弹出');
+  });
+
+  // 底导上方气泡 → 点击定位;点「×」收起,侧边栏保留未读
+  msgBubble2.addEventListener('click', function (e) {
+    if (e.target.closest('.mb2-close')) return;
+    openAgent('locate');   // 点气泡 → 定位(草稿状态5)
+  });
+
+  msgBubble2Close.addEventListener('click', function (e) {
+    e.stopPropagation();
+    if (state === 'DONE_BUBBLE') {
+      setState('UNREAD');
+      log('点「×」收起气泡 → 侧边栏保留红点+「未读」标注(状态4)');
+    }
+  });
+
+  /* ---- 场景化并行:半弹窗(直接调缓存,新开窗口,不出提醒/未读,独立于状态机) ---- */
+  var sceneSheet = $('sceneSheet'), sceneSheetMask = $('sceneSheetMask');
+  var sceneAnswer = $('sceneAnswer');
+  var sceneUserBubble = sceneSheet.querySelector('.user-bubble');
+  var SCENE_QA = {
+    '板块异动AI总结': '13:30 军工板块发生大幅拉升，中航沈飞领涨。驱动因素：一是行业景气度持续验证，中报订单同比高增；二是低空经济与大飞机产业链催化密集落地。资金面看，军工ETF（512660）今日放量上涨1.86%，主力资金净流入居两市前列。综合判断，板块短线情绪偏强，建议关注主机厂与发动机链核心标的，注意追高风险。',
+    '军工板块还能上车吗？': '短线看板块情绪偏强但涨幅已高，追高风险加大。建议不重仓追涨：已持仓者可继续持有并设好止盈；未上车者等待回调分批布局，优先关注订单确定性高的主机厂与发动机产业链龙头。',
+    '中航沈飞当前估值贵不贵？': '中航沈飞当前市盈率处于近五年中位偏上水平，短期股价快速拉升后估值有所透支；但考虑其战斗机总装稀缺地位与中报订单高增，中长期成长确定性较强。建议结合自身持仓成本与风险偏好决定去留。'
+  };
+  function openSceneSheet(q) {
+    sceneUserBubble.textContent = q;
+    sceneAnswer.textContent = SCENE_QA[q];
+    sceneSheetMask.classList.add('show');
+    sceneSheet.classList.add('open');
+    $('sceneSheetBody').scrollTop = 0;
+    log('场景化并行:「' + q + '」→ 半弹窗新开对话,调缓存秒答(不出提醒/未读)', true);
+  }
+  function closeSceneSheet() {
+    sceneSheetMask.classList.remove('show');
+    sceneSheet.classList.remove('open');
+    log('关闭半弹窗 → 语音球/底导状态不受影响(§2)');
+  }
+  $('sectorCard').addEventListener('click', function () { openSceneSheet('板块异动AI总结'); });
+  $('sceneSheetClose').addEventListener('click', closeSceneSheet);
+  sceneSheetMask.addEventListener('click', closeSceneSheet);
+  sceneSheet.querySelectorAll('.scene-rec-item').forEach(function (el) {
+    el.addEventListener('click', function () { openSceneSheet(el.getAttribute('data-q')); });
+  });
+  $('sceneInput').addEventListener('click', function () {
+    log('演示:半弹窗内输入 → 继续该独立对话(不影响主动提问)');
+  });
+
+  // 底导 tab:始终保持原样;气泡出现时点任意 tab = 气泡收起(转未读,草稿状态3备注)
+  document.querySelectorAll('.gj-bnav-tab').forEach(function (tab) {
+    tab.addEventListener('click', function () {
+      if (state === 'DONE_BUBBLE') {
+        setState('UNREAD');
+        log('点底导「' + tab.querySelector('span').textContent + '」→ 气泡收起,侧边栏保留未读(状态3)');
+      }
+      setTab(tab);
+      if (tab.dataset.tab !== 'home') log('演示:切换至「' + tab.querySelector('span').textContent + '」(页面未在本 DEMO 范围)');
+    });
+  });
+
+  agentCloseV2.addEventListener('click', closeAgent);
+
+  // 首页小宝头像:任意智能体入口统一规则(§3-1)
+  var greetAvatar = document.querySelector('.greet-avatar img');
+  if (greetAvatar) {
+    greetAvatar.style.cursor = 'pointer';
+    greetAvatar.addEventListener('click', agentEntry);
+  }
+
+  // 金刚区「AI投顾」入口:任意智能体入口统一规则(§3-1)
+  var aiEntry = $('aiEntryCell');
+  if (aiEntry) aiEntry.addEventListener('click', agentEntry);
+
+  // 推荐问点击 → 提问
+  document.querySelectorAll('.rec-item-v2').forEach(function (el) {
+    el.addEventListener('click', function () { ask(el.getAttribute('data-q')); });
+  });
+  agentInputV2.style.cursor = 'pointer';
+  agentInputV2.addEventListener('click', function () { ask(QUESTION); });
+
+  // 异常情况:重新生成按钮
+  if (errorRegenBtn) {
+    errorRegenBtn.addEventListener('click', function () {
+      var lastQ = (cur && cur.q) || currentQuestion || QUESTION;
+      var i = sessions.indexOf(cur);
+      if (i > -1) sessions.splice(i, 1);   // 异常会话由重答的新会话取代,不在历史里留重复
+      pendingError = null;
+      agentError.style.display = 'none';
+      agentConv.style.display = '';
+      ask(lastQ);
+      log('点击「重新生成」→ AI重新回答「' + lastQ + '」(§3.2)', true);
+    });
+  }
+
+  /* ---- 异常情况(§3.2):仅系统异常(回答超时);思考中触发,静默中断;不出气泡、不引入未读 ---- */
+  function triggerError() {
+    if (state !== 'THINKING') { log('提示:请先提问进入「思考态」,再模拟异常'); return; }
+    clearTimers();
+    pendingError = 'timeout';
+    answerDone = false;
+    unreadAnswer = false;
+    pendingNotify = false;
+    if (cur) { cur.err = true; cur.done = false; cur.unread = false; }
+    if (inAgent) { inAgent = false; agentPage.classList.remove('open'); }
+    setState('IDLE');   // 静默回常规态:无气泡、无未读
+    updateDots();
+    log('模拟系统异常(回答超时) → 回答中断,不出消息提醒、不引入未读;下次进入智能体直接显示首页推荐问,错误信息可从侧边栏历史消息查看(§3.2)', true);
+  }
+
+  // 换一换按钮(模拟刷新推荐问)
+  var refreshBtn = document.querySelector('.refresh-btn-v2');
+  if (refreshBtn) {
+    refreshBtn.addEventListener('click', function () {
+      log('点击「换一换」→ 刷新推荐问');
+    });
+  }
+
+  /* ---- 演示台 ---- */
+  /* ---- 侧边栏抽屉(首页 / 智能体页共用同一抽屉与未读标注) ---- */
+  function openDrawer() {
+    updateDots();
+    sideDrawerMask.classList.add('show');
+    sideDrawer.classList.add('open');
+    var n = unreadCount();
+    log('打开侧边栏 → ' + (n > 0 ? n + ' 条未读回答显示「未读」标签(§3.1b:仅最新一次会提醒,其余仅标未读)'
+      : badgesExpired ? '已过24:00,红点与「未读」标签均已失效(状态4)'
+      : pendingError ? '无未读;异常会话可点击查看错误信息(§3.2)' : '无未读'));
+  }
+  function closeDrawer() {
+    sideDrawerMask.classList.remove('show');
+    sideDrawer.classList.remove('open');
+  }
+  $('menuBtn').addEventListener('click', openDrawer);
+  $('agentMenuBtnV2').addEventListener('click', openDrawer);
+  sideDrawerMask.addEventListener('click', closeDrawer);
+  $('drawerNewChat').addEventListener('click', function () {
+    closeDrawer();
+    openAgent('new-v2');
+    log('侧边栏「新建对话」→ 新开对话,显示首页推荐问');
+  });
+
+  /* ---- 距上一提问时间窗模拟(情况①②③) ---- */
+  var WIN_LABEL = {
+    in10: '10min内:任意入口定位到上一次提问(情况①)',
+    in4h: '10min~4h:入口出首页推荐问,回答未读时侧边栏旁弹气泡(情况②)',
+    over4h: '超过4h:入口出首页推荐问,侧边栏旁气泡消失(情况③)'
+  };
+  function setWindow(w, silent) {
+    timeWindow = w;
+    $('dcWin10').classList.toggle('active', w === 'in10');
+    $('dcWin4h').classList.toggle('active', w === 'in4h');
+    $('dcWinOver').classList.toggle('active', w === 'over4h');
+    if (!silent) log('模拟距上一提问 → ' + WIN_LABEL[w], true);
+    // 若正停留在推荐问页,立即按新时间窗刷新侧边栏旁气泡
+    if (inAgent && agentWelcomeV2.style.display !== 'none') {
+      var show = hasQuestion && answerDone && unreadAnswer && w !== 'over4h' && !pendingError && !tipDismissed;
+      if (show) showTip(); else hideTip();
+    }
+  }
+  $('dcWin10').addEventListener('click', function () { setWindow('in10'); });
+  $('dcWin4h').addEventListener('click', function () { setWindow('in4h'); });
+  $('dcWinOver').addEventListener('click', function () { setWindow('over4h'); });
+
+  /* ---- 状态3 双重检测模拟:是否在APP内一级界面 / 提问账号是否登录 ---- */
+  function syncCheckBtns() {
+    $('dcChkIn').classList.toggle('active', atL1 && acctLoggedIn);
+    $('dcChkOut').classList.toggle('active', !atL1);
+    $('dcChkLogout').classList.toggle('active', !acctLoggedIn);
+  }
+  $('dcChkIn').addEventListener('click', function () {
+    atL1 = true; acctLoggedIn = true; syncCheckBtns();
+    log('模拟:用户在APP内一级界面且提问账号已登录 → 回答完成后即出气泡(状态3)', true);
+  });
+  $('dcChkOut').addEventListener('click', function () {
+    atL1 = false; syncCheckBtns();
+    log('模拟:用户不在APP内一级界面(APP外/二级页) → 回答完成后提醒挂起(状态3)', true);
+  });
+  $('dcChkLogout').addEventListener('click', function () {
+    acctLoggedIn = false; syncCheckBtns();
+    log('模拟:已登出提问账号 → 回答完成后提醒挂起,等重新登录该账号(状态3)', true);
+  });
+  $('dcChkBack').addEventListener('click', resumeNotify);
+
+  /* ---- 状态4:小红点与「未读」标签 24:00 失效 ---- */
+  function expireBadges() {
+    if (!sessions.length) { log('提示:请先提问产生未读,再模拟跨24:00'); return; }
+    badgesExpired = true;
+    pendingNotify = false;
+    hideBubble();
+    hideTip();
+    if (state === 'DONE_BUBBLE' || state === 'UNREAD') setState('IDLE');
+    updateDots();
+    log('模拟跨24:00 → 侧边栏小红点与历史对话「未读」标签全部失效,会话本身保留(状态4)', true);
+  }
+  $('dcMidnight').addEventListener('click', expireBadges);
+
+  /* ---- 情况①②③一键演示:先确保存在"已完成但未读的上一个提问" ---- */
+  function ensureAnsweredQuestion() {
+    if (hasQuestion && answerDone && unreadAnswer && !pendingError) return;
+    if (state === 'THINKING') clearTimers();
+    hasQuestion = true;
+    pendingError = null;
+    currentQuestion = currentQuestion || QUESTION;
+    if (!cur || cur.err || !cur.done) {
+      cur = { q: currentQuestion, a: ANSWER, done: true, unread: true, err: false };
+      sessions.unshift(cur);
+    }
+    cur.done = true;
+    cur.unread = true;
+    userBubble.textContent = currentQuestion;
+    thinkCard.classList.add('done');
+    thinkTitle.textContent = '思考完成';
+    thinkStep2.classList.add('done');
+    step2Text.textContent = '补充查询数据和资料完成';
+    answerBlock.classList.add('show', 'finished');
+    answerText.textContent = ANSWER;
+    answerDone = true;
+    unreadAnswer = true;
+    tipDismissed = false;
+    setState('IDLE');
+    log('(演示预置)存在已完成且未读的上一个提问:「' + currentQuestion + '」');
+  }
+  function demoScene1() {
+    ensureAnsweredQuestion();
+    setWindow('in10', true);
+    log('演示①:距上一提问10min内,点任意智能体入口 → 定位到上一次提问', true);
+    openAgent('locate');
+  }
+  function demoScene2() {
+    ensureAnsweredQuestion();
+    setWindow('in4h', true);
+    openAgent('new-v2');
+  }
+  function demoScene3() {
+    ensureAnsweredQuestion();
+    setWindow('over4h', true);
+    openAgent('new-v2');
+  }
+
+  /* ---- §3.1b 演示:先留一条已完成未读的旧提问,再问新问题,只提醒最新一次 ---- */
+  var QUESTION2 = '半导体设备板块最近怎么了？后面还有机会吗？';
+  function askAgain() {
+    var q = (cur && cur.q === QUESTION) ? QUESTION2 : QUESTION;
+    if (!inAgent) openAgent('new-v2');
+    later(function () { ask(q); }, 300);
+    later(closeAgent, 1600);
+    log('再问一个新问题 → 此前提问保留「未读」,提醒只认这一条(§3.1b)', true);
+  }
+  function demoLatestOnly() {
+    resetAll();
+    currentQuestion = QUESTION;
+    ensureAnsweredQuestion();
+    log('(演示预置)已有一条已完成且未读的旧提问:「' + QUESTION + '」');
+    later(function () { openAgent('new-v2'); }, 200);
+    later(function () { ask(QUESTION2); }, 700);
+    later(closeAgent, 2000);
+    log('▶ 演示 b:旧提问保留未读 → 新提问回答完成后只提醒最新一条,侧边栏可见 2 条「未读」(§3.1b)', true);
+  }
+  $('dcAskAgain').addEventListener('click', askAgain);
+
+  $('dcAsk').addEventListener('click', function () {
+    resetAll();
+    later(function () { openAgent('new-v2'); }, 200);
+    later(function () { ask(QUESTION); }, 900);
+    later(function () { closeAgent(); }, 2400);
+    log('▶ 一键演示:进入智能体→提问→思考中退出', true);
+  });
+  $('dcFinishNow').addEventListener('click', function () {
+    if (state === 'THINKING') { clearTimers(); finishAnswer(); }
+    else log('当前不在思考态,无法完成');
+  });
+  $('dcTimeout').addEventListener('click', function () {
+    if (state === 'DONE_BUBBLE') {
+      setState('UNREAD');
+      log('模拟超时 → 气泡收起,侧边栏红点+「未读」标注保留(状态4)');
+    } else log('当前无气泡');
+  });
+
+  /* ---- 演示台:保留气泡(不自动收起),方便讨论气泡样式 ---- */
+  $('dcPin').addEventListener('click', function () {
+    pinBubble = !pinBubble;
+    this.classList.toggle('primary', pinBubble);
+    this.textContent = pinBubble ? '取消保留(恢复自动收起)' : '保留气泡(不自动收起)';
+    if (pinBubble) {
+      if (bubbleTimer) { clearTimeout(bubbleTimer); bubbleTimer = null; }
+      if (tipTimer) { clearTimeout(tipTimer); tipTimer = null; }
+      var showing = msgBubble2.classList.contains('show') || agentTipBubble.classList.contains('show');
+      if (!showing) {
+        // 无气泡时预置「已完成未读」的上一个提问,并直接呈现底导上方气泡供查看样式
+        ensureAnsweredQuestion();
+        if (inAgent) closeAgent();
+        setState('DONE_BUBBLE');
+        ringToCheck();
+        showBubble();
+      }
+      log('已开启「保留气泡」→ 两个气泡均不自动收起(仅演示用,便于讨论样式)', true);
+    } else {
+      // 恢复自动收起:对当前正显示的气泡重新计时
+      if (msgBubble2.classList.contains('show')) showBubble();
+      if (agentTipBubble.classList.contains('show')) showTip();
+      log('已取消「保留气泡」→ 恢复气泡5s / 侧边栏旁气泡1min 自动收起', true);
+    }
+  });
+
+  $('dcReset').addEventListener('click', resetAll);
+
+  setState('IDLE');   // 初始:常规态(声波引导循环 + 底导原样)
+  syncCheckBtns();
+  log('演示台就绪(v9,对齐 方案一 2026-08-10)。新增:状态3 完成时双重检测(APP一级界面/账号登录)、状态4 红点与未读标签24:00失效、§3.1b 只提醒最新一次提问。');
+
+  // 暴露到全局供HTML onclick使用
+  window.openAgent = openAgent;
+  window.openSceneSheet = openSceneSheet;
+  window.triggerError = triggerError;
+  window.demoScene1 = demoScene1;
+  window.demoScene2 = demoScene2;
+  window.demoScene3 = demoScene3;
+  window.demoLatestOnly = demoLatestOnly;
+  window.openDrawer = openDrawer;
+})();
+</script>
+
+
+<!-- ===== 审阅版防护(标准):禁右键 / 拦截另存·打印·查看源码·开发者工具快捷键 ===== -->
+<script>
+(function(){
+  'use strict';
+  function stop(e){ e.preventDefault(); e.stopPropagation(); return false; }
+  ['contextmenu','dragstart','selectstart','copy','cut'].forEach(function(type){
+    document.addEventListener(type, stop, true);
+  });
+  document.addEventListener('keydown', function(e){
+    var k = (e.key || '').toLowerCase();
+    var mod = e.ctrlKey || e.metaKey;
+    if (k === 'f12') return stop(e);
+    if (mod && e.shiftKey && (k === 'i' || k === 'j' || k === 'c')) return stop(e);
+    if (mod && (k === 's' || k === 'p' || k === 'u' || k === 'a' || k === 'c')) return stop(e);
+  }, true);
+  try {
+    console.log('%c本页面为内部审阅用高保真 DEMO,版权归作者所有,禁止保存、转载或用于其他用途。',
+      'color:#F93838;font:600 14px/1.8 -apple-system,sans-serif');
+  } catch (err) {}
+})();
+</script>
+
+</body>
+</html>
