@@ -307,26 +307,15 @@ body {
   cursor: pointer;
 }
 
-/* 未读红点·方案二:侧边栏按钮(三条杠)右上角红点(参考图:小实心点) */
-.menu-dot {
-  position: absolute;
-  right: -4px;
-  top: -2px;
-  width: 14px;
-  height: 14px;
-  border-radius: 50%;
-  background: var(--CP0);
-  opacity: 0;
-  transition: opacity .3s;
-}
-
-.menu-dot.show { opacity: 1; }
+/* 入口红点为新增事件提示，与逐条未读标签独立确认。 */
+.menu-dot { position:absolute; right:0; top:2px; width:12px; height:12px; border-radius:50%; background:var(--CP0); opacity:0; transition:opacity .25s; pointer-events:none; }
+.menu-dot.show { opacity:1; }
 
 /* 智能体页侧边栏按钮(与首页 menu-btn 同体系,去掉首页专用下沉边距) */
 .agent-menu-btn {
   margin-bottom: 0;
-  width: 56px;
-  height: 56px;
+  width: 48px;
+  height: 48px;
 }
 
 /* 侧边栏抽屉(参考 方案一·方案2 截图:国金FM 历史对话面板) */
@@ -450,7 +439,7 @@ body {
   text-overflow: ellipsis;
 }
 
-/* 未读标注:历史对话未读消息以「未读」标签标注(替代小红点;红字 --CP0 / 浅红底 --CB13 / 圆角4) */
+/* 未读标注:历史对话未读消息以「未读」标签标注(与入口红点独立;红字 --CP0 / 浅红底 --CB13 / 圆角4) */
 .drawer-q .dq-badge {
   flex-shrink: 0;
   display: none;
@@ -1873,7 +1862,7 @@ body {
 
 /* ============================================================
  * 交互 DEMO 扩展 (方案一：小宝异步提醒)
- * 状态机：常规 - 思考中 - 完成(气泡) - 未读(红点) - 已读
+ * 状态机：常规 - 思考中 - 完成(气泡) - 未读(历史对话标签) - 已读
  * 语音球动效参数取自「国金语音球交互方案-外发版 · 方案三 声波光环」
  * ============================================================ */
 
@@ -2093,17 +2082,20 @@ body {
  * 层级:不用阴影,靠浅紫渐变与页面 CB2 分层 + 1px CL2 描边 */
 .msg-bubble2 {
   position: absolute;
-  left: var(--s-16);
-  right: var(--s-16);
-  bottom: 176px;            /* 源稿真值 84px(375基准)×2:底边略高于语音球顶8px,小三角悬空指向球体 */
-  min-height: 148px;
+  left: 24px;
+  right: 24px;
+  bottom: 166px;
+  height: 146px;
+  box-sizing: border-box;
   display: flex;
   align-items: flex-start;
-  gap: var(--s-16);
-  padding: var(--s-20) var(--s-24) 22px;
-  background: linear-gradient(135deg, var(--P19) 0%, var(--P3) 100%);
-  border: 1px solid var(--CL2);
+  gap: 12px;
+  padding: 20px 20px 30px;
+  background: none;
+  isolation: isolate;
+  border: 0;
   border-radius: var(--r-32);
+  box-shadow: none;
   cursor: pointer;
   z-index: 3;
   opacity: 0;
@@ -2119,7 +2111,8 @@ body {
   bottom: -17px;          /* 上压1px盖住卡片底边描边,保证尾巴与卡身无缝 */
   width: 36px;
   height: 18px;
-  color: var(--P3);
+  color: var(--CP3);
+  display: none;
   pointer-events: none;
 }
 
@@ -2130,22 +2123,24 @@ body {
 }
 
 /* 文案列 */
-.toast-copy { flex: 1; min-width: 0; }
+.toast-copy { flex: 1; min-width: 0; display:flex; flex-direction:column; gap:4px; }
+.toast-q-row { display:flex; align-items:center; gap:12px; height:48px; min-width:0; }
 
 /* 「回答完毕」标签:紫色渐变胶囊(S8 · r-pill · 反白 CT6;渐变取紫阶 P16→P17) */
 .toast-flag {
-  display: block;
+  display: inline-flex;
+  align-items:center;
+  flex-shrink:0;
   width: max-content;
-  height: 36px;
-  margin-bottom: 6px;
-  padding: 0 var(--s-16);
+  height: 32px;
+  margin-bottom: 0;
+  padding: 0 8px;
   font-size: 20px;          /* S8 */
-  line-height: 36px;
+  line-height: 30px;
   font-weight: 500;
-  letter-spacing: .6px;
-  color: var(--CT6);
-  background: linear-gradient(90deg, var(--P16), var(--P17));
-  border-radius: var(--r-pill);
+  color: #9192FA;
+  background: rgba(255,255,255,0.96);
+  border-radius: var(--r-6);
 }
 
 /* 问 / 答两行:各单行截断;问=S5/500/CT1,答=S8/400/CT3,文字行高 1.5× */
@@ -2158,32 +2153,34 @@ body {
   text-overflow: ellipsis;
 }
 .toast-q {
-  font-size: 28px;          /* S5 */
-  line-height: 42px;
+  flex:1;
+  font-size: 32px;
+  line-height: 48px;
   font-weight: 500;
-  color: var(--CT1);
+  color: var(--CT6);
 }
 .toast-a {
-  font-size: 20px;          /* S8 */
-  line-height: 30px;
+  font-size: 28px;
+  line-height: 44px;
   font-weight: 400;
-  color: var(--CT3);
+  color: var(--CT6);
 }
 
 /* 右上角圆形「×」关闭钮:紫 8% 底 CB16 + 紫 P6 图标,r-pill */
 .msg-bubble2 .toast-close {
   flex-shrink: 0;
-  width: 40px;
-  height: 40px;
+  width: 32px;
+  height: 32px;
   margin: 0;
   padding: 0;
   border: 0;
   border-radius: var(--r-pill);
-  background: var(--CB16);
-  color: var(--P6);
+  background: transparent;
+  color: var(--CT6);
   font-family: inherit;
-  font-size: 28px;
-  line-height: 40px;
+  font-size: 30px;
+  line-height: 32px;
+  margin-top: 8px;
   text-align: center;
   cursor: pointer;
 }
@@ -2199,8 +2196,8 @@ body {
 
 .qa-txt {
   min-width: 0;
-  font-size: 26px;
-  line-height: 40px;
+  font-size: 32px;
+  line-height: 48px;
   white-space: nowrap;
   overflow: hidden;
   text-overflow: ellipsis;
@@ -2318,10 +2315,7 @@ body {
   z-index: 400;
   display: flex;
   flex-direction: column;
-  background:
-    radial-gradient(ellipse at 20% 0%, rgba(197,208,255,0.55) 0%, transparent 45%),
-    radial-gradient(ellipse at 90% 8%, rgba(255,214,235,0.5) 0%, transparent 40%),
-    linear-gradient(180deg, #EEF2FF 0%, #F7F9FF 40%, #FDFDFF 100%);
+  background: #F9FBFF url("assets/figma/agent-background.svg") center / 100% 100% no-repeat;
   transform: translateX(100%);
   transition: transform .38s cubic-bezier(.32,.72,.34,1);
   overflow: hidden;
@@ -2392,25 +2386,45 @@ body {
 
 /* 新版欢迎区 */
 .agent-welcome-v2 {
+  position: relative;
   display: flex;
   flex-direction: column;
-  padding: 24px 24px 0;
+  width: calc(100% + 48px);
+  margin-left: -24px;
+  box-sizing: border-box;
+  padding: 31px 29px 0 35px;
 }
 
 .welcome-card-v2 {
-  background: #FFFFFF;
-  border-radius: 28px;
-  padding: 44px 36px 36px;
+  height: 360px;
+  box-sizing: border-box;
+  background: rgba(255,255,255,.5);
+  border: 2px solid #FFFFFF;
+  border-radius: 52px;
+  padding: 52px 32px 36px;
   position: relative;
-  box-shadow: 0 8px 32px rgba(102,127,255,0.08);
+  box-shadow: 0 0 20px rgba(218,233,248,.4);
+  margin-top: 52px;
 }
+
+.welcome-recommendations-v2 {
+  position: relative;
+  z-index: 1;
+  margin-top: -108px;
+  padding: 40px 32px 32px;
+  background: #FFFFFF;
+  border-radius: 52px;
+}
+
+.welcome-head-default { position: relative; z-index: 1; }
 
 .welcome-avatar-v2 {
   position: absolute;
-  top: -20px;
-  right: 24px;
-  width: 180px;
-  height: 180px;
+  top: -52px;
+  right: 32px;
+  width: 220px;
+  height: 246px;
+  z-index: 2;
 }
 
 .welcome-avatar-v2 img {
@@ -2419,9 +2433,11 @@ body {
 }
 
 .welcome-hello-v2 {
-  font-size: 36px;
+  font-size: 44px;
+  line-height: 56px;
+  width: max-content;
   font-weight: 600;
-  background: linear-gradient(90deg, #667FFF 0%, #8B52FF 100%);
+  background: linear-gradient(90deg, #6183FF 0%, #BB70EE 52%, #FF2C5E 100%);
   -webkit-background-clip: text;
   background-clip: text;
   color: transparent;
@@ -2431,18 +2447,15 @@ body {
 .welcome-title-v2 {
   font-size: 40px;
   font-weight: 600;
-  background: linear-gradient(90deg, #33334D 0%, #667FFF 70%, #8B52FF 100%);
-  -webkit-background-clip: text;
-  background-clip: text;
-  color: transparent;
-  line-height: 56px;
-  margin-bottom: 12px;
+  color: #0F0F1B;
+  line-height: 52px;
+  margin-bottom: 8px;
 }
 
 .welcome-sub-v2 {
   font-size: 28px;
-  color: #666685;
-  line-height: 42px;
+  color: #87878D;
+  line-height: 44px;
 }
 
 /* 情况②:距上一提问10min~4h内进入 → 首页推荐问 + 侧边栏按钮旁气泡(内容=上一次问答两行)
@@ -2450,22 +2463,19 @@ body {
  * 配色由品牌 token CP2/CP3 经 color-mix 取半透明,文字反白;卡片圆角 24 */
 .agent-tip-bubble {
   position: absolute;
-  left: 104px;
-  top: 8px;
+  left: 80px;
+  top: 0;
   display: flex;
-  align-items: flex-start;
-  gap: 10px;
-  max-width: 460px;
-  min-width: 340px;
-  padding: 12px 14px 12px 18px;
-  background: linear-gradient(135deg,
-    color-mix(in srgb, var(--CP2) 74%, transparent) 0%,
-    color-mix(in srgb, var(--CP3) 74%, transparent) 100%);
-  backdrop-filter: blur(18px) saturate(160%);
-  -webkit-backdrop-filter: blur(18px) saturate(160%);
-  border: 1px solid rgba(255,255,255,0.38);
-  border-radius: 24px;
-  box-shadow: 0 16px 36px rgba(102,127,255,0.30), inset 0 1px 0 rgba(255,255,255,0.35);
+  align-items: center;
+  width: 500px;
+  height: 124px;
+  box-sizing: border-box;
+  padding: 20px 16px 20px 30px;
+  background: none;
+  isolation: isolate;
+  border: 0;
+  border-radius: 0;
+  box-shadow: none;
   cursor: pointer;
   z-index: 30;
   opacity: 0;
@@ -2482,15 +2492,20 @@ body {
   animation: tipPulse 2.4s ease-in-out .6s 1;
 }
 
-/* 尾巴:指向左侧侧边栏按钮(按钮竖直中心 ≈ 顶部下 32),色值取玻璃左缘蓝紫 */
+.msg-bubble2::before,
 .agent-tip-bubble::before {
-  content: '';
+  content: "";
   position: absolute;
-  left: -11px;
-  top: 32px;
-  border: 10px solid transparent;
-  border-right-color: color-mix(in srgb, var(--CP2) 74%, transparent);
-  border-left-width: 4px;
+  inset: 0;
+  z-index: -1;
+  pointer-events: none;
+  background: linear-gradient(110deg, #B693F6, #858CF8);
+  -webkit-mask: url("data:image/svg+xml,%3Csvg%20xmlns%3D%22http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%22%20viewBox%3D%229.6%209.6%20702%20146%22%3E%3Cpath%20fill%3D%22white%22%20d%3D%22M669.404%20153.556C669.268%20153.706%20669.147%20153.869%20669.022%20154.029C667.383%20156.123%20663.817%20156.123%20662.178%20154.029C662.053%20153.869%20661.932%20153.706%20661.796%20153.556L656.982%20148.234C655.465%20146.557%20653.31%20145.6%20651.049%20145.6H33.6C20.3452%20145.6%209.6%20134.855%209.6%20121.6V33.6C9.6%2020.3452%2020.3452%209.6%2033.6%209.6H687.6C700.855%209.6%20711.6%2020.3452%20711.6%2033.6V121.6C711.6%20134.855%20700.855%20145.6%20687.6%20145.6H680.151C677.89%20145.6%20675.735%20146.557%20674.218%20148.234L669.404%20153.556Z%22%2F%3E%3C%2Fsvg%3E") center / 100% 100% no-repeat;
+  mask: url("data:image/svg+xml,%3Csvg%20xmlns%3D%22http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%22%20viewBox%3D%229.6%209.6%20702%20146%22%3E%3Cpath%20fill%3D%22white%22%20d%3D%22M669.404%20153.556C669.268%20153.706%20669.147%20153.869%20669.022%20154.029C667.383%20156.123%20663.817%20156.123%20662.178%20154.029C662.053%20153.869%20661.932%20153.706%20661.796%20153.556L656.982%20148.234C655.465%20146.557%20653.31%20145.6%20651.049%20145.6H33.6C20.3452%20145.6%209.6%20134.855%209.6%20121.6V33.6C9.6%2020.3452%2020.3452%209.6%2033.6%209.6H687.6C700.855%209.6%20711.6%2020.3452%20711.6%2033.6V121.6C711.6%20134.855%20700.855%20145.6%20687.6%20145.6H680.151C677.89%20145.6%20675.735%20146.557%20674.218%20148.234L669.404%20153.556Z%22%2F%3E%3C%2Fsvg%3E") center / 100% 100% no-repeat;
+}
+.agent-tip-bubble::before {
+  -webkit-mask-image: url("data:image/svg+xml,%3Csvg%20xmlns%3D%22http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%22%20viewBox%3D%229.6%209.6%20500%20124%22%3E%3Cpath%20fill%3D%22white%22%20d%3D%22M475.601%209.6C488.856%209.60026%20499.601%2020.3453%20499.601%2033.6V75.049C499.601%2077.31%20500.558%2079.4654%20502.235%2080.982L507.557%2085.7963C507.707%2085.9321%20507.87%2086.0533%20508.03%2086.1781C510.124%2087.817%20510.124%2091.383%20508.03%2093.0219C507.87%2093.1467%20507.707%2093.2679%20507.557%2093.4037L502.235%2098.218C500.558%2099.7346%20499.601%20101.89%20499.601%20104.151V109.6C499.601%20122.855%20488.856%20133.6%20475.601%20133.6H33.6C20.3454%20133.6%209.60098%20122.855%209.60098%20109.6V33.6C9.60098%2020.3453%2020.3454%209.60026%2033.6%209.6H475.601Z%22%20transform%3D%22rotate%28180%20259.6%2071.6%29%22%2F%3E%3C%2Fsvg%3E");
+  mask-image: url("data:image/svg+xml,%3Csvg%20xmlns%3D%22http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%22%20viewBox%3D%229.6%209.6%20500%20124%22%3E%3Cpath%20fill%3D%22white%22%20d%3D%22M475.601%209.6C488.856%209.60026%20499.601%2020.3453%20499.601%2033.6V75.049C499.601%2077.31%20500.558%2079.4654%20502.235%2080.982L507.557%2085.7963C507.707%2085.9321%20507.87%2086.0533%20508.03%2086.1781C510.124%2087.817%20510.124%2091.383%20508.03%2093.0219C507.87%2093.1467%20507.707%2093.2679%20507.557%2093.4037L502.235%2098.218C500.558%2099.7346%20499.601%20101.89%20499.601%20104.151V109.6C499.601%20122.855%20488.856%20133.6%20475.601%20133.6H33.6C20.3454%20133.6%209.60098%20122.855%209.60098%20109.6V33.6C9.60098%2020.3453%2020.3454%209.60026%2033.6%209.6H475.601Z%22%20transform%3D%22rotate%28180%20259.6%2071.6%29%22%2F%3E%3C%2Fsvg%3E");
 }
 
 @keyframes tipPulse {
@@ -2502,20 +2517,23 @@ body {
 .agent-tip-bubble .qa-q { color: var(--CT6); font-weight: 500; }
 .agent-tip-bubble .qa-a { color: rgba(255,255,255,0.85); }
 /* 更紧凑的行距,压低整体高度,避免挡住下方欢迎卡 */
-.agent-tip-bubble .qa { gap: 2px; }
-.agent-tip-bubble .qa-txt { line-height: 36px; }
+.agent-tip-bubble .qa { width:454px; gap:4px; }
+.agent-tip-bubble .qa-txt { line-height:36px; }
+.agent-tip-bubble .qa-q { height:44px; font-size:28px; gap:12px; }
+.agent-tip-bubble .qa-a { font-size:24px; }
+.agent-tip-bubble .qa-flag { background:#FFFFFF; color:#9192FA; border:0; border-radius:6px; }
 
 .agent-tip-bubble .tip-close {
   flex-shrink: 0;
-  width: 40px;
-  height: 40px;
-  margin-top: -2px;
+  width: 32px;
+  height: 32px;
+  margin-top: 0;
   display: flex;
   align-items: center;
   justify-content: center;
-  border-radius: 50%;
-  background: rgba(255,255,255,0.20);
-  font-size: 20px;
+  border-radius: 0;
+  background: transparent;
+  font-size: 30px;
   color: var(--CT6);
   cursor: pointer;
 }
@@ -2534,15 +2552,16 @@ body {
   display: flex;
   align-items: center;
   gap: 16px;
-  margin-top: 28px;
-  padding: 20px;
-  background: var(--CB40);
-  border-radius: 16px;
+  margin-top: 0;
+  padding: 0;
+  height: 84px;
+  background: transparent;
+  border-radius: 0;
 }
 
 .fm-card .fm-icon {
-  width: 64px;
-  height: 64px;
+  width: 84px;
+  height: 84px;
   flex-shrink: 0;
 }
 
@@ -2559,15 +2578,17 @@ body {
 }
 
 .fm-card .fm-sub {
-  font-size: 22px;
+  font-size: 24px;
   color: var(--CT4);
-  line-height: 32px;
+  line-height: 36px;
   font-variant-numeric: tabular-nums;
   font-feature-settings: "tnum";
 }
 
+
 .rec-list-v2 {
-  margin-top: 32px;
+  margin-top: 40px;
+  border-top: 1px solid var(--CL2);
   display: flex;
   flex-direction: column;
   gap: 0;
@@ -2576,14 +2597,13 @@ body {
 .rec-item-v2 {
   display: flex;
   align-items: center;
-  padding: 24px 8px;
-  border-bottom: 1px solid rgba(102,127,255,0.08);
+  height: 124px;
+  padding: 40px 0;
+  border-bottom: 1px solid var(--CL2);
   cursor: pointer;
 }
 
-.rec-item-v2:last-child {
-  border-bottom: none;
-}
+.rec-item-v2:last-child { border-bottom: 1px solid var(--CL2); }
 
 .rec-dot-v2 {
   width: 12px;
@@ -2597,8 +2617,9 @@ body {
 .rec-text-v2 {
   flex: 1;
   font-size: 28px;
-  color: #1A1A2E;
-  line-height: 42px;
+  font-weight: 500;
+  color: var(--CT1);
+  line-height: 44px;
 }
 
 .rec-arrow-v2 {
@@ -2612,9 +2633,10 @@ body {
   align-items: center;
   justify-content: center;
   gap: 10px;
-  padding-top: 28px;
-  font-size: 26px;
-  color: #666685;
+  padding-top: 32px;
+  font-size: 24px;
+  line-height: 36px;
+  color: var(--CT1);
   cursor: pointer;
 }
 
@@ -2626,7 +2648,7 @@ body {
 .agent-toolbar-v2 {
   display: flex;
   gap: 16px;
-  padding: 20px 24px 16px;
+  padding: 20px 32px 20px;
   flex-shrink: 0;
   overflow-x: auto;
   scrollbar-width: none;
@@ -2638,8 +2660,9 @@ body {
   display: flex;
   align-items: center;
   gap: 10px;
-  font-size: 26px;
-  color: #33334D;
+  font-size: 24px;
+  line-height: 36px;
+  color: var(--CT1);
   background: var(--CB1);
   border: 1px solid var(--CL2);
   border-radius: 999px;
@@ -2666,8 +2689,8 @@ body {
 .agent-inputbar-v2 {
   display: flex;
   align-items: center;
-  margin: 0 24px 60px;
-  height: 92px;
+  margin: 0 32px 80px;
+  height: 100px;
   background: #FFFFFF;
   border-radius: 999px;
   padding: 0 16px 0 28px;
@@ -2679,7 +2702,7 @@ body {
   width: 56px;
   height: 56px;
   border-radius: 50%;
-  background: linear-gradient(135deg, #667FFF 0%, #8B52FF 100%);
+  background: transparent;
   display: flex;
   align-items: center;
   justify-content: center;
@@ -2687,8 +2710,8 @@ body {
 }
 
 .agent-inputbar-v2 .voice-icon .iconfont {
-  color: #FFFFFF;
-  font-size: 28px;
+  color: var(--CT1);
+  font-size: 44px;
 }
 
 .agent-inputbar-v2 .input-ph-v2 {
@@ -3420,8 +3443,7 @@ body { gap: 48px; padding-left: 24px; padding-right: 24px; }
     <div class="top-nav">
       <div class="top-nav-left">
         <div class="menu-btn" id="menuBtn">
-          <i class="iconfont icon-cebianlan"></i>
-          <span class="menu-dot" id="menuDot"></span>
+          <i class="iconfont icon-cebianlan"></i><span class="menu-dot" id="homeMenuDot"></span>
         </div>
         <div class="nav-tabs">
           <span class="nav-tab is-on">推荐</span>
@@ -3793,7 +3815,7 @@ body { gap: 48px; padding-left: 24px; padding-right: 24px; }
       <div class="agent-nav-v2" id="agentNavV2">
         <div class="nav-left">
           <div class="menu-btn agent-menu-btn" id="agentMenuBtnV2">
-            <i class="iconfont icon-cebianlan nav-icon"></i>
+            <i class="iconfont icon-cebianlan nav-icon"></i><span class="menu-dot" id="agentMenuDot"></span>
           </div>
           <span class="nav-logo">AI投顾</span>
           <span class="nav-slogan">随叫随到，你的投资小帮手！</span>
@@ -3805,15 +3827,8 @@ body { gap: 48px; padding-left: 24px; padding-right: 24px; }
         <!-- 情况②:距上一提问10min~4h内进入 → 侧边栏旁气泡,内容=上一次问答两行,点击定位到上一个问题 -->
         <div class="agent-tip-bubble" id="agentTipBubble">
           <div class="qa">
-            <span class="qa-txt qa-q"><span class="qa-flag">回答完毕</span><span class="qa-var" id="tipQ">今天大盘为什么突然涨这么多？我手上的军工还能继续拿吗？</span></span>
+            <span class="qa-txt qa-q"><span class="qa-flag">回答完毕</span><span class="qa-var" id="tipQ">今天大盘为什么突然涨这么多？我手上的军工还能继续拿吗？</span><span class="tip-close" id="agentTipClose"><i class="iconfont icon-guanbi"></i></span></span>
             <span class="qa-txt qa-a" id="tipA">今日大盘呈现震荡上行格局：上证指数收涨0.82%，科创50放量拉升近7%，军工、AI算力方向领涨。北向资金全天净流入58亿元。综合来看，市场情绪回暖，建议关注景气度持续验证的军工与科技主线，控制仓位、逢低分批布局。</span>
-          </div>
-          <div class="bub-right">
-            <span class="tip-close" id="agentTipClose"><i class="iconfont icon-guanbi"></i></span>
-            <span class="bub-go">
-              <svg class="c1" viewBox="0 0 24 24" fill="none"><path d="M9 6l6 6-6 6" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"/></svg>
-              <svg class="c2" viewBox="0 0 24 24" fill="none"><path d="M9 6l6 6-6 6" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"/></svg>
-            </span>
           </div>
         </div>
       </div>
@@ -3853,13 +3868,15 @@ body { gap: 48px; padding-left: 24px; padding-right: 24px; }
         <div class="agent-welcome-v2" id="agentWelcomeV2" style="display:none">
           <div class="welcome-card-v2">
             <div class="welcome-avatar-v2">
-              <img src="assets/icons/xiaobao.svg" alt="小宝">
+              <img src="assets/figma/agent-mascot.svg" alt="小宝">
             </div>
             <div class="welcome-head-default">
               <div class="welcome-hello-v2">Hello～</div>
               <div class="welcome-title-v2">尊敬的AI服务体验官！</div>
               <div class="welcome-sub-v2">有什么投资的问题，尽管问我！</div>
             </div>
+          </div>
+          <div class="welcome-recommendations-v2">
             <!-- 国金FM 资讯子卡 -->
             <div class="fm-card">
               <svg class="fm-icon" viewBox="0 0 56 56" fill="none">
@@ -3960,9 +3977,9 @@ body { gap: 48px; padding-left: 24px; padding-right: 24px; }
       <div class="agent-inputbar-v2" id="agentInputV2">
         <div class="voice-icon">
           <svg viewBox="0 0 32 32" fill="none" width="28" height="28">
-            <rect x="12" y="4" width="8" height="16" rx="4" fill="#fff"/>
-            <path d="M7 15C7 20 11 23.5 16 23.5C21 23.5 25 20 25 15" stroke="#fff" stroke-width="2.5" stroke-linecap="round" fill="none"/>
-            <path d="M16 23.5V28" stroke="#fff" stroke-width="2.5" stroke-linecap="round"/>
+            <rect x="12" y="4" width="8" height="16" rx="4" fill="currentColor"/>
+            <path d="M7 15C7 20 11 23.5 16 23.5C21 23.5 25 20 25 15" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" fill="none"/>
+            <path d="M16 23.5V28" stroke="currentColor" stroke-width="2.5" stroke-linecap="round"/>
           </svg>
         </div>
         <span class="input-ph-v2">发消息或按住说话...</span>
@@ -4097,8 +4114,10 @@ body { gap: 48px; padding-left: 24px; padding-right: 24px; }
            样式对齐 guojin-home-demo1:浅紫渐变圆角卡 + 底部小三角指向语音球;内容=标签 + 问 / 答两行(单行截断) -->
       <div class="msg-bubble2" id="msgBubble2">
         <div class="toast-copy">
-          <span class="toast-flag">回答完毕</span>
-          <b class="toast-q" id="mbQ">今天大盘为什么突然涨这么多？我手上的军工还能继续拿吗？</b>
+          <div class="toast-q-row">
+            <span class="toast-flag">回答完毕</span>
+            <b class="toast-q" id="mbQ">今天大盘为什么突然涨这么多？我手上的军工还能继续拿吗？</b>
+          </div>
           <small class="toast-a" id="mbA">今日大盘呈现震荡上行格局：上证指数收涨0.82%，科创50放量拉升近7%，军工、AI算力方向领涨。北向资金全天净流入58亿元。综合来看，市场情绪回暖，建议关注景气度持续验证的军工与科技主线，控制仓位、逢低分批布局。</small>
         </div>
         <button type="button" class="toast-close mb2-close" id="msgBubble2Close" aria-label="关闭">×</button>
@@ -4221,8 +4240,10 @@ body { gap: 48px; padding-left: 24px; padding-right: 24px; }
         <button class="dc-btn primary" id="dcAsk">一键演示：提问并退出</button>
         <button class="dc-btn" id="dcFinishNow">立即完成回答</button>
         <button class="dc-btn" id="dcAskAgain">再问一个新问题</button>
+        <button class="dc-btn" id="dcLatestNews">模拟新增最新消息</button>
+        <button class="dc-btn" id="dcStockQuestion">演示股票引用提问</button>
         <button class="dc-btn" id="dcTimeout">模拟气泡超时(5s)</button>
-        <button class="dc-btn" id="dcMidnight">模拟跨24:00(红点/未读失效)</button>
+        <button class="dc-btn" id="dcMidnight">模拟跨24:00(未读标签失效)</button>
         <button class="dc-btn" id="dcPin">保留气泡(不自动收起)</button>
         <button class="dc-btn reset" id="dcReset">重置全部状态</button>
       </div>
@@ -4233,7 +4254,8 @@ body { gap: 48px; padding-left: 24px; padding-right: 24px; }
       <div class="dc-guide">
         <b>消息提示</b>：仅「底导上方气泡」一种形式，<b>覆盖「投资者的一天」信息栏</b>（显示时隐藏该信息栏，收起后复原），内容为<b>【回答完毕】+问 / 答两行</b>（各单行截断，始终两行），右上「×」可去除，「×」下方为<b>「&gt;&gt;」脉冲</b>；<b>5s</b> 未点击自动收起转未读。<br>
         <b>出现时机（状态3 双重检测）</b>：回答完成时检测 <b>①用户是否在APP内一级界面 ②提问账号是否登录</b> —— 在一级界面且未登出则<b>回答完成后即出气泡</b>；不在一级界面或已登出则<b>提醒挂起</b>，等用户<b>下一次进入APP / 登录提问账号</b>时（限提问后 <b>4h</b> 内）补发，超 4h 作废、仅留未读。<br>
-        <b>未读消息</b>：侧边栏按钮（三条杠）右上角<b>小红点</b> + 历史对话该条打「<b>未读</b>」标签；<b>首页与智能体内侧边栏共用</b>同一套标注；<b>小红点与未读标签 24:00 失效</b>。<br>
+        <b>未读消息</b>：首页三杠红点由新增未读回答或最新消息触发；智能体内三杠红点仅由新增未读回答触发；点击各自三杠清除该入口红点，历史对话该条保留「<b>未读</b>」标签；<b>首页与智能体内侧边栏共用</b>同一套标注；<b>未读标签 24:00 失效</b>。<br>
+        <b>气泡规则</b>：仅视觉气泡，不播放提示音、不振动；股票引用仅在气泡标题中去除 $ 与括号代码，原问题保留。<br>
         <b>AI回答进程</b>：不管是否退出智能体界面、是否杀掉后台进程，AI都<b>继续回答</b>。
       </div>
 
@@ -4242,7 +4264,7 @@ body { gap: 48px; padding-left: 24px; padding-right: 24px; }
           <div class="dc-note-title"><span class="dot purple"></span>提问后退出并重进智能体的显示界面（场景化除外，三种情况）</div>
           <ul class="dc-note-list">
             <li><span class="num">1</span>距上一提问<b>10min内</b>，点击任意智能体入口 → 都<b>定位到上一次提问</b>（思考中则定位查看进度）</li>
-            <li><span class="num">2</span>10min内<b>未进入</b>智能体，则距上一提问<b>4h内</b>且回答仍「未读」，点击任意入口 → 显示<b>首页推荐问</b>，且侧边栏旁弹出<b>蓝紫毛玻璃气泡</b>（两行：【回答完毕】+提问 / 回答），<b>出现时脉冲一次</b>，点击气泡定位到上一个问题；<b>保持1min后自动消失</b>，点「×」也可手动收起（「×」下方为「&gt;&gt;」脉冲），未读保留</li>
+            <li><span class="num">2</span>10min内<b>未进入</b>智能体，则距上一提问<b>4h内</b>且回答仍「未读」，点击任意入口 → 显示<b>首页推荐问</b>，且侧边栏旁弹出<b>蓝紫毛玻璃气泡</b>（两行：【回答完毕】+提问 / 回答），<b>出现时脉冲一次</b>，点击气泡定位到上一个问题；<b>保持10s后自动消失</b>，点「×」也可手动收起（「×」下方为「&gt;&gt;」脉冲），未读保留</li>
             <li><span class="num">3</span>距上一提问<b>4h后</b>重进 → 显示首页推荐问，侧边栏旁气泡<b>消失</b></li>
           </ul>
           <div style="margin-top:14px;display:flex;gap:10px;flex-wrap:wrap">
@@ -4269,7 +4291,7 @@ body { gap: 48px; padding-left: 24px; padding-right: 24px; }
           <div class="dc-note-title"><span class="dot orange"></span>异常情况（§3.2）</div>
           <ul class="dc-note-list">
             <li>仅指 <b>系统异常（回答超时）</b>，不再考虑APP后台进程是否被杀</li>
-            <li><b>不出现消息提示气泡</b>，也<b>不引入未读</b>（侧边栏无红点、历史对话无「未读」标注）</li>
+            <li><b>不出现消息提示气泡</b>，也<b>不引入未读</b>（历史对话无「未读」标注）</li>
             <li>下一次回到智能体界面时，<b>直接显示首页推荐问</b></li>
             <li>用户仍可通过<b>侧边栏历史消息</b>查看错误信息（点击相应会话后显示错误界面），可点「<b>重新生成</b>」重答</li>
           </ul>
@@ -4306,17 +4328,17 @@ document.querySelectorAll('.ai-tabs').forEach(tabs => {
 /* ============================================================
  * 「小宝异步提醒」状态机 v9(对齐 方案一/需求草稿1 2026-08-10)
  * IDLE 常规 → THINKING 思考中 → DONE_BUBBLE 完成(底导上方气泡5s)
- * → UNREAD 未读(侧边栏红点+历史对话「未读」标注) → 定位查看 → IDLE
+ * → UNREAD 未读(历史对话「未读」标注) → 定位查看 → IDLE
  * v9 变更(相对 v8):
  *  - 状态3:回答完成时恢复双重检测 ①是否在APP内一级界面 ②提问账号是否登录
  *    · 在一级界面且未登出 → 回答完成后即出气泡
  *    · 不在一级界面/已登出 → 提醒挂起,等下次进入APP或登录提问账号时补发(限提问后4h内)
- *  - 状态4:侧边栏小红点与历史对话「未读」标签 24:00 失效(过期后仅保留会话,不再标未读)
+ *  - 状态4:历史对话「未读」标签 24:00 失效(过期后仅保留会话,不再标未读)
  *  - 状态5.2:侧边栏旁气泡出现时脉冲「一次」(v8 为两次)
  *  - §3.1b:多对话并行 → 消息提醒以「最新一次提问」为准,此前提问仅保留未读、不再提醒完成
  * 沿用规则:
  *  - 消息提示仅「底导上方气泡」,覆盖「投资者的一天」信息栏,内容=【回答完毕】+问 / 答两行
- *  - 未读仅走侧边栏:三条杠红点 + 历史对话「未读」标签
+ *  - 入口红点点击确认，历史对话「未读」标签定位查看后清除
  *  - 重进智能体三种情况(场景化除外):①10min内定位上次提问 ②10min~4h内未读 → 推荐问+侧边栏旁气泡
  *    ③4h后 → 推荐问,气泡消失
  *  - 系统异常(回答超时):不出气泡、不引入未读,错误信息仅从侧边栏历史消息进入
@@ -4360,8 +4382,13 @@ document.querySelectorAll('.ai-tabs').forEach(tabs => {
   var atL1 = true;
   var acctLoggedIn = true;
   var pendingNotify = false; // 提醒已挂起,待用户下次进入APP/登录提问账号时补发(限4h内)
-  var badgesExpired = false; // 状态4:小红点与「未读」标签是否已过 24:00 失效
+  var badgesExpired = false; // 状态4:「未读」标签是否已过 24:00 失效
   /* §3.1b 多对话并行:sessions 保存今日主动提问(index 0 = 最新);cur 指向最新一次提问 */
+  var homeNewsRevision = 0, homeSeenNewsRevision = 0;
+  var answerRevision = 0, homeSeenRevision = 0, agentSeenRevision = 0;
+  var drawerSurface = 'home';
+  var drawerOpen = false;
+  var drawerAnswerRevisionAtOpen = 0, drawerNewsRevisionAtOpen = 0;
   var sessions = [];
   var cur = null;
   var timers = [];
@@ -4411,10 +4438,10 @@ document.querySelectorAll('.ai-tabs').forEach(tabs => {
     });
   }
 
-  /* ---- 未读指示(唯一方案:侧边栏):三条杠红点 + 历史对话「未读」标签
-   *      状态4:两者均 24:00 失效;系统异常不引入未读(§3.2)
+  /* ---- 未读指示:入口红点按新增事件确认，历史对话逐条保留「未读」标签
+   *      状态4:标签 24:00 失效;系统异常不引入未读(§3.2)
    *      §3.1b:多条提问各自保留「未读」,提醒只认最新一次 ---- */
-  var menuDot = $('menuDot'), drawerToday = $('drawerToday');
+  var drawerToday = $('drawerToday');
   var sideDrawer = $('sideDrawer'), sideDrawerMask = $('sideDrawerMask');
 
   function unreadCount() {
@@ -4425,7 +4452,7 @@ document.querySelectorAll('.ai-tabs').forEach(tabs => {
   function renderHistory() {
     drawerToday.innerHTML = '';
     sessions.forEach(function (s, i) {
-      var showBadge = s.unread && !badgesExpired;
+      var showBadge = s.unread && !badgesExpired && acctLoggedIn;
       var row = document.createElement('div');
       row.className = 'drawer-q' + (showBadge ? ' unread' : '');
       row.dataset.idx = i;
@@ -4436,8 +4463,15 @@ document.querySelectorAll('.ai-tabs').forEach(tabs => {
     });
   }
 
-  function updateDots() {
-    menuDot.classList.toggle('show', unreadCount() > 0);
+  function updateUnreadLabels() {
+    sessions.forEach(function (s) {
+      if (s.unread && !badgesExpired && !s.unreadRevision) s.unreadRevision = ++answerRevision;
+    });
+    var homeAnswerPending = sessions.some(function (s) { return s.unread && !badgesExpired && s.unreadRevision > homeSeenRevision; });
+    var agentAnswerPending = sessions.some(function (s) { return s.unread && !badgesExpired && s.unreadRevision > agentSeenRevision; });
+    var homeNewsPendingNow = homeNewsRevision > homeSeenNewsRevision;
+    $('homeMenuDot').classList.toggle('show', acctLoggedIn && (homeNewsPendingNow || homeAnswerPending));
+    $('agentMenuDot').classList.toggle('show', acctLoggedIn && agentAnswerPending);
     renderHistory();
   }
 
@@ -4451,7 +4485,7 @@ document.querySelectorAll('.ai-tabs').forEach(tabs => {
     else if (s === 'UNREAD') { orb.classList.add('is-unread'); startGuide(); }
     else { startGuide(); }   // IDLE:恢复声波引导循环
     if (s !== 'DONE_BUBBLE') hideBubble();
-    updateDots();
+    updateUnreadLabels();
   }
 
   /* ---- 语音球进度环(方案三:单次走完,不循环) ---- */
@@ -4484,11 +4518,17 @@ document.querySelectorAll('.ai-tabs').forEach(tabs => {
   }
 
   /* ---- 气泡问答内容:两个气泡统一显示「最新一次提问 + 回答」两行(§3.1b) ---- */
+  // 仅清洗气泡问题标题，原问题、历史列表与回答正文保持原文。
+  function formatBubbleTitle(text) {
+    return text.replace(/\$([^$\r\n（）()]+?)(?:（\s*\d{5,6}(?:\.[A-Za-z]+)?\s*）|\(\s*\d{5,6}(?:\.[A-Za-z]+)?\s*\))/g, '$1');
+  }
+
   function fillQA() {
     var q = (cur && cur.q) || currentQuestion || QUESTION;
     var a = (cur && cur.a) || ANSWER;
-    $('mbQ').textContent = q;
-    $('tipQ').textContent = q;
+    var title = formatBubbleTitle(q);
+    $('mbQ').textContent = title;
+    $('tipQ').textContent = title;
     $('mbA').textContent = a;
     $('tipA').textContent = a;
   }
@@ -4505,7 +4545,7 @@ document.querySelectorAll('.ai-tabs').forEach(tabs => {
     bubbleTimer = later(function () {
       if (state === 'DONE_BUBBLE') {
         setState('UNREAD');
-        log('气泡5s未点击 → 收起,「投资者的一天」复原;侧边栏保留红点+「未读」标注(状态4)');
+        log('气泡5s未点击 → 收起,「投资者的一天」复原;历史对话保留「未读」标注(状态4)');
       }
     }, BUBBLE_MS);
   }
@@ -4514,8 +4554,8 @@ document.querySelectorAll('.ai-tabs').forEach(tabs => {
     floatingLayer.classList.remove('msg-on');
   }
 
-  /* ---- 侧边栏旁气泡(情况②:推荐问页,内容=上一次问答两行;出现1min后自动消失) ---- */
-  var TIP_MS = 60000;
+  /* ---- 侧边栏旁气泡(情况②:推荐问页,内容=上一次问答两行;出现10s后自动消失) ---- */
+  var TIP_MS = 10000;
   var tipTimer = null;
   var tipShowTimer = null;
   function showTip() {
@@ -4528,7 +4568,7 @@ document.querySelectorAll('.ai-tabs').forEach(tabs => {
       if (agentTipBubble.classList.contains('show')) {
         tipDismissed = true;   // 自动消失后不再随时间窗切换重复弹出
         hideTip();
-        log('侧边栏旁气泡保持1min未点击 → 自动消失(历史对话「未读」标注仍保留)');
+        log('侧边栏旁气泡保持10s未点击 → 自动消失(历史对话「未读」标注仍保留)');
       }
     }, TIP_MS);
   }
@@ -4592,10 +4632,10 @@ document.querySelectorAll('.ai-tabs').forEach(tabs => {
         log('进入智能体 → 首页推荐问(无已完成的上一个回答)');
       }
     }
-    // 状态4:红点/「未读」标签由「是否仍有未读回答」决定(并 24:00 失效),不再一进入智能体就清空
+    // 状态4:历史对话「未读」标签由「是否仍有未读回答」决定(并 24:00 失效),不再一进入智能体就清空
     if ((state === 'DONE_BUBBLE' || state === 'UNREAD') && !unreadAnswer) setState('IDLE');
     else if (state === 'DONE_BUBBLE' && mode !== 'locate') setState('UNREAD');
-    updateDots();
+    updateUnreadLabels();
   }
 
   /* ---- 侧边栏历史对话:点任意一条主动提问(§3.1b 多条并行) ---- */
@@ -4699,11 +4739,12 @@ document.querySelectorAll('.ai-tabs').forEach(tabs => {
   function resumeNotify() {
     atL1 = true; acctLoggedIn = true;
     syncCheckBtns();
+    updateUnreadLabels();
     if (!pendingNotify) { log('当前无挂起的提醒'); return; }
     if (timeWindow === 'over4h') {
       pendingNotify = false;
       log('进入APP/登录提问账号,但距上一提问已超4h → 提醒作废,仅保留侧边栏未读(状态3)', true);
-      updateDots();
+      updateUnreadLabels();
       return;
     }
     pendingNotify = false;
@@ -4732,6 +4773,7 @@ document.querySelectorAll('.ai-tabs').forEach(tabs => {
   function resetAll() {
     clearTimers();
     if (bubbleTimer) clearTimeout(bubbleTimer);
+    closeDrawer();
     hasQuestion = false;
     pendingError = null;
     currentQuestion = '';
@@ -4739,6 +4781,9 @@ document.querySelectorAll('.ai-tabs').forEach(tabs => {
     unreadAnswer = false;
     tipDismissed = false;
     sessions = [];
+    homeNewsRevision = homeSeenNewsRevision = 0;
+    answerRevision = homeSeenRevision = agentSeenRevision = 0;
+    drawerAnswerRevisionAtOpen = drawerNewsRevisionAtOpen = 0;
     cur = null;
     pendingNotify = false;
     badgesExpired = false;
@@ -4746,7 +4791,6 @@ document.querySelectorAll('.ai-tabs').forEach(tabs => {
     acctLoggedIn = true;
     syncCheckBtns();
     setWindow('in10', true);
-    closeDrawer();
     inAgent = false;
     agentPage.classList.remove('open');
     hideTip();
@@ -4798,7 +4842,7 @@ document.querySelectorAll('.ai-tabs').forEach(tabs => {
     e.stopPropagation();
     if (state === 'DONE_BUBBLE') {
       setState('UNREAD');
-      log('点「×」收起气泡 → 侧边栏保留红点+「未读」标注(状态4)');
+      log('点「×」收起气泡 → 历史对话保留「未读」标注(状态4)');
     }
   });
 
@@ -4891,7 +4935,7 @@ document.querySelectorAll('.ai-tabs').forEach(tabs => {
     if (cur) { cur.err = true; cur.done = false; cur.unread = false; }
     if (inAgent) { inAgent = false; agentPage.classList.remove('open'); }
     setState('IDLE');   // 静默回常规态:无气泡、无未读
-    updateDots();
+    updateUnreadLabels();
     log('模拟系统异常(回答超时) → 回答中断,不出消息提醒、不引入未读;下次进入智能体直接显示首页推荐问,错误信息可从侧边栏历史消息查看(§3.2)', true);
   }
 
@@ -4906,17 +4950,30 @@ document.querySelectorAll('.ai-tabs').forEach(tabs => {
   /* ---- 演示台 ---- */
   /* ---- 侧边栏抽屉(首页 / 智能体页共用同一抽屉与未读标注) ---- */
   function openDrawer() {
-    updateDots();
+    if (drawerOpen) return;
+    updateUnreadLabels();
+    drawerSurface = inAgent ? 'agent' : 'home';
+    drawerAnswerRevisionAtOpen = answerRevision;
+    drawerNewsRevisionAtOpen = homeNewsRevision;
+    drawerOpen = true;
     sideDrawerMask.classList.add('show');
     sideDrawer.classList.add('open');
     var n = unreadCount();
     log('打开侧边栏 → ' + (n > 0 ? n + ' 条未读回答显示「未读」标签(§3.1b:仅最新一次会提醒,其余仅标未读)'
-      : badgesExpired ? '已过24:00,红点与「未读」标签均已失效(状态4)'
+      : badgesExpired ? '已过24:00,「未读」标签已失效(状态4)'
       : pendingError ? '无未读;异常会话可点击查看错误信息(§3.2)' : '无未读'));
   }
   function closeDrawer() {
+    if (!drawerOpen) return;
+    drawerOpen = false;
     sideDrawerMask.classList.remove('show');
     sideDrawer.classList.remove('open');
+    if (drawerSurface === 'agent') agentSeenRevision = Math.max(agentSeenRevision, drawerAnswerRevisionAtOpen);
+    else {
+      homeSeenRevision = Math.max(homeSeenRevision, drawerAnswerRevisionAtOpen);
+      homeSeenNewsRevision = Math.max(homeSeenNewsRevision, drawerNewsRevisionAtOpen);
+    }
+    updateUnreadLabels();
   }
   $('menuBtn').addEventListener('click', openDrawer);
   $('agentMenuBtnV2').addEventListener('click', openDrawer);
@@ -4956,7 +5013,7 @@ document.querySelectorAll('.ai-tabs').forEach(tabs => {
     $('dcChkLogout').classList.toggle('active', !acctLoggedIn);
   }
   $('dcChkIn').addEventListener('click', function () {
-    atL1 = true; acctLoggedIn = true; syncCheckBtns();
+    atL1 = true; acctLoggedIn = true; syncCheckBtns(); updateUnreadLabels();
     log('模拟:用户在APP内一级界面且提问账号已登录 → 回答完成后即出气泡(状态3)', true);
   });
   $('dcChkOut').addEventListener('click', function () {
@@ -4964,12 +5021,12 @@ document.querySelectorAll('.ai-tabs').forEach(tabs => {
     log('模拟:用户不在APP内一级界面(APP外/二级页) → 回答完成后提醒挂起(状态3)', true);
   });
   $('dcChkLogout').addEventListener('click', function () {
-    acctLoggedIn = false; syncCheckBtns();
+    acctLoggedIn = false; syncCheckBtns(); updateUnreadLabels();
     log('模拟:已登出提问账号 → 回答完成后提醒挂起,等重新登录该账号(状态3)', true);
   });
   $('dcChkBack').addEventListener('click', resumeNotify);
 
-  /* ---- 状态4:小红点与「未读」标签 24:00 失效 ---- */
+  /* ---- 状态4:历史对话「未读」标签 24:00 失效 ---- */
   function expireBadges() {
     if (!sessions.length) { log('提示:请先提问产生未读,再模拟跨24:00'); return; }
     badgesExpired = true;
@@ -4977,8 +5034,8 @@ document.querySelectorAll('.ai-tabs').forEach(tabs => {
     hideBubble();
     hideTip();
     if (state === 'DONE_BUBBLE' || state === 'UNREAD') setState('IDLE');
-    updateDots();
-    log('模拟跨24:00 → 侧边栏小红点与历史对话「未读」标签全部失效,会话本身保留(状态4)', true);
+    updateUnreadLabels();
+    log('模拟跨24:00 → 历史对话「未读」标签全部失效,会话本身保留(状态4)', true);
   }
   $('dcMidnight').addEventListener('click', expireBadges);
 
@@ -5060,7 +5117,7 @@ document.querySelectorAll('.ai-tabs').forEach(tabs => {
   $('dcTimeout').addEventListener('click', function () {
     if (state === 'DONE_BUBBLE') {
       setState('UNREAD');
-      log('模拟超时 → 气泡收起,侧边栏红点+「未读」标注保留(状态4)');
+      log('模拟超时 → 气泡收起,历史对话「未读」标注保留(状态4)');
     } else log('当前无气泡');
   });
 
@@ -5086,15 +5143,25 @@ document.querySelectorAll('.ai-tabs').forEach(tabs => {
       // 恢复自动收起:对当前正显示的气泡重新计时
       if (msgBubble2.classList.contains('show')) showBubble();
       if (agentTipBubble.classList.contains('show')) showTip();
-      log('已取消「保留气泡」→ 恢复气泡5s / 侧边栏旁气泡1min 自动收起', true);
+      log('已取消「保留气泡」→ 恢复气泡5s / 侧边栏旁气泡10s 自动收起', true);
     }
   });
 
+  $('dcLatestNews').addEventListener('click', function () {
+    homeNewsRevision++;
+    updateUnreadLabels();
+    log('新增最新消息 → 仅首页三杠出现红点，智能体内红点不受影响');
+  });
+  $('dcStockQuestion').addEventListener('click', function () {
+    openAgent('new-v2');
+    ask('$贵州茅台（600519）分析一下趋势');
+    closeAgent();
+  });
   $('dcReset').addEventListener('click', resetAll);
 
   setState('IDLE');   // 初始:常规态(声波引导循环 + 底导原样)
   syncCheckBtns();
-  log('演示台就绪(v9,对齐 方案一 2026-08-10)。新增:状态3 完成时双重检测(APP一级界面/账号登录)、状态4 红点与未读标签24:00失效、§3.1b 只提醒最新一次提问。');
+  log('演示台就绪(v9,对齐 方案一 2026-08-10)。新增:状态3 完成时双重检测(APP一级界面/账号登录)、状态4 历史对话未读标签24:00失效、§3.1b 只提醒最新一次提问。');
 
   // 暴露到全局供HTML onclick使用
   window.openAgent = openAgent;
